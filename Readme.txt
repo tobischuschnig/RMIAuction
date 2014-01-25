@@ -50,6 +50,16 @@ Abnahmen Erfolgen durch mich immer am Mo (wenn nicht möglich Di) vor den Review
 
 Alle Arbeitspakete die mit dem Wort "Designüberlegung" enden müssen unmissverständlich beschrieben werden. Diese Beschreibungen kommen dann von mir in das Protokoll. Änderungen dieser Beschreibungen müssen ebenfalls beschrieben werden.
 
+Gitname:
+Nach Folgenden Schema:
+"VornameNachname" 
+
+Beispiel:
+"TobiasSchuschnig"
+
+Javadoc:
+Author wie folgend angeben angeben:
+@author Vorname Nachname email
 
 Arbeitspakete wöchentlich: 
 
