@@ -5,5 +5,5 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ ExceptionsTest.class, ModelTest.class })
+@SuiteClasses({ ManagementClientTest.class, TaskExecutorTest.class })
 public class TestSuite {}
