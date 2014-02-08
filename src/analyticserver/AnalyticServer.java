@@ -63,7 +63,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 
 	private void claculateAuctionStatistic() {
 		// TODO Auto-generated method stub
-		auctionEvents.
+		//auctionEvents.
 	}
 	
 	private void claculateUserStatistic() {

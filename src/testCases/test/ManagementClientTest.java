@@ -1,4 +1,4 @@
-package test;
+package testCases.test;
 
 import org.junit.Assert.*;
 import org.mockito.Mockito.*;

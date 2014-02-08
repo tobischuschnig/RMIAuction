@@ -6,12 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 /**
- * Diese Klasse dient der anmeldung des users. Wenn er sich erfolgreich mit
- * username und password an BillingServer angemeldet hat, bekommt dieser
- * eine Referenz auf BillineServerSecure, welcher weitere methoden bereitstellt.
- * @author Klune Alexander
- * @version 1.0
+ * This is the class for the user login.
+ * If the login is successfully, you will get
+ * an reference to the BillingServerSecure Object
+ * which provides you other methods
+ * @author Klune Alexander, Tobias Lins
+ * @version 1.1
  * @email = aklune@student.tgm.ac.at
+ * @email tobias.lins@student.tgm.ac.at
  *
  */
 public class BillingServer {
@@ -25,9 +27,9 @@ public class BillingServer {
 	 * Use the java.security.MessageDigest class to obtain the MD5 hash of a given password. 
 	 * If and only if the login information is correct, the management client obtains 
 	 * a reference to a SecureBillingServer remote object, which performs the actual tasks.
-	 * @param username	username fuer den login
-	 * @param password	password fuer den login
-	 * @return	referenz von BillingServerSecure
+	 * @param username	username of the user login
+	 * @param password	password from this user
+	 * @return	reference von BillingServerSecure
 	 */
 	public BillingServerSecure login(String username, String password){
 		FileInputStream fis = null;
@@ -47,9 +49,9 @@ public class BillingServer {
 			fis.close();
 			br.close();
 		}catch (FileNotFoundException e) {
-			System.err.println("Fehler mein Laden / lesen des Files: user.properties");
+			System.err.println("Error loading file : user.properties");
 		}catch (IOException e) {
-			System.err.println("Fehler mein Laden / lesen des Files: user.properties");
+			System.err.println("Error loading file : user.properties");
 		}
 		//Rueckgabe der referenz
 		if(login)
