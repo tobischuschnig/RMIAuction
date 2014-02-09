@@ -13,9 +13,12 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import model.Event;
+
 /**
  * 
  * @author alexander auradnik
+ * @author Alexander Rieppel
  */
 public class ManagmentClient extends Thread implements RMI {
 
@@ -188,7 +191,7 @@ public class ManagmentClient extends Thread implements RMI {
             //String iteratorValue = (String) it.next();
             //System.out.println(iteratorValue);
             Event iteratorValue = (Event) it.next();
-            // TODO ausgabe mittels getter mehtoden
+            System.out.println(iteratorValue.getTimestamp()+" "+iteratorValue.getType()+" with ID "+iteratorValue.getID());
         }
     }
 
@@ -210,7 +213,7 @@ public class ManagmentClient extends Thread implements RMI {
     @Override
     public void processEvent(Event event) {
         if(autoprint==true){
-            // TODO Event ausgabe mittels getter Methoden
+            System.out.println(event.getTimestamp()+" "+event.getType()+" with ID "+event.getID());
         }else{
             unprintedMessages.add(event);
         }
