@@ -1,14 +1,19 @@
 package analyticserver.junit;
 
-import static org.junit.Assert.*;
 
-import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-public class AllTest {
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
+/**
+ * Fügt mit SuitClasses alle Testcaste klassen zusammen.
+ * @author auradnik alexander
+ * @version 08/02/2014
+ */
+// run modus suite
+@RunWith(Suite.class)
+// Klassen auswaehlen: 
+@SuiteClasses({ AnalyticsServerInterfaceTest.class,AnalyticsServerTest.class})
 
-}
+public class AllTest {}
