@@ -9,7 +9,6 @@ import model.PriceSteps;
 import model.Bill;
 import model.User;
 
-<<<<<<< HEAD
 
 /**
  * Provides the management of the pricesteps
@@ -31,12 +30,10 @@ public class BillingServerSecure {
 	private PriceSteps priceSteps;
 	private ConcurrentHashMap<String,Bill> bills;
 	
-<<<<<<< HEAD
 	public BillingServerSecure(){
 		this.priceSteps=new PriceSteps();
 	}
-=======
->>>>>>> c36a60d34cb34e495fa596047d50022038732c63
+
 	
 	public PriceSteps getPriceSteps(){
 		return priceSteps;
