@@ -5,8 +5,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PriceSteps {
 	private ConcurrentHashMap<Integer,PriceStep> priceSteps;
 
-	public PriceSteps(ConcurrentHashMap<Integer, PriceStep> priceSteps) {
-		this.priceSteps = priceSteps;
+	public PriceSteps() {
+		this.priceSteps = new ConcurrentHashMap<Integer,PriceStep>();
 	}
 
 	/**
