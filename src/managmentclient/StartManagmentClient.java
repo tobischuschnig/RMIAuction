@@ -18,7 +18,7 @@ public class StartManagmentClient {
             mc.run();
 		}
 		if(wronginput){
-			System.out.println("Wrong arguments\n Please enter like this:<BillingServer Remote Adress> <AnalyticsServer Remote Adress>");
+			System.out.println("Wrong arguments\n Please type in this:<BillingServer Remote Adress> <AnalyticsServer Remote Adress>");
 		}
     }
 }
