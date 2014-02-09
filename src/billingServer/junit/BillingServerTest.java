@@ -1,4 +1,4 @@
-package billingServer.test;
+package billingServer.junit;
 
 import static org.junit.Assert.*;
 import org.junit.Before;

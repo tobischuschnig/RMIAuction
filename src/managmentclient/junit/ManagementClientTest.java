@@ -1,8 +1,8 @@
-package testCases.test;
+package managmentclient.junit;
 
 import org.junit.Assert.*;
-import org.mockito.Mockito.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.junit.*;
