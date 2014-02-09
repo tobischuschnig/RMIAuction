@@ -9,12 +9,6 @@ import model.PriceSteps;
 import model.Bill;
 import model.User;
 
-
-/**
- * Provides the management of the pricesteps
- * @author tobiaslins
- *
-=======
 /**
  * Diese Klasse bietet moeglichkeiten angelegte PriceSteps zu loeschen
  * oder neue hinzuzufuegen, sowie diese auszugeben. Weiters kann eine Rechnung
@@ -23,7 +17,6 @@ import model.User;
  * @author Klune Alexander
  * @version 1.0
  * @email aklune@student.tgm.ac.at
->>>>>>> c36a60d34cb34e495fa596047d50022038732c63
  */
 public class BillingServerSecure {
 
@@ -80,8 +73,8 @@ public class BillingServerSecure {
 	
 	//User user, int auctionID, int feeFixed, double strikePrice,
     //double feeVariable, double feeTotal
-	public void billAuction(String user, long auctionID, double Price){
-		
+	public void billAuction(String user, long auctionID, double price){
+		bills.put(user, new Bill(user, auctionID, price));
 	}
 	
 	public Bill getBill(String user){
