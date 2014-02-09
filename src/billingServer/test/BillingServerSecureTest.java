@@ -1,6 +1,9 @@
 package billingServer.test;
 
 import static org.junit.Assert.*;
+
+import java.rmi.RemoteException;
+
 import model.Bill;
 import model.PriceSteps;
 
@@ -8,6 +11,11 @@ import org.junit.*;
 
 import billingServer.BillingServerSecure;
 
+/**
+ * TDD Testclass for BillingServerSecure
+ * @author Alexander Rieppel
+ * @email <arieppel@student.tgm.ac.at>
+ */
 public class BillingServerSecureTest {
 	private BillingServerSecure bss;
 	
@@ -18,80 +26,72 @@ public class BillingServerSecureTest {
 	
 	@Test
 	public void testGetPriceSteps(){
-		PriceSteps ps = new PriceSteps(null);
+		PriceSteps ps = new PriceSteps();
 		bss.setPriceSteps(ps);
 		assertEquals(bss.getPriceSteps(),ps);
-		
 	}
 	@Test
-	public void testCreatePriceStepNormal(){
+	public void testCreatePriceStepNormal() throws RemoteException{
 		bss.createPriceStep(0, 100, 3, 5);
-		//TODO Assert
+		assertEquals(bss.getPriceSteps().size(),1);
 	}
 	@Test
-	public void testCreatePriceStepOverlapse(){
+	public void testCreatePriceStepOverlapse() throws RemoteException{
 		bss.createPriceStep(0, 100, 3, 5);
 		bss.createPriceStep(50, 150, 3, 5);
-		//TODO Assert
+		assertEquals(bss.getPriceSteps().size(),1);
 	}
-	@Test
+	@Test(expected=RemoteException.class)
 	public void testCreatePriceStepStartNegative(){
 		bss.createPriceStep(-1, 100, 3, 5);
-		//TODO Assert
+		assertEquals(bss.getPriceSteps().size(),0);
 	}
-	@Test
+	@Test(expected=RemoteException.class)
 	public void testCreatePriceStepEndNegative(){
 		bss.createPriceStep(0, -1, 3, 5);
-		//TODO Assert
+		assertEquals(bss.getPriceSteps().size(),0);
 	}
-	@Test
+	@Test(expected=RemoteException.class)
 	public void testCreatePriceStepFixedNegative(){
 		bss.createPriceStep(0, 100, -1, 5);
-		//TODO Assert
+		assertEquals(bss.getPriceSteps().size(),0);
 	}
-	@Test
+	@Test(expected=RemoteException.class)
 	public void testCreatePriceStepVariableNegative(){
 		bss.createPriceStep(0, 100, 3, -1);
-		//TODO Assert
+		assertEquals(bss.getPriceSteps().size(),0);
 	}
 	@Test
 	public void testdeletePriceStep(){
+		bss.createPriceStep(0, 100,3,5);
 		bss.deletePriceStep(0, 100);
-		//TODO Assert
+		assertEquals(bss.getPriceSteps().size(),0);
 	}
 	@Test
 	public void testdeletePriceStepNotExisting(){
-		bss.deletePriceStep(0, 100);
-		//TODO Assert
+		bss.createPriceStep(0, 100,3,5);
+		bss.deletePriceStep(0, 200);
+		assertEquals(bss.getPriceSteps().size(),1);
 	}
+	
 	@Test
 	public void testbillAuction(){
 		bss.billAuction("test", 123, 100);
-		//TODO Assert
+		assertEquals(bss.getBills().size(),1);
 	}
 	@Test
 	public void testbillAuctionUserNotExisting(){
 		bss.billAuction("none", 123, 100);
-		//TODO Assert
+		assertEquals(bss.getBills().size(),0);
 	}
 	@Test
 	public void testbillAuctionAuctionNotExisting(){
 		bss.billAuction("test", 123454, 100);
-		//TODO Assert
-	}
-	@Test
-	public void testbillAuctionPriceInvalid(){
-		bss.billAuction("test", 123, -1);
-		//TODO Assert
-	}
-	@Test
-	public void testbillAuctionAuctionInvalid(){
-		bss.billAuction("test", -1, 100);
-		//TODO Assert
+		assertEquals(bss.getBills().size(),0);
 	}
 	@Test
 	public void testgetBill(){
-		Bill b = new Bill(null, 0, 0, 0, 0, 0);
+		Bill b = new Bill("test", 0, 0);
 		bss.setBill(b);
 		assertEquals(bss.getBill(null),b);
 	}

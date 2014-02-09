@@ -6,6 +6,11 @@ import org.junit.Test;
 
 import billingServer.BillingServer;
 
+/**
+ * TDD Testclass for BillingServer
+ * @author Alexander Rieppel
+ * @email <arieppel@student.tgm.ac.at>
+ */
 public class BillingServerTest {
 private BillingServer bs;
 	
@@ -16,8 +21,10 @@ private BillingServer bs;
 	
 	@Test
 	public void testLogin(){
-		bs.login("test", "1234");
-		//TODO Assert
+		assertNotNull(bs.login("test", "1234"));
 	}
-	
+	@Test
+	public void testLoginFail(){
+		assertNull(bs.login("test", "123454"));
+	}
 }
