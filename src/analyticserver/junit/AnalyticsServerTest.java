@@ -23,7 +23,6 @@ public class AnalyticsServerTest {
 	@Test
 	public void testEquality() {
 		assertTrue(as.equals(as));
-
 	}
 	
 	@Test
@@ -33,6 +32,24 @@ public class AnalyticsServerTest {
 		n.equals("");
 	}
 	
-
-
+	@Test
+	public void testUnsuscribeSuccessfullCall(){
+		//as=new  AnalyticServer();
+		try{
+		as.unsuscribe("wrong id");
+		}catch(Exception e){
+			fail("Exception thrown");
+		}
+	}
+	
+	@Test
+	public void testCalculate(){
+		//as=new  AnalyticServer();
+		try{
+		as.claculate();
+		}catch(Exception e){
+			fail("Exception thrown");
+		}
+	}
+	
 }

@@ -24,6 +24,7 @@ public class AnalyticsServerInterfaceTest {
 		//asi = new
 		//this.asi=asi;	
 	}
+
 	@Test 
 	public void testEquality() {
 		try{
