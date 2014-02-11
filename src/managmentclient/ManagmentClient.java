@@ -220,6 +220,90 @@ public class ManagmentClient implements RMI,Runnable {
     }
 
 	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * @return the loggedIn
+	 */
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
+	/**
+	 * @param loggedIn the loggedIn to set
+	 */
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
+
+	/**
+	 * @return the active
+	 */
+	public boolean isActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	/**
+	 * @return the unprintedMessages
+	 */
+	public Queue<Event> getUnprintedMessages() {
+		return unprintedMessages;
+	}
+
+	/**
+	 * @param unprintedMessages the unprintedMessages to set
+	 */
+	public void setUnprintedMessages(Queue<Event> unprintedMessages) {
+		this.unprintedMessages = unprintedMessages;
+	}
+
+	/**
+	 * @return the cli
+	 */
+	public CLI getCli() {
+		return cli;
+	}
+
+	/**
+	 * @param cli the cli to set
+	 */
+	public void setCli(CLI cli) {
+		this.cli = cli;
+	}
+
+	/**
+	 * @return the t
+	 */
+	public TaskExecuter getT() {
+		return t;
+	}
+
+	/**
+	 * @param t the t to set
+	 */
+	public void setT(TaskExecuter t) {
+		this.t = t;
+	}
+
+	/**
 	 * @return the autoprint
 	 */
 	public boolean isAutoprint() {
