@@ -8,7 +8,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * Fügt mit SuitClasses alle Testcaste klassen zusammen.
- * @author auradnik alexander
+ * @author auradnik alexander Alexander Auradnik <alexander.auradnik@student.tgm.ac.at>
  * @version 08/02/2014
  */
 // run modus suite
