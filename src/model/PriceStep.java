@@ -1,6 +1,8 @@
 package model;
 
-public class PriceStep {
+import java.io.Serializable;
+
+public class PriceStep implements Serializable{
 	private double startPrice, endPrice, fixedPrice, variablePricePercent;
 
 	public PriceStep(double startPrice, double endPrice, double fixedPrice,

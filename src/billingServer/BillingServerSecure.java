@@ -1,8 +1,12 @@
 package billingServer;
 
+import java.io.Serializable;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
+
+import billingServer.junit.BillingServerSecureTest;
 
 import model.PriceStep;
 import model.PriceSteps;
@@ -18,7 +22,7 @@ import model.User;
  * @version 1.0
  * @email aklune@student.tgm.ac.at
  */
-public class BillingServerSecure {
+public class BillingServerSecure implements Serializable,BillingServerSecureInterface{
 
 	private PriceSteps priceSteps;
 	private ConcurrentHashMap<String,Bill> bills;

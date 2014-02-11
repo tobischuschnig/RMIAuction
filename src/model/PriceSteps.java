@@ -6,9 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class PriceSteps {
+public class PriceSteps implements Serializable{
 	private ConcurrentHashMap<Integer,PriceStep> priceSteps;
 
 	
@@ -19,18 +20,27 @@ public class PriceSteps {
 	 */
 	public PriceSteps(){
 		try{
-			FileInputStream fin = new FileInputStream("price.steps");
-			ObjectInputStream ois = new ObjectInputStream(fin);
-			this.priceSteps = (ConcurrentHashMap<Integer, PriceStep>) ois.readObject();
-			ois.close();
+			//FileInputStream fin = new FileInputStream("price.steps");
+			//ObjectInputStream ois = new ObjectInputStream(fin);
+			//this.priceSteps = (ConcurrentHashMap<Integer, PriceStep>) ois.readObject();
+			//ois.close();
+			this.priceSteps=new ConcurrentHashMap<Integer, PriceStep>();
+			//this.priceSteps.put(1, new PriceStep(1.0, 5.0, 2.0, 5.0));
 		}catch(Exception e){
+			e.printStackTrace();
 			System.err.println("Fehler beim Laden von price.steps: 0");
-		}
-		
-		
-		
+		}		
 	}
 
+	@Override
+	public String toString(){
+		String returnment="";
+		for (int x=0;x<priceSteps.size();x++){
+			returnment+=" " +priceSteps.get(x).getStartPrice();
+		}
+		return returnment;
+	}
+	
 	/**
 	 * @return the priceSteps
 	 */
