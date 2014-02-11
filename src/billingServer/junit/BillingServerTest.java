@@ -1,9 +1,13 @@
 package billingServer.junit;
 
 import static org.junit.Assert.*;
+
+import java.rmi.RemoteException;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import Exceptions.UserInputException;
 import billingServer.BillingServer;
 
 /**
@@ -21,16 +25,20 @@ private BillingServer bs;
 	/**
 	 * Testing of login Method, when all should do fine and Method returns the 
 	 * BillingServerSecure Reference
+	 * @throws UserInputException 
+	 * @throws RemoteException 
 	 */
 	@Test
-	public void testLogin(){
+	public void testLogin() throws RemoteException, UserInputException{
 		assertNotNull(bs.login("test", "1234"));
 	}
 	/**
 	 * Testing of login Method, when login should fail and Method returns null
+	 * @throws UserInputException 
+	 * @throws RemoteException 
 	 */
-	@Test
-	public void testLoginFail(){
+	@Test(expected=UserInputException.class)
+	public void testLoginFail() throws RemoteException, UserInputException{
 		assertNull(bs.login("test", "123454"));
 	}
 }
