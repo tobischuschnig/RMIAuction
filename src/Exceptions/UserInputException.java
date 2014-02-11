@@ -13,7 +13,7 @@ public class UserInputException extends Exception{
 	 * sets the Exception message
 	 */
 	public UserInputException(){
-		super("There are invalid arguments!");
+		super("The user information you entered is not correct! Please use an valid user account");
 	}
 	
 	/**

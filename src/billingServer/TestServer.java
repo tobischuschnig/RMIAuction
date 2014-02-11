@@ -3,6 +3,8 @@ package billingServer;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 
+import Exceptions.UserInputException;
+
 import model.PriceStep;
 
 public class TestServer {
@@ -19,10 +21,9 @@ public class TestServer {
 			secure.createPriceStep(1.0, 5.0, 2.0, 5.0);
 			System.out.println(secure.getPriceSteps().toString());
 		} catch (RemoteException e) {
-			e.printStackTrace();
-		}//catch (InvalidUserException e) {
-		//	e.printStackTrace();
-		//}
+		}catch (UserInputException e1) {
+			System.err.println(e1.getMessage());
+		}
 	}
 
 }
