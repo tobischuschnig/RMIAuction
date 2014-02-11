@@ -20,7 +20,7 @@ import model.Event;
  * @author alexander auradnik
  * @author Alexander Rieppel
  */
-public class ManagmentClient extends Thread implements RMI {
+public class ManagmentClient implements RMI,Runnable {
 
     private String username;
     private boolean loggedIn;
@@ -218,4 +218,19 @@ public class ManagmentClient extends Thread implements RMI {
             unprintedMessages.add(event);
         }
     }
+
+	/**
+	 * @return the autoprint
+	 */
+	public boolean isAutoprint() {
+		return autoprint;
+	}
+
+	/**
+	 * @param autoprint the autoprint to set
+	 */
+	public void setAutoprint(boolean autoprint) {
+		this.autoprint = autoprint;
+	}
+    
 }
