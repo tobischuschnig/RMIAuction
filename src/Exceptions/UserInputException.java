@@ -15,4 +15,13 @@ public class UserInputException extends Exception{
 	public UserInputException(){
 		super("There are invalid arguments!");
 	}
+	
+	/**
+	 * Second Constructor of the class
+	 * sets the the param as Message
+	 * @param message The Message that should be shown
+	 */
+	public UserInputException(String message){
+		super(message);
+	}
 }

@@ -10,62 +10,56 @@ import org.junit.Test;
 
 import analyticserver.AnalyticServerInterface;
 
+/**
+ * Junit Tests for the Rmi Remote Interface AnalyricsServerInterface.
+ * @author Alexander Auradnik <alexander.auradnik@student.tgm.ac.at>
+ * @version 08/02/2014
+ *
+ */
 public class AnalyticsServerInterfaceTest {
 
 	public  AnalyticServerInterface asi;
 	
-	//public AnalyticsServerInterfaceTest(AnalyticServerInterface asi){
-	//	this.asi=asi;
-	//}
-	
+	/**
+	 * Settup which is started for every single test.
+	 */
 	@Before
 	public void setUp() {
-		//AnalyticServerInterface asi;
-		//asi = new
-		//this.asi=asi;	
+		AnalyticServerInterface asi;
 	}
 
-	@Test 
-	public void testEquality() {
-		try{
-		asi.equals(asi);	
-		fail("nullpointer expected");
-		}catch(NullPointerException npe){
-			
-		}
-	}
+	
+	/**
+	 * Test of calling not initalized Interface.
+	 */
 	@Test 
 	public void testNullInit() {
 		assertNull(asi);
 	}
 	
-	@Test
+	/**
+	 * Testing null initializeing
+	 */
+	@Test(expected=NullPointerException.class)
 	public void testEqualityObject() {
-		try{
 			asi.getClass();
-			fail("nullpointer expected");
-			}catch(NullPointerException npe){
-				
-			}
+			assertNull(asi);
 	}
-	
-	@Test
+	/**
+	 * Testing null initializeing with process event
+	 */
+	@Test(expected=NullPointerException.class)
 	public void testProcessEvent() {
-		try{
-		asi.processEvent(new Event());		
-		fail("nullpointer expected");
-	}catch(NullPointerException npe){
-		
+		asi.processEvent(new Event());	
+		assertNull(asi);
 	}
-	}
-	@Test
+	/**
+	 * Testing null initializeing with unsubscribe
+	 */
+	@Test(expected=NullPointerException.class)
 	public void testInsuscribe() {
-		try{
 		asi.unsuscribe("id");
-		fail("nullpointer expected");
-	}catch(NullPointerException npe){
-		
-	}
+		assertNull(asi);
 	}
 
 }
