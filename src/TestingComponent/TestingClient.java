@@ -18,8 +18,7 @@ public class TestingClient {
 	
 	private ArrayList <Integer> auctionsIDs;
 	
-	public void TestingClient(int clientID, int auctionsPerMin, int auctionDuration, int updateIntervalSec, int bidsPerMin){
-		
+	public TestingClient(int clientID, int auctionsPerMin, int auctionDuration, int updateIntervalSec, int bidsPerMin) {
 	}
 	
 	public void createAuctionTest(){
