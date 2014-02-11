@@ -100,7 +100,10 @@ public class TestingComponent {
 		for(int i = 0; i < clients; i++){
 			clientID = i;
 			c = new TestingClient(clientID, auctionsPerMin, auctionDuration, updateIntervalSec, bidsPerMin);
-			testingclients.put(clientID, c);	
+			try{
+				testingclients.put(clientID, c);	
+			}catch(NullPointerException e){
+			}
 		}
 		
 			
