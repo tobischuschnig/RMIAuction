@@ -14,10 +14,9 @@ import model.Bill;
 import model.User;
 
 /**
- * Diese Klasse bietet moeglichkeiten angelegte PriceSteps zu loeschen
- * oder neue hinzuzufuegen, sowie diese auszugeben. Weiters kann eine Rechnung
- * angelegt werden, wenn eine Auction zu ende ist. Diese Rechnung kann auch ueber
- * den usernamen abgefragt und zurueckgegeben werden.
+ * This class provides methodes to delete, create and get the current Pricesteps. 
+ * To that, there can be created a bill, when the auction is over. This bill can be lookuped
+ * by the specific username.
  * @author Klune Alexander
  * @version 1.0
  * @email aklune@student.tgm.ac.at
@@ -27,15 +26,30 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 	private PriceSteps priceSteps;
 	private ConcurrentHashMap<String,Bill> bills;
 	
+	/**
+	 * Konstructor wich sets the concurrenthashmap for the pricesteps
+	 */
 	public BillingServerSecure(){
 		this.priceSteps=new PriceSteps();
 	}
 
-	
+	/**
+	 * This method returns the current pricesteps
+	 * @return	current priceSteps
+	 */
 	public PriceSteps getPriceSteps(){
 		return priceSteps;
 	}
 	
+	/**
+	 * This method creates a new pricestep, if the new pricestep doesnt overlap with existing ones.
+	 * If the new pricestep overlaps, you have to delete the old one first. All parameters have to be > 0
+	 * @param startPrice	startprice of the new pricestep
+	 * @param endPrice		endprice of the new pricestep
+	 * @param fixedPrice	fixedprice of the new pricestep
+	 * @param variablePricePercent		variablePricePercent of the new pricestep
+	 * @throws RemoteException		thrown when parameter < 0 or overlaping with existing pricestep
+	 */
 	public void createPriceStep(double startPrice, double endPrice, double fixedPrice, double variablePricePercent) throws RemoteException{
 		priceSteps = new PriceSteps();
 		boolean overlaped = false;
@@ -58,10 +72,17 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 		if(!overlaped){
 			psTemp.put(psTemp.size(), new PriceStep(startPrice,endPrice,fixedPrice,variablePricePercent));
 			priceSteps.setPriceSteps(psTemp);
-		}else
+		}else{
 			System.out.println("Es konnte kein neuer PriceStep angelgegt werden, da er sich mit einem vorhandnen ueberschneidet");
+			throw new RemoteException();
+		}
 	}
 	
+	/**
+	 * This Method deletes the pricestep with the specific startprice and endprice
+	 * @param startPrice	startprice of the pricestep to be deleted
+	 * @param endPrice		endprice of the pricestep to be deleted
+	 */
 	public void deletePriceStep(double startPrice, double endPrice){
 		ConcurrentHashMap<Integer,PriceStep> psTemp = priceSteps.getPriceSteps();
 		Iterator<Integer> it = psTemp.keySet().iterator();
@@ -75,12 +96,21 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 		}
 	}
 	
-	//User user, int auctionID, int feeFixed, double strikePrice,
-    //double feeVariable, double feeTotal
+	/**
+	 * This Method creates a bill with the given user, auctionID and price
+	 * @param user		username who won the auction
+	 * @param auctionID	ended auctionID
+	 * @param price		endprice of the auction
+	 */
 	public void billAuction(String user, long auctionID, double price){
 		bills.put(user, new Bill(user, auctionID, price));
 	}
 	
+	/**
+	 * This Method returns the bill of a specific user
+	 * @param user	username of the bill to be returned
+	 * @return		Bill of the username
+	 */
 	public Bill getBill(String user){
 		if(bills.containsKey(user))
 			return bills.get(user);
