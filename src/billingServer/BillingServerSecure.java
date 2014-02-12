@@ -49,8 +49,9 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 	 * @param fixedPrice	fixedprice of the new pricestep
 	 * @param variablePricePercent		variablePricePercent of the new pricestep
 	 * @throws RemoteException		thrown when parameter < 0 or overlaping with existing pricestep
+	 * @return boolean	true, if the new pricestep has been successfully set. otherwise throw RemoteException
 	 */
-	public void createPriceStep(double startPrice, double endPrice, double fixedPrice, double variablePricePercent) throws RemoteException{
+	public boolean createPriceStep(double startPrice, double endPrice, double fixedPrice, double variablePricePercent) throws RemoteException{
 		priceSteps = new PriceSteps();
 		boolean overlaped = false;
 		ConcurrentHashMap<Integer,PriceStep> psTemp = priceSteps.getPriceSteps();
@@ -72,10 +73,12 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 		if(!overlaped){
 			psTemp.put(psTemp.size(), new PriceStep(startPrice,endPrice,fixedPrice,variablePricePercent));
 			priceSteps.setPriceSteps(psTemp);
+			return true;
 		}else{
 			System.out.println("Es konnte kein neuer PriceStep angelgegt werden, da er sich mit einem vorhandnen ueberschneidet");
 			throw new RemoteException();
 		}
+		
 	}
 	
 	/**
@@ -83,7 +86,7 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 	 * @param startPrice	startprice of the pricestep to be deleted
 	 * @param endPrice		endprice of the pricestep to be deleted
 	 */
-	public void deletePriceStep(double startPrice, double endPrice){
+	public boolean deletePriceStep(double startPrice, double endPrice){
 		ConcurrentHashMap<Integer,PriceStep> psTemp = priceSteps.getPriceSteps();
 		Iterator<Integer> it = psTemp.keySet().iterator();
 		while(it.hasNext()){
@@ -92,8 +95,10 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 			
 			if(temp.getStartPrice() == startPrice && temp.getStartPrice() == endPrice ){
 				psTemp.remove(key);
+				return true;
 			}
 		}
+		return false;
 	}
 	
 	/**
@@ -102,8 +107,9 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 	 * @param auctionID	ended auctionID
 	 * @param price		endprice of the auction
 	 */
-	public void billAuction(String user, long auctionID, double price){
+	public boolean billAuction(String user, long auctionID, double price){
 		bills.put(user, new Bill(user, auctionID, price));
+		return true;
 	}
 	
 	/**
