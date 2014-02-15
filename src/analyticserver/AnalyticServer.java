@@ -8,7 +8,7 @@ import model.*;
 
 public class AnalyticServer implements AnalyticServerInterface{
 	
-	private ConcurrentHashMap<Integer,AuctionEvent> auctionEventsStarted;
+	private ConcurrentHashMap<Long,AuctionEvent> auctionEventsStarted;
 	private ArrayList<AuctionEvent> auctionEventsEnded;
 	
 	private ConcurrentHashMap<Integer,UserEvent> userEvents;
@@ -45,7 +45,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 		// TODO Auto-generated method stub
 		if(event instanceof AuctionEvent) {
 			if (event.getType().equals(EventType.AUCTION_STARTED)) {
-				auctionEventsStarted.put((int) ((AuctionEvent) event).getAuctionID(), (AuctionEvent) event);
+				auctionEventsStarted.put(((AuctionEvent) event).getAuctionID(), (AuctionEvent) event);
 			} else {
 				auctionEventsEnded.add((AuctionEvent) event);
 				this.claculateAuctionStatistic();
@@ -75,11 +75,30 @@ public class AnalyticServer implements AnalyticServerInterface{
 	
 
 	private void claculateAuctionStatistic() {
-		long gesamtzeit;
-		for (int i = 0; i < auctionEventsEnded.size(); i++) {
-			auctionEventsStarted.get(auctionEventsEnded.get(i).getAuctionID());
-			
-		}
+		//Ansatz mit schleife immer neu durchrechnen
+//		long gesamtzeit;
+//		for (int i = 0; i < auctionEventsEnded.size(); i++) {
+//			auctionEventsStarted.get(auctionEventsEnded.get(i).getAuctionID());
+//			
+//		}
+		long newtime = auctionEventsStarted.get( auctionEventsEnded.get(auctionEventsEnded.size()-1).getAuctionID() ).getTimestamp()
+				- auctionEventsEnded.get(auctionEventsEnded.size()-1).getTimestamp();
+		//Berechnen der neuen Zeit
+		
+		long value = (long) ( statisticsEvents.get(EventType.AUCTION_TIME_AVG).getValue() * (auctionEventsEnded.size()-1) 
+				+ newtime) 
+				/ auctionEventsEnded.size(); 
+		//Berechnen der durchschnitts Zeit:
+		// (AlterDurchschnitt * auctionEventsEnded.size()-1 + newtime) : auctionEventsEnded.size()
+		// (AtlerDurchschnitt * alterDivident + NeueZeit) : NeuerDivident
+		
+		StatisticsEvent newEvent = new StatisticsEvent("1",EventType.AUCTION_TIME_AVG, 
+				System.currentTimeMillis(),value);
+		//TODO Wie mach ich das mit der ID;
+		//Neues Event erstellen
+		
+		statisticsEvents.put(EventType.AUCTION_TIME_AVG, newEvent);
+		//Ersetzten (da gleicher Key)
 	}
 	
 	private void claculateUserStatistic() {
