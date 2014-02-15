@@ -1,5 +1,7 @@
 package analyticserver;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +27,12 @@ public class Spielwiese {
 			
 		}
 		
-		System.out.println(wert.size());
+		System.out.println(wert.size()); 
+		
+		long wert12 = System.currentTimeMillis();
+		long wert13 = System.currentTimeMillis();
+		System.out.println(wert12-wert13);
+		System.out.println(wert12);
+		System.out.println( new Date().getTime());
 	}
 }

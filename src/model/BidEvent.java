@@ -8,6 +8,25 @@ public class BidEvent extends Event {
 
 	private double price;
 
+	
+	
+	public BidEvent(String iD, EventType type, long timestamp) {
+		super(iD, type, timestamp);
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	
+	public BidEvent(String iD, EventType type, long timestamp, String userName,
+			long auctionID, double price) {
+		super(iD, type, timestamp);
+		this.userName = userName;
+		this.auctionID = auctionID;
+		this.price = price;
+	}
+
+
+
 	/**
 	 * @return the userName
 	 */

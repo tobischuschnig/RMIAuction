@@ -8,6 +8,13 @@ public class Event {
 
 	private long timestamp;
 
+	
+	public Event(String iD, EventType type, long timestamp) {
+		this.ID = iD;
+		this.type = type;
+		this.timestamp = timestamp;
+	}
+
 	/**
 	 * @return the iD
 	 */

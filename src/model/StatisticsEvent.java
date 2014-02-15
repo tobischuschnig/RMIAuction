@@ -2,8 +2,23 @@ package model;
 
 public class StatisticsEvent extends Event {
 
-	private double value;
+	public StatisticsEvent(String iD, EventType type, long timestamp) {
+		super(iD, type, timestamp);
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
+	public StatisticsEvent(String iD, EventType type, long timestamp,
+			double value) {
+		super(iD, type, timestamp);
+		this.value = value;
+	}
 
+
+
+	private double value;
+	
 	/**
 	 * @return the value
 	 */

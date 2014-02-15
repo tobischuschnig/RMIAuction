@@ -4,6 +4,18 @@ public class AuctionEvent extends Event {
 
 	private long auctionID;
 	private boolean succes;
+	
+	public AuctionEvent(String iD, EventType type, long timestamp) {
+		super(iD, type, timestamp);
+	}
+
+
+	public AuctionEvent(String iD, EventType type, long timestamp,
+			long auctionID, boolean succes) {
+		super(iD, type, timestamp);
+		this.auctionID = auctionID;
+		this.succes = succes;
+	}
 
 	/**
 	 * @return the auctionID

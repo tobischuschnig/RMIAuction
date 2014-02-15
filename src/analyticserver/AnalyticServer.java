@@ -8,7 +8,9 @@ import model.*;
 
 public class AnalyticServer implements AnalyticServerInterface{
 	
-	private ConcurrentHashMap<Integer,AuctionEvent> auctionEvents;
+	private ConcurrentHashMap<Integer,AuctionEvent> auctionEventsStarted;
+	private ArrayList<AuctionEvent> auctionEventsEnded;
+	
 	private ConcurrentHashMap<Integer,UserEvent> userEvents;
 	private ConcurrentHashMap<Integer,BidEvent> bidEvents;
 	private ConcurrentHashMap<EventType,StatisticsEvent> statisticsEvents;
@@ -17,7 +19,9 @@ public class AnalyticServer implements AnalyticServerInterface{
 	// 	private ConcurrentHashMap<String,String> managementClients; //correct but not implemented now
 
 	public AnalyticServer() {
-		auctionEvents = new ConcurrentHashMap();
+		auctionEventsStarted = new ConcurrentHashMap();
+		auctionEventsEnded = new ArrayList();
+		
 		userEvents = new ConcurrentHashMap();
 		bidEvents = new ConcurrentHashMap();
 		statisticsEvents = new ConcurrentHashMap();
@@ -41,13 +45,12 @@ public class AnalyticServer implements AnalyticServerInterface{
 		// TODO Auto-generated method stub
 		if(event instanceof AuctionEvent) {
 			if (event.getType().equals(EventType.AUCTION_STARTED)) {
-				auctionEvents.put((int) ((AuctionEvent) event).getAuctionID(), (AuctionEvent) event);
+				auctionEventsStarted.put((int) ((AuctionEvent) event).getAuctionID(), (AuctionEvent) event);
 			} else {
-				auctionEvents.put((int) -((AuctionEvent) event).getAuctionID(), (AuctionEvent) event);
-
+				auctionEventsEnded.add((AuctionEvent) event);
+				this.claculateAuctionStatistic();
 			}
 			
-			this.claculateAuctionStatistic((int) ((AuctionEvent) event).getAuctionID());
 		}
 		else if(event instanceof UserEvent) {
 			userEvents.put(userEvents.size(), (UserEvent) event);
@@ -58,7 +61,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 			bidEvents.put(bidEvents.size(), (BidEvent) event);
 			this.claculateBidStatistic();
 		}
-	}
+	} 
 
 	@Override
 	public void unsuscribe(String uid) {
@@ -71,14 +74,12 @@ public class AnalyticServer implements AnalyticServerInterface{
 	}
 	
 
-	private void claculateAuctionStatistic(Integer newkey) {
-		Enumeration<Integer> keys = auctionEvents.keys();
-		while(keys.hasMoreElements()) {
-			int current = keys.nextElement();
-			auctionEvents.get(keys.nextElement());
+	private void claculateAuctionStatistic() {
+		long gesamtzeit;
+		for (int i = 0; i < auctionEventsEnded.size(); i++) {
+			auctionEventsStarted.get(auctionEventsEnded.get(i).getAuctionID());
+			
 		}
-		Double past = statisticsEvents.get(EventType.AUCTION_TIME_AVG).getValue();
-		past *= auctionEvents.size()/2;
 	}
 	
 	private void claculateUserStatistic() {
