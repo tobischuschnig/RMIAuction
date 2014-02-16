@@ -50,17 +50,42 @@ public class EventHandler {
 			}
 		
 		}else if(event instanceof BidEvent) { //fertig
-			if (a.getBidEvents().get(((BidEvent) event).getAuctionID()) == null) {
-				ArrayList<BidEvent> wert = new ArrayList();
-				wert.add((BidEvent) event);
-				a.getBidEvents().put(((BidEvent) event).getAuctionID(), wert);
-				return calculateBidEvents.calculate(event);
-			}
-			else {
-				a.getBidEvents().get(((BidEvent) event).getAuctionID()).add((BidEvent) event);
-				return calculateBidEvents.calculate(event);
-			}
+			if(event.getType().equals(EventType.BID_PLACED)) {
+				if (a.getBidEvents().get(((BidEvent) event).getAuctionID()) == null) {
+					ArrayList<BidEvent> wert = new ArrayList();
+					wert.add((BidEvent) event);
+					a.getBidEvents().put(((BidEvent) event).getAuctionID(), wert);
+					return calculateBidEvents.calculate(event);
+				}
+				else {
+					a.getBidEvents().get(((BidEvent) event).getAuctionID()).add((BidEvent) event);
+					return calculateBidEvents.calculate(event);
+				}
+				
+			} else if(event.getType().equals(EventType.BID_OVERBID)) {
+				if (a.getBidEventsOverbid().get(((BidEvent) event).getAuctionID()) == null) {
+					ArrayList<BidEvent> wert = new ArrayList();
+					wert.add((BidEvent) event);
+					a.getBidEventsOverbid().put(((BidEvent) event).getAuctionID(), wert);
+					return calculateBidEvents.calculate(event);
+				}
+				else {
+					a.getBidEventsOverbid().get(((BidEvent) event).getAuctionID()).add((BidEvent) event);
+					return calculateBidEvents.calculate(event);
+				}
 			
+			} else { //BidWON
+				if (a.getBidEventsWon().get(((BidEvent) event).getAuctionID()) == null) {
+					ArrayList<BidEvent> wert = new ArrayList();
+					wert.add((BidEvent) event);
+					a.getBidEventsWon().put(((BidEvent) event).getAuctionID(), wert);
+					return calculateBidEvents.calculate(event);
+				}
+				else {
+					a.getBidEventsWon().get(((BidEvent) event).getAuctionID()).add((BidEvent) event);
+					return calculateBidEvents.calculate(event);
+				}
+			}
 		}
 		return null;
 	}

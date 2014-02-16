@@ -15,6 +15,11 @@ public class AnalyticServer implements AnalyticServerInterface{
 	private ConcurrentHashMap<String,ArrayList<UserEvent>> userEventsLogout;
 	
 	private ConcurrentHashMap<Integer,ArrayList<BidEvent>> bidEvents;
+	private ConcurrentHashMap<Integer,ArrayList<BidEvent>> bidEventsOverbid; //Type = BidOverBid or BidWon
+	private ConcurrentHashMap<Integer,ArrayList<BidEvent>> bidEventsWon;
+	//Because every bid has and BidPlaced 
+	//BidOverBid: Generated when there was an previous Bid so there are two generated
+	//BidWon: Is generated when the bid has won so there are two generated (or three)
 	
 	private ConcurrentHashMap<EventType,StatisticsEvent> statisticsEvents;
 	private ConcurrentHashMap<String,String> managementClients; //incorect 
@@ -283,4 +288,35 @@ public class AnalyticServer implements AnalyticServerInterface{
 			ConcurrentHashMap<String, String> managementClients) {
 		this.managementClients = managementClients;
 	}
+
+	/**
+	 * @return the bidEventsOverbid
+	 */
+	public ConcurrentHashMap<Integer, ArrayList<BidEvent>> getBidEventsOverbid() {
+		return bidEventsOverbid;
+	}
+
+	/**
+	 * @param bidEventsOverbid the bidEventsOverbid to set
+	 */
+	public void setBidEventsOverbid(
+			ConcurrentHashMap<Integer, ArrayList<BidEvent>> bidEventsOverbid) {
+		this.bidEventsOverbid = bidEventsOverbid;
+	}
+
+	/**
+	 * @return the bidEventsWon
+	 */
+	public ConcurrentHashMap<Integer, ArrayList<BidEvent>> getBidEventsWon() {
+		return bidEventsWon;
+	}
+
+	/**
+	 * @param bidEventsWon the bidEventsWon to set
+	 */
+	public void setBidEventsWon(
+			ConcurrentHashMap<Integer, ArrayList<BidEvent>> bidEventsWon) {
+		this.bidEventsWon = bidEventsWon;
+	}
+	
 }

@@ -1,5 +1,8 @@
 package analyticserver;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import model.*;
 
 
@@ -26,8 +29,23 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 	}
 	
 	private StatisticsEvent calculateBidEventAverageTime() {
+		// einfach nur schauen groesse jeder arraylist zu einer Variable hinzufuegen
+		// Differenz! in Minuten am besten
+		// Bids / Minuten = Bid Count per Minute
+		//Ausnahme wenn minute null 
 		//Bid Time Average berechnen
-		return null;		
+		Set<Integer> wert = a.getBidEvents().keySet();
+		Iterator<Integer> it = wert.iterator();
+		int bids = 0;
+		while(it.hasNext()) {
+			bids += a.getBidEvents().get(it.next()).size();
+		}
+		double value = bids / (Math.round(System.currentTimeMillis()-startTime/60000));
+		StatisticsEvent wert1 = new StatisticsEvent("1", EventType.BID_COUNT_PER_MINUTE, System.currentTimeMillis(),
+				value);
+		a.getStatisticsEvents().put(EventType.BID_COUNT_PER_MINUTE, wert1);
+		//TODO weis nicht wie ich die ID's machen soll
+		return wert1;		
 	}
 
 	@Override
