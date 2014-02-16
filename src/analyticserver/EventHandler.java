@@ -15,6 +15,8 @@ public class EventHandler {
 		this.a = a;
 		calculateAuctionEvents = new CalculateAuctionEvents(a);
 		calculateBidEvents = new CalculateBidEvents(a);
+		Thread thread = new Thread(calculateBidEvents);
+		thread.start();
 		calculateUserEvents = new CalculateUserEvents(a);
 	}
 	

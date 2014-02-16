@@ -3,7 +3,6 @@ package model;
 public class AuctionEvent extends Event {
 
 	private int auctionID;
-	private boolean succes;
 	
 	public AuctionEvent(String iD, EventType type, long timestamp) {
 		super(iD, type, timestamp);
@@ -11,10 +10,9 @@ public class AuctionEvent extends Event {
 
 
 	public AuctionEvent(String iD, EventType type, long timestamp,
-			int auctionID, boolean succes) {
+			int auctionID) {
 		super(iD, type, timestamp);
 		this.auctionID = auctionID;
-		this.succes = succes;
 	}
 
 	/**
@@ -31,19 +29,6 @@ public class AuctionEvent extends Event {
 		this.auctionID = auctionID;
 	}
 
-	/**
-	 * @return the succes
-	 */
-	public boolean isSucces() {
-		return succes;
-	}
-
-	/**
-	 * @param succes the succes to set
-	 */
-	public void setSucces(boolean succes) {
-		this.succes = succes;
-	}	
 	
 	
 }

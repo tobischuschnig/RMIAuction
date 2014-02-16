@@ -84,6 +84,13 @@ public class AnalyticServer implements AnalyticServerInterface{
 	}
 	
 	public void notify(ArrayList<StatisticsEvent> events) {
+		if(events != null) {
+			for(int i = 0; i < events.size();i++) {
+				System.out.println(events.get(i).getType()+"             "+events.get(i).getValue());
+			}
+		} else {
+			System.out.println("null");
+		}
 		
 	}
 
