@@ -11,8 +11,8 @@ public class AnalyticServer implements AnalyticServerInterface{
 	private ConcurrentHashMap<Integer,AuctionEvent> auctionEventsStarted;
 	private ArrayList<AuctionEvent> auctionEventsEnded;
 	
-	private ConcurrentHashMap<Integer,UserEvent> userEventsLogin;
-	//private Concurrent
+	private ConcurrentHashMap<String,ArrayList<UserEvent>> userEventsLogin;
+	private ConcurrentHashMap<String,ArrayList<UserEvent>> userEventsLogout;
 	
 	private ConcurrentHashMap<Integer,ArrayList<BidEvent>> bidEvents;
 	
@@ -34,7 +34,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 		statisticsEvents.put(EventType.BID_PRICE_MAX,new StatisticsEvent());
 		statisticsEvents.put(EventType.BID_COUNT_PER_MINUTE,new StatisticsEvent());
 		statisticsEvents.put(EventType.AUCTION_TIME_AVG,new StatisticsEvent()); // fertig
-		statisticsEvents.put(EventType.ACUTION_SUCCESS_RATIO,new StatisticsEvent());		
+		statisticsEvents.put(EventType.ACUTION_SUCCESS_RATIO,new StatisticsEvent()); // fertig		
 	}
 	
 	@Override
@@ -56,18 +56,39 @@ public class AnalyticServer implements AnalyticServerInterface{
 			
 		}
 		else if(event instanceof UserEvent) {
-			userEvents.put(userEvents.size(), (UserEvent) event);
-			this.claculateUserStatistic();
+			String key;
+			if (event.getType().equals(EventType.USER_LOGIN)) {
+				if (userEventsLogin.get(((UserEvent) event).getUserName()) == null) {
+					ArrayList<UserEvent> wert = new ArrayList();
+					wert.add((UserEvent) event);
+					userEventsLogin.put(((UserEvent) event).getUserName(),wert);
+					key = ((UserEvent) event).getUserName();
+				} else {
+					userEventsLogin.get(((UserEvent) event).getUserName()).add((UserEvent) event);
+					key = ((UserEvent) event).getUserName();
+				}
+			} else {
+				if (userEventsLogout.get(((UserEvent) event).getUserName()) == null) {
+					ArrayList<UserEvent> wert = new ArrayList();
+					wert.add((UserEvent) event);
+					userEventsLogout.put(((UserEvent) event).getUserName(),wert);
+					key = ((UserEvent) event).getUserName();
+				} else {
+					userEventsLogout.get(((UserEvent) event).getUserName()).add((UserEvent) event);
+					key = ((UserEvent) event).getUserName();
+				}
+			}
 		
-		
+			this.claculateUserStatistic(key);
+
 		}else if(event instanceof BidEvent) { //fertig
 			if (bidEvents.get(((BidEvent) event).getAuctionID()) == null) {
 				ArrayList<BidEvent> wert = new ArrayList();
 				wert.add((BidEvent) event);
-				bidEvents.put((int) ((BidEvent) event).getAuctionID(), wert);
+				bidEvents.put(((BidEvent) event).getAuctionID(), wert);
 			}
 			else {
-				bidEvents.get(bidEvents.get(((BidEvent) event).getAuctionID())).add((BidEvent) event);
+				bidEvents.get(((BidEvent) event).getAuctionID()).add((BidEvent) event);
 			}
 			
 			this.claculateBidStatistic();
@@ -132,13 +153,14 @@ public class AnalyticServer implements AnalyticServerInterface{
 		statisticsEvents.put(EventType.ACUTION_SUCCESS_RATIO, newEventRadio);
 	}
 	
-	private void claculateUserStatistic() {
+	private void claculateUserStatistic(String key) {
 		// TODO Auto-generated method stub
 		
 	}
 	
 	private void claculateBidStatistic() {
-		
+		// TODO Auto-generated method stub
+
 		
 	}
 }
