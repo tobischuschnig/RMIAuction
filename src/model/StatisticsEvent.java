@@ -1,6 +1,7 @@
 package model;
 
 public class StatisticsEvent extends Event {
+	private double value;
 
 	public StatisticsEvent(String iD, EventType type, long timestamp) {
 		super(iD, type, timestamp);
@@ -15,9 +16,6 @@ public class StatisticsEvent extends Event {
 		this.value = value;
 	}
 
-
-
-	private double value;
 	
 	/**
 	 * @return the value

@@ -2,7 +2,7 @@ package model;
 
 public class AuctionEvent extends Event {
 
-	private long auctionID;
+	private int auctionID;
 	private boolean succes;
 	
 	public AuctionEvent(String iD, EventType type, long timestamp) {
@@ -11,7 +11,7 @@ public class AuctionEvent extends Event {
 
 
 	public AuctionEvent(String iD, EventType type, long timestamp,
-			long auctionID, boolean succes) {
+			int auctionID, boolean succes) {
 		super(iD, type, timestamp);
 		this.auctionID = auctionID;
 		this.succes = succes;
@@ -20,14 +20,14 @@ public class AuctionEvent extends Event {
 	/**
 	 * @return the auctionID
 	 */
-	public long getAuctionID() {
+	public int getAuctionID() {
 		return auctionID;
 	}
 
 	/**
 	 * @param auctionID the auctionID to set
 	 */
-	public void setAuctionID(long auctionID) {
+	public void setAuctionID(int auctionID) {
 		this.auctionID = auctionID;
 	}
 

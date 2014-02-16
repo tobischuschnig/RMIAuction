@@ -8,11 +8,14 @@ import model.*;
 
 public class AnalyticServer implements AnalyticServerInterface{
 	
-	private ConcurrentHashMap<Long,AuctionEvent> auctionEventsStarted;
+	private ConcurrentHashMap<Integer,AuctionEvent> auctionEventsStarted;
 	private ArrayList<AuctionEvent> auctionEventsEnded;
 	
-	private ConcurrentHashMap<Integer,UserEvent> userEvents;
-	private ConcurrentHashMap<Integer,BidEvent> bidEvents;
+	private ConcurrentHashMap<Integer,UserEvent> userEventsLogin;
+	//private Concurrent
+	
+	private ConcurrentHashMap<Integer,ArrayList<BidEvent>> bidEvents;
+	
 	private ConcurrentHashMap<EventType,StatisticsEvent> statisticsEvents;
 	private ConcurrentHashMap<String,String> managementClients; //incorect 
 	//Important: first String is an ID for the Management Client
@@ -30,7 +33,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 		statisticsEvents.put(EventType.USER_SESSIONTIME_AVG,new StatisticsEvent());
 		statisticsEvents.put(EventType.BID_PRICE_MAX,new StatisticsEvent());
 		statisticsEvents.put(EventType.BID_COUNT_PER_MINUTE,new StatisticsEvent());
-		statisticsEvents.put(EventType.AUCTION_TIME_AVG,new StatisticsEvent());
+		statisticsEvents.put(EventType.AUCTION_TIME_AVG,new StatisticsEvent()); // fertig
 		statisticsEvents.put(EventType.ACUTION_SUCCESS_RATIO,new StatisticsEvent());		
 	}
 	
@@ -43,7 +46,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	@Override
 	public void processEvent(Event event) {
 		// TODO Auto-generated method stub
-		if(event instanceof AuctionEvent) {
+		if(event instanceof AuctionEvent) { //fertig
 			if (event.getType().equals(EventType.AUCTION_STARTED)) {
 				auctionEventsStarted.put(((AuctionEvent) event).getAuctionID(), (AuctionEvent) event);
 			} else {
@@ -57,8 +60,16 @@ public class AnalyticServer implements AnalyticServerInterface{
 			this.claculateUserStatistic();
 		
 		
-		}else if(event instanceof BidEvent) {
-			bidEvents.put(bidEvents.size(), (BidEvent) event);
+		}else if(event instanceof BidEvent) { //fertig
+			if (bidEvents.get(((BidEvent) event).getAuctionID()) == null) {
+				ArrayList<BidEvent> wert = new ArrayList();
+				wert.add((BidEvent) event);
+				bidEvents.put((int) ((BidEvent) event).getAuctionID(), wert);
+			}
+			else {
+				bidEvents.get(bidEvents.get(((BidEvent) event).getAuctionID())).add((BidEvent) event);
+			}
+			
 			this.claculateBidStatistic();
 		}
 	} 
@@ -81,11 +92,15 @@ public class AnalyticServer implements AnalyticServerInterface{
 //			auctionEventsStarted.get(auctionEventsEnded.get(i).getAuctionID());
 //			
 //		}
-		long newtime = auctionEventsStarted.get( auctionEventsEnded.get(auctionEventsEnded.size()-1).getAuctionID() ).getTimestamp()
+		
+		////////////////////////////////////////////////////////////////////////
+		//Auction Time Average
+		
+		double newtime = auctionEventsStarted.get( auctionEventsEnded.get(auctionEventsEnded.size()-1).getAuctionID() ).getTimestamp()
 				- auctionEventsEnded.get(auctionEventsEnded.size()-1).getTimestamp();
 		//Berechnen der neuen Zeit
 		
-		long value = (long) ( statisticsEvents.get(EventType.AUCTION_TIME_AVG).getValue() * (auctionEventsEnded.size()-1) 
+		double value =  ( statisticsEvents.get(EventType.AUCTION_TIME_AVG).getValue() * (auctionEventsEnded.size()-1) 
 				+ newtime) 
 				/ auctionEventsEnded.size(); 
 		//Berechnen der durchschnitts Zeit:
@@ -99,6 +114,22 @@ public class AnalyticServer implements AnalyticServerInterface{
 		
 		statisticsEvents.put(EventType.AUCTION_TIME_AVG, newEvent);
 		//Ersetzten (da gleicher Key)
+		
+		
+		///////////////////////////////////////////////////////////////////////////////
+		//Auction Succes Ratio
+		double alt =  statisticsEvents.get(EventType.ACUTION_SUCCESS_RATIO).getValue() * (auctionEventsEnded.size()-1);
+		double newwert;
+		if (bidEvents.get(auctionEventsEnded.get(auctionEventsEnded.size()-1).getAuctionID()) == null) {
+			newwert = (alt + 0) /  (auctionEventsEnded.size());
+		}
+		else {
+			newwert = (alt + 100) /  (auctionEventsEnded.size());
+		}
+		StatisticsEvent newEventRadio = new StatisticsEvent("1", EventType.ACUTION_SUCCESS_RATIO,
+				System.currentTimeMillis(),newwert);
+		
+		statisticsEvents.put(EventType.ACUTION_SUCCESS_RATIO, newEventRadio);
 	}
 	
 	private void claculateUserStatistic() {

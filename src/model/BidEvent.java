@@ -4,7 +4,7 @@ public class BidEvent extends Event {
 
 	private String userName;
 
-	private long auctionID;
+	private int auctionID;
 
 	private double price;
 
@@ -18,7 +18,7 @@ public class BidEvent extends Event {
 	
 	
 	public BidEvent(String iD, EventType type, long timestamp, String userName,
-			long auctionID, double price) {
+			int auctionID, double price) {
 		super(iD, type, timestamp);
 		this.userName = userName;
 		this.auctionID = auctionID;
@@ -44,14 +44,14 @@ public class BidEvent extends Event {
 	/**
 	 * @return the auctionID
 	 */
-	public long getAuctionID() {
+	public int getAuctionID() {
 		return auctionID;
 	}
 
 	/**
 	 * @param auctionID the auctionID to set
 	 */
-	public void setAuctionID(long auctionID) {
+	public void setAuctionID(int auctionID) {
 		this.auctionID = auctionID;
 	}
 
