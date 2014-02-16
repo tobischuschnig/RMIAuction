@@ -1,5 +1,6 @@
 package analyticserver;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -16,19 +17,21 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 	}
 	
 	@Override
-	public StatisticsEvent calculate(Event event) {
+	public ArrayList<StatisticsEvent> calculate(Event event) {
 		if(((BidEvent) event).getPrice()  >= a.getStatisticsEvents().get(EventType.BID_PRICE_MAX).getValue()) {
 			StatisticsEvent wert = new StatisticsEvent("1", EventType.BID_PRICE_MAX, System.currentTimeMillis(),
 					((BidEvent) event).getPrice());
 			//TODO weis nicht wie ich die ID's machen soll
 			
 			a.getStatisticsEvents().put(EventType.BID_PRICE_MAX, wert);
-			return wert;
+			ArrayList<StatisticsEvent> ret = new ArrayList();
+			ret.add(wert);
+			return ret;
 		}
 		return null;
 	}
 	
-	private StatisticsEvent calculateBidEventAverageTime() {
+	private ArrayList<StatisticsEvent> calculateBidEventAverageTime() {
 		// einfach nur schauen groesse jeder arraylist zu einer Variable hinzufuegen
 		// Differenz! in Minuten am besten
 		// Bids / Minuten = Bid Count per Minute
@@ -43,9 +46,12 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 		double value = bids / (Math.round(System.currentTimeMillis()-startTime/60000));
 		StatisticsEvent wert1 = new StatisticsEvent("1", EventType.BID_COUNT_PER_MINUTE, System.currentTimeMillis(),
 				value);
-		a.getStatisticsEvents().put(EventType.BID_COUNT_PER_MINUTE, wert1);
 		//TODO weis nicht wie ich die ID's machen soll
-		return wert1;		
+
+		a.getStatisticsEvents().put(EventType.BID_COUNT_PER_MINUTE, wert1);
+		ArrayList<StatisticsEvent> ret = new ArrayList();
+		ret.add(wert1);
+		return ret;		
 	}
 
 	@Override

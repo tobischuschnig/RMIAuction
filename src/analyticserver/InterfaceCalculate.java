@@ -1,8 +1,10 @@
 package analyticserver;
 
+import java.util.ArrayList;
+
 import model.Event;
 import model.StatisticsEvent;
 
 public interface  InterfaceCalculate {
-	public StatisticsEvent calculate(Event event);
+	public ArrayList<StatisticsEvent> calculate(Event event);
 }

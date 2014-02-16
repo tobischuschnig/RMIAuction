@@ -18,7 +18,7 @@ public class EventHandler {
 		calculateUserEvents = new CalculateUserEvents(a);
 	}
 	
-	public StatisticsEvent execute(Event event) {
+	public ArrayList<StatisticsEvent> execute(Event event) {
 		if(event instanceof AuctionEvent) { //fertig
 			if (event.getType().equals(EventType.AUCTION_STARTED)) {
 				a.getAuctionEventsStarted().put(((AuctionEvent) event).getAuctionID(), (AuctionEvent) event);
