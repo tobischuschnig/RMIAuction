@@ -49,21 +49,24 @@ public class AnalyticServer implements AnalyticServerInterface{
 		managementClients = new ConcurrentHashMap();
 		
 		
-		StatisticsEvent wert = new StatisticsEvent("1", EventType.USER_SESSIONTIME_MIN, System.currentTimeMillis(), 0);
+		StatisticsEvent wert1 = new StatisticsEvent("1", EventType.USER_SESSIONTIME_MIN, System.currentTimeMillis(), Double.MAX_VALUE);
+		StatisticsEvent wert2 = new StatisticsEvent("1", EventType.USER_SESSIONTIME_MAX, System.currentTimeMillis(), 0);
+		StatisticsEvent wert3 = new StatisticsEvent("1", EventType.USER_SESSIONTIME_AVG, System.currentTimeMillis(), 0);
+		StatisticsEvent wert4 = new StatisticsEvent("1", EventType.BID_PRICE_MAX, System.currentTimeMillis(), 0);
+		StatisticsEvent wert5 = new StatisticsEvent("1", EventType.BID_COUNT_PER_MINUTE, System.currentTimeMillis(), 0);
+		StatisticsEvent wert6 = new StatisticsEvent("1", EventType.AUCTION_TIME_AVG, System.currentTimeMillis(), 0);
+		StatisticsEvent wert7 = new StatisticsEvent("1", EventType.ACUTION_SUCCESS_RATIO, System.currentTimeMillis(), 0);
+
+		
+		
 		//TODO weis nicht wie ich die ID's machen soll
-		statisticsEvents.put(EventType.USER_SESSIONTIME_MIN,wert); //fertig
-		wert.setType(EventType.USER_SESSIONTIME_MAX);
-		statisticsEvents.put(EventType.USER_SESSIONTIME_MAX,wert); //fertig
-		wert.setType(EventType.USER_SESSIONTIME_AVG);
-		statisticsEvents.put(EventType.USER_SESSIONTIME_AVG,wert); //fertig
-		wert.setType(EventType.BID_PRICE_MAX);
-		statisticsEvents.put(EventType.BID_PRICE_MAX,wert); // fertig
-		wert.setType(EventType.BID_COUNT_PER_MINUTE);
-		statisticsEvents.put(EventType.BID_COUNT_PER_MINUTE,wert); //fertig
-		wert.setType(EventType.AUCTION_TIME_AVG);
-		statisticsEvents.put(EventType.AUCTION_TIME_AVG,wert); // fertig
-		wert.setType(EventType.ACUTION_SUCCESS_RATIO);
-		statisticsEvents.put(EventType.ACUTION_SUCCESS_RATIO,wert); // fertig		
+		statisticsEvents.put(EventType.USER_SESSIONTIME_MIN,wert1); //fertig		 //funkt
+		statisticsEvents.put(EventType.USER_SESSIONTIME_MAX,wert2); //fertig			 //funkt
+		statisticsEvents.put(EventType.USER_SESSIONTIME_AVG,wert3); //fertig		     //funkt
+		statisticsEvents.put(EventType.BID_PRICE_MAX,wert4); // fertig                //funkt
+		statisticsEvents.put(EventType.BID_COUNT_PER_MINUTE,wert5); //fertig          //funkt
+		statisticsEvents.put(EventType.AUCTION_TIME_AVG,wert6); // fertig             //funkt
+		statisticsEvents.put(EventType.ACUTION_SUCCESS_RATIO,wert7); // fertig		 //funkt
 	}
 	
 	@Override

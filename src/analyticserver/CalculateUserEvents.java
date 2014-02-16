@@ -16,12 +16,15 @@ public class CalculateUserEvents implements InterfaceCalculate {
 	@Override
 	public ArrayList<StatisticsEvent> calculate(Event event) {
 		// TODO Auto-generated method stub
-		ArrayList<StatisticsEvent> ret = null;
+		ArrayList<StatisticsEvent> ret = new ArrayList();
 		
 		/////////////////////////////////////////////////////////////////////////////////
 		// Min und Max
 		long time = event.getTimestamp() - 
-				a.getUserEventsLogin().get(((BidEvent) event).getUserName()) .get(a.getUserEventsLogin().get(((BidEvent) event).getUserName()).size()-1).getTimestamp();
+				a.getUserEventsLogin()
+				.get(((UserEvent) event).getUserName()) 
+				.get(a.getUserEventsLogin().get(((UserEvent) event).getUserName())
+						.size()-1).getTimestamp();
 		if(time >= a.getStatisticsEvents().get(EventType.USER_SESSIONTIME_MAX).getValue()) {
 			StatisticsEvent wert = new StatisticsEvent("1", EventType.USER_SESSIONTIME_MAX, System.currentTimeMillis(),
 					time);
@@ -30,7 +33,9 @@ public class CalculateUserEvents implements InterfaceCalculate {
 			a.getStatisticsEvents().put(EventType.USER_SESSIONTIME_MAX, wert);
 			ret = new ArrayList();
 			ret.add(wert);
-		}else if(time <= a.getStatisticsEvents().get(EventType.USER_SESSIONTIME_MIN).getValue()) {
+		}
+		//System.out.println(a.getStatisticsEvents().get(EventType.USER_SESSIONTIME_MIN).getValue()+"        "+time);
+		if(time <= a.getStatisticsEvents().get(EventType.USER_SESSIONTIME_MIN).getValue()) {
 			StatisticsEvent wert = new StatisticsEvent("1", EventType.USER_SESSIONTIME_MIN, System.currentTimeMillis(),
 					time);
 			//TODO weis nicht wie ich die ID's machen soll
@@ -50,10 +55,12 @@ public class CalculateUserEvents implements InterfaceCalculate {
 		}
 		
 		double value = (a.getStatisticsEvents().get(EventType.USER_SESSIONTIME_AVG).getValue()
-				* logouts-1 + time) / logouts;
+				* (logouts-1) + time) / logouts;
+		//System.out.println(a.getStatisticsEvents().get(EventType.USER_SESSIONTIME_AVG).getValue()+"\n"+ time);
 	
 		StatisticsEvent wert2 = new StatisticsEvent("1", EventType.USER_SESSIONTIME_AVG, System.currentTimeMillis(),
 				value);
+		a.getStatisticsEvents().put(EventType.USER_SESSIONTIME_AVG,wert2);
 		//TODO weis nicht wie ich die ID's machen soll
 		ret.add(wert2);
 		return ret;

@@ -40,10 +40,13 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 		Set<Integer> wert = a.getBidEvents().keySet();
 		Iterator<Integer> it = wert.iterator();
 		int bids = 0;
+		
 		while(it.hasNext()) {
 			bids += a.getBidEvents().get(it.next()).size();
 		}
-		double value = bids / (Math.round(System.currentTimeMillis()-startTime/60000));
+		//System.out.println(((Math.round(System.currentTimeMillis()-startTime)/60000)));
+		double value = (double) (bids / ((double)(Math.round(System.currentTimeMillis()-startTime)/60000)));
+		//System.out.println(value);
 		StatisticsEvent wert1 = new StatisticsEvent("1", EventType.BID_COUNT_PER_MINUTE, System.currentTimeMillis(),
 				value);
 		//TODO weis nicht wie ich die ID's machen soll
@@ -57,8 +60,10 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 	@Override
 	public void run() {
 		try {
-			Thread.sleep(60000);
-			this.calculateBidEventAverageTime();
+			while(true) {
+				Thread.sleep(60000);
+				a.notify(this.calculateBidEventAverageTime());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -25,8 +25,8 @@ public class CalculateAuctionEvents implements InterfaceCalculate {
 		////////////////////////////////////////////////////////////////////////
 		//Auction Time Average
 		
-		double newtime = a.getAuctionEventsStarted().get( a.getAuctionEventsEnded().get(a.getAuctionEventsEnded().size()-1).getAuctionID() ).getTimestamp()
-				- a.getAuctionEventsEnded().get(a.getAuctionEventsEnded().size()-1).getTimestamp();
+		double newtime = a.getAuctionEventsEnded().get(a.getAuctionEventsEnded().size()-1).getTimestamp() -
+				a.getAuctionEventsStarted().get( a.getAuctionEventsEnded().get(a.getAuctionEventsEnded().size()-1).getAuctionID() ).getTimestamp();
 		//Berechnen der neuen Zeit
 		
 		double value =  ( a.getStatisticsEvents().get(EventType.AUCTION_TIME_AVG).getValue() * (a.getAuctionEventsEnded().size()-1) 
