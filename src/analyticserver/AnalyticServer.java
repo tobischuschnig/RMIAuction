@@ -31,7 +31,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 		statisticsEvents.put(EventType.USER_SESSIONTIME_MIN,new StatisticsEvent());
 		statisticsEvents.put(EventType.USER_SESSIONTIME_MAX,new StatisticsEvent());
 		statisticsEvents.put(EventType.USER_SESSIONTIME_AVG,new StatisticsEvent());
-		statisticsEvents.put(EventType.BID_PRICE_MAX,new StatisticsEvent());
+		statisticsEvents.put(EventType.BID_PRICE_MAX,new StatisticsEvent()); // fertig
 		statisticsEvents.put(EventType.BID_COUNT_PER_MINUTE,new StatisticsEvent());
 		statisticsEvents.put(EventType.AUCTION_TIME_AVG,new StatisticsEvent()); // fertig
 		statisticsEvents.put(EventType.ACUTION_SUCCESS_RATIO,new StatisticsEvent()); // fertig		
@@ -162,5 +162,125 @@ public class AnalyticServer implements AnalyticServerInterface{
 		// TODO Auto-generated method stub
 
 		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////	
+	//Getters and Setters
+	/**
+	 * @return the auctionEventsStarted
+	 */
+	public ConcurrentHashMap<Integer, AuctionEvent> getAuctionEventsStarted() {
+		return auctionEventsStarted;
+	}
+
+	/**
+	 * @param auctionEventsStarted the auctionEventsStarted to set
+	 */
+	public void setAuctionEventsStarted(
+			ConcurrentHashMap<Integer, AuctionEvent> auctionEventsStarted) {
+		this.auctionEventsStarted = auctionEventsStarted;
+	}
+
+	/**
+	 * @return the auctionEventsEnded
+	 */
+	public ArrayList<AuctionEvent> getAuctionEventsEnded() {
+		return auctionEventsEnded;
+	}
+
+	/**
+	 * @param auctionEventsEnded the auctionEventsEnded to set
+	 */
+	public void setAuctionEventsEnded(ArrayList<AuctionEvent> auctionEventsEnded) {
+		this.auctionEventsEnded = auctionEventsEnded;
+	}
+
+	/**
+	 * @return the userEventsLogin
+	 */
+	public ConcurrentHashMap<String, ArrayList<UserEvent>> getUserEventsLogin() {
+		return userEventsLogin;
+	}
+
+	/**
+	 * @param userEventsLogin the userEventsLogin to set
+	 */
+	public void setUserEventsLogin(
+			ConcurrentHashMap<String, ArrayList<UserEvent>> userEventsLogin) {
+		this.userEventsLogin = userEventsLogin;
+	}
+
+	/**
+	 * @return the userEventsLogout
+	 */
+	public ConcurrentHashMap<String, ArrayList<UserEvent>> getUserEventsLogout() {
+		return userEventsLogout;
+	}
+
+	/**
+	 * @param userEventsLogout the userEventsLogout to set
+	 */
+	public void setUserEventsLogout(
+			ConcurrentHashMap<String, ArrayList<UserEvent>> userEventsLogout) {
+		this.userEventsLogout = userEventsLogout;
+	}
+
+	/**
+	 * @return the bidEvents
+	 */
+	public ConcurrentHashMap<Integer, ArrayList<BidEvent>> getBidEvents() {
+		return bidEvents;
+	}
+
+	/**
+	 * @param bidEvents the bidEvents to set
+	 */
+	public void setBidEvents(
+			ConcurrentHashMap<Integer, ArrayList<BidEvent>> bidEvents) {
+		this.bidEvents = bidEvents;
+	}
+
+	/**
+	 * @return the statisticsEvents
+	 */
+	public ConcurrentHashMap<EventType, StatisticsEvent> getStatisticsEvents() {
+		return statisticsEvents;
+	}
+
+	/**
+	 * @param statisticsEvents the statisticsEvents to set
+	 */
+	public void setStatisticsEvents(
+			ConcurrentHashMap<EventType, StatisticsEvent> statisticsEvents) {
+		this.statisticsEvents = statisticsEvents;
+	}
+
+	/**
+	 * @return the managementClients
+	 */
+	public ConcurrentHashMap<String, String> getManagementClients() {
+		return managementClients;
+	}
+
+	/**
+	 * @param managementClients the managementClients to set
+	 */
+	public void setManagementClients(
+			ConcurrentHashMap<String, String> managementClients) {
+		this.managementClients = managementClients;
 	}
 }
