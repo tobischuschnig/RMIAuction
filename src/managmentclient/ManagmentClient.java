@@ -1,5 +1,6 @@
 package managmentclient;
 
+import java.io.Serializable;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -10,8 +11,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import model.Event;
 
 /**
@@ -20,7 +20,7 @@ import model.Event;
  * @author Alexander Rieppel <alexander.rieppel@student.tgm.ac.at>
  * @version 2014-02-14
  */
-public class ManagmentClient implements ManagmentClientInterface, Runnable {
+public class ManagmentClient implements ManagmentClientInterface,Serializable, Runnable {
 
     private String username;
     private boolean loggedIn;
@@ -41,6 +41,7 @@ public class ManagmentClient implements ManagmentClientInterface, Runnable {
         loggedIn = false;
         username = "";
         cli = new CLI();
+        autoprint = true;
         t = new TaskExecuter(this, billing, analytics);
     }
 
@@ -74,6 +75,7 @@ public class ManagmentClient implements ManagmentClientInterface, Runnable {
                         if (b) {
                             System.out.println("Successfully logged in as " + werte[1]);
                             loggedIn = true;
+                            username = werte[1];
                         } else {
                             System.out.println("Access denied for " + werte[1] + " " + werte[2]);
                         }
@@ -98,7 +100,7 @@ public class ManagmentClient implements ManagmentClientInterface, Runnable {
                         boolean b = false;
                         try {
                            b = t.addStep(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]),
-                                    Double.parseDouble(werte[3]), Integer.parseInt(werte[4]));
+                                    Double.parseDouble(werte[3]), Double.parseDouble(werte[4]));
                            if(b){
                                System.out.println("Pricestepp added successfully");
                            }else{
@@ -230,6 +232,8 @@ public class ManagmentClient implements ManagmentClientInterface, Runnable {
             // TODO optimize output format
             System.out.println(iteratorValue.getTimestamp() + " " + iteratorValue.getType() + " with ID " + iteratorValue.getID());
         }
+        unprintedMessages = new LinkedList<Event>();
+        
     }
 
     /**
@@ -241,16 +245,10 @@ public class ManagmentClient implements ManagmentClientInterface, Runnable {
             ManagmentClientInterface stub = (ManagmentClientInterface) UnicastRemoteObject.exportObject(this, 0);
             Registry registry = LocateRegistry.getRegistry();
             // setting up Name of Remote
-            registry.bind("ManagmentClient", stub);
+            registry.rebind("ManagmentClient", stub);
+            System.out.println("Service bound");
         } catch (RemoteException ex) {
-            // TODO remove printstacktrace in final version
-            ex.printStackTrace();
-            Logger.getLogger(ManagmentClient.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        } catch (AlreadyBoundException ex) {
-            // TODO remove printstacktrace in final version
-            ex.printStackTrace();
-            Logger.getLogger(ManagmentClient.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error: "+ex.getMessage());
             return false;
         }
         return true;
@@ -262,7 +260,7 @@ public class ManagmentClient implements ManagmentClientInterface, Runnable {
      */
     @Override
     public void processEvent(Event event) {
-        // direct output
+        // direct output      
         if (autoprint == true) {
             // TODO optimize output format
             System.out.println(event.getTimestamp() + " " + event.getType() + " with ID " + event.getID());

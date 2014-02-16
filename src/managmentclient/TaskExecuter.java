@@ -1,10 +1,11 @@
 package managmentclient;
 
 import Exceptions.UserInputException;
+import analyticserver.AnalyticServerInterface;
+import billingServer.BillingServerInterface;
+import billingServer.BillingServerSecureInterface;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Bill;
 
 /**
@@ -27,10 +28,12 @@ public class TaskExecuter {
         try {
             // example: objb = (RMI_Billing)Naming.lookup("//localhost/RmiServer");
             objb = (BillingServerInterface) Naming.lookup(billingServer);
-            obja = (AnalyticServerInterface) Naming.lookup(analyticsServer);
+            // TODO ! Remove this
+            // obja = (AnalyticServerInterface) Naming.lookup(analyticsServer);
             secure = null;
         } catch (Exception ex) {
-            System.out.println("Client exit: " + ex.getMessage());
+            System.out.println("Client exit: Cannot connect." + "\n(" + ex.getMessage() + ")");
+            System.exit(0);
         }
 
     }
@@ -41,9 +44,8 @@ public class TaskExecuter {
      */
     public void logout(String username) {
         // TODO update this ?  
-        System.out.println("logout");
         secure = null;
-        System.out.println("logout "+username);
+        System.out.println("logout " + username);
     }
 
     /**
@@ -52,20 +54,15 @@ public class TaskExecuter {
      * @param password 
      */
     public boolean login(String username, String password) {
-        System.out.println("login");
         boolean ret = false;
         try {
             secure = (BillingServerSecureInterface) objb.login(username, password);
-            if(secure!=null){
-                ret=true;
+            if (secure != null) {
+                ret = true;
             }
-        } catch (RemoteException ex) {
-            Logger.getLogger(TaskExecuter.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UserInputException ex) {
-            Logger.getLogger(TaskExecuter.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
         } catch (NullPointerException npe) {
-            // tritt bei fehlerhaftenm login auf
-            //TODO handel this
         }
         return ret;
     }
@@ -74,12 +71,10 @@ public class TaskExecuter {
      * Printing the existing pricesteps of the billingserver
      */
     public void steps() {
-        System.out.println("steps");
         try {
             // PriceSteps ps = secure.getPriceSteps();
-            System.out.println(secure.getPriceSteps().toString());
+            System.out.println("Price Steps:\n" + secure.getPriceSteps().toString());
         } catch (RemoteException ex) {
-            Logger.getLogger(TaskExecuter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -98,7 +93,6 @@ public class TaskExecuter {
         try {
             ret = secure.createPriceStep(startPrice, endPrice, fixedPrice, fixedPrice);
         } catch (RemoteException ex) {
-            Logger.getLogger(TaskExecuter.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ret;
     }
@@ -115,7 +109,6 @@ public class TaskExecuter {
         try {
             ret = secure.deletePriceStep(startPrice, endPrice);
         } catch (RemoteException ex) {
-            Logger.getLogger(TaskExecuter.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return ret;
@@ -129,7 +122,6 @@ public class TaskExecuter {
         System.out.println("bill");
         try {
             Bill b = secure.getBill(username);
-            // TODO Ausgabe mittels getter Methoden 
             if (b == null) {
                 System.out.println("No Bills for User " + username);
             } else {
@@ -137,7 +129,6 @@ public class TaskExecuter {
                         + b.getAuctionID() + ", Price: " + b.getPrice());
             }
         } catch (RemoteException ex) {
-            Logger.getLogger(TaskExecuter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -146,12 +137,11 @@ public class TaskExecuter {
      * @param filter 
      */
     public void subscribe(String filter) {
-        System.out.println("subscribe");
         try {
+            System.out.println("subscribe");
             // TODO filter pruefen ?
             System.out.println(obja.subscribe(filter));
-        } catch (RemoteException ex) {
-            Logger.getLogger(TaskExecuter.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
         }
 
     }
@@ -164,8 +154,7 @@ public class TaskExecuter {
         System.out.println("unsubscribe");
         try {
             obja.unsubscribe("" + subscriptionID);
-        } catch (RemoteException ex) {
-            Logger.getLogger(TaskExecuter.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
         }
 
     }
