@@ -60,7 +60,7 @@ public class BillingServerSecureTest {
 	@Test
 	public void testCreatePriceStepOverlapse() throws RemoteException{
 		bss.createPriceStep(0, 100, 3, 5);
-		bss.createPriceStep(50, 150, 3, 5);
+		bss.createPriceStep(50, 80, 3, 5);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),1);
 	}
 	/**
@@ -137,7 +137,8 @@ public class BillingServerSecureTest {
 	@Test
 	public void testbillAuction(){
 		bss.billAuction("test", 123, 100);
-		assertEquals( bss.getBills().size(),1);
+		assertNotNull(bss.getBill("test"));
+		//assertEquals( bss.getBills().size(),1);
 	}
 	/**
 	 * Testing of billAuction Method, when the bill was created for not existing user
@@ -146,7 +147,8 @@ public class BillingServerSecureTest {
 	@Test
 	public void testbillAuctionUserNotExisting(){
 		bss.billAuction("none", 123, 100);
-		assertEquals(bss.getBills().size(),0);
+		assertNull(bss.getBill("none"));
+		//assertEquals(bss.getBills().size(),0);
 	}
 	/**
 	 * Testing of billAuction Method, when the bill was created for not existing auction
@@ -155,7 +157,8 @@ public class BillingServerSecureTest {
 	@Test
 	public void testbillAuctionAuctionNotExisting(){
 		bss.billAuction("test", 123454, 100);
-		assertEquals(bss.getBills().size(),0);
+		assertNull(bss.getBill("test"));
+		//assertEquals(bss.getBills().size(),0);
 	}
 	/**
 	 * Testing of getBill Method

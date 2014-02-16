@@ -2,6 +2,7 @@ package billingServer.junit;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
 import java.rmi.RemoteException;
 
 import org.junit.Before;
@@ -29,8 +30,8 @@ private BillingServer bs;
 	 * @throws RemoteException 
 	 */
 	@Test
-	public void testLogin() throws RemoteException, UserInputException{
-		assertNotNull(bs.login("test", "1234"));
+	public void testLogin() throws UserInputException, RemoteException{
+		assertNotNull(bs.login("admin", "admin"));
 	}
 	/**
 	 * Testing of login Method, when login should fail and Method returns null
@@ -40,5 +41,25 @@ private BillingServer bs;
 	@Test(expected=UserInputException.class)
 	public void testLoginFail() throws RemoteException, UserInputException{
 		assertNull(bs.login("test", "123454"));
+	}
+	
+	/**
+	 * Testing of FileNotFoundException
+	 * @throws RemoteException
+	 * @throws UserInputException
+	 */
+	@Test(expected=FileNotFoundException.class)
+	public void testFileNotFound() throws RemoteException, UserInputException{
+		assertNull(bs.login("admin", "admin"));
+	}
+	
+	/**
+	 * Testing of Create MD5 Method, where the MD5 should match
+	 */
+	@Test
+	public void testCreateMD5(){
+		String asd = bs.createMD5("asd");
+		String asd1 = bs.createMD5("asd");
+		assertEquals(asd,asd1);
 	}
 }
