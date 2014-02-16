@@ -2,6 +2,14 @@ package testingComponent;
 
 import java.util.ArrayList;
 
+import model.Auction;
+import model.User;
+/**
+ * 
+ * @author Klune Alexander
+ *@version 1.0
+ *@email aklune@student.tgm.ac.at
+ */
 public class TestingClient{
 	
 	private int clients;
@@ -18,6 +26,14 @@ public class TestingClient{
 	
 	private ArrayList <Integer> auctionsIDs;
 	
+	/**
+	 * 
+	 * @param clientID
+	 * @param auctionsPerMin
+	 * @param auctionDuration
+	 * @param updateIntervalSec
+	 * @param bidsPerMin
+	 */
 	public TestingClient(int clientID, int auctionsPerMin, int auctionDuration, int updateIntervalSec, int bidsPerMin) {
 		this.clientID = clientID;
 		this.auctionsPerMin = auctionsPerMin;
@@ -26,12 +42,19 @@ public class TestingClient{
 		this.bidsPerMin = bidsPerMin;
 	}
 	
-	
+	/**
+	 * 
+	 */
 	public void createAuctionTest(){
+		Auction auc = new Auction(new User(),"Test Auction Description",1000l);
 		
 	}
 	
+	/**
+	 * 
+	 * @param ids
+	 */
 	public void setAuctionsIDs(ArrayList <Integer> ids){
-		
+		this.auctionsIDs = ids;
 	}
 }
