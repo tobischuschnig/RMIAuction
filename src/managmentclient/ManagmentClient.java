@@ -78,7 +78,7 @@ public class ManagmentClient implements ManagmentClientInterface, Runnable {
                             System.out.println("Access denied for " + werte[1] + " " + werte[2]);
                         }
                     } else {
-                        cli.out("Please enter User like:\n!login Username passwort");
+                        cli.out("Please enter User like:\n!login Username password");
                     }
                 } else {
                     cli.out("Already logged in, logout first!");
@@ -100,7 +100,7 @@ public class ManagmentClient implements ManagmentClientInterface, Runnable {
                            b = t.addStep(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]),
                                     Double.parseDouble(werte[3]), Integer.parseInt(werte[4]));
                            if(b){
-                               System.out.println("Pricestepp added successfully");
+                               System.out.println("Pricestep added successfully");
                            }else{
                                System.out.println("Cannot add Pricestep. Check Input.");
                            }

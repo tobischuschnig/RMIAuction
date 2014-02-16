@@ -31,7 +31,7 @@ public class BillingServerSecureTest {
 	@Test
 	public void testGetPriceSteps(){
 		PriceSteps ps = new PriceSteps();
-		bss.setPriceSteps(ps);
+		//bss.setPriceSteps(ps);
 		assertEquals(bss.getPriceSteps(),ps);
 	}
 	/**

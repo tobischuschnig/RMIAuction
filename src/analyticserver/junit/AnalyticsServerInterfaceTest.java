@@ -50,7 +50,7 @@ public class AnalyticsServerInterfaceTest {
 	 */
 	@Test(expected=NullPointerException.class)
 	public void testProcessEvent() {
-		asi.processEvent(new Event());	
+		asi.processEvent(new Event(null, null, 0));	
 		assertNull(asi);
 	}
 	/**
