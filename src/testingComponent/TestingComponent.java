@@ -1,4 +1,4 @@
-package TestingComponent;
+package testingComponent;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -79,7 +79,7 @@ public class TestingComponent {
 			auctionDuration = at[2];
 			updateIntervalSec = at[3];
 			bidsPerMin = at[4];
-			//Für einen Funktionsbeweis einfach auskommentieren
+			//Fuer einen Funktionsbeweis einfach auskommentieren
 			//System.out.println(clients + "\n" + auctionsPerMin + "\n" + auctionDuration + "\n" + updateIntervalSec + "\n" + bidsPerMin);
 		}catch (ArrayIndexOutOfBoundsException e){
 		}
