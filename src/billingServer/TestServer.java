@@ -9,6 +9,8 @@ import model.PriceStep;
 
 public class TestServer {
 	public static void main (String [] args){
+		
+		//BillingServer Objekt wird erstellt, und durch Naming Lookup abgerufen
 		BillingServerInterface acc = null;
 		try {      
 			acc = (BillingServerInterface)Naming.lookup("BillingServer");
@@ -17,6 +19,9 @@ public class TestServer {
 			e.printStackTrace();
 		}
 		try {
+			// BillingServerSecure objekt wird erstellt. 
+			
+			//Login hat zwei parameter (username, password) aber unverschluesselt.
 			BillingServerSecureInterface secure=(BillingServerSecureInterface)acc.login("admin", "admin");
 			secure.createPriceStep(1.0, 5.0, 2.0, 5.0);
 			System.out.println(secure.getPriceSteps().toString());

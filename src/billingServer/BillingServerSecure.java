@@ -106,6 +106,7 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 	 * @param user		username who won the auction
 	 * @param auctionID	ended auctionID
 	 * @param price		endprice of the auction
+	 * @return if bill was sucessfully created
 	 */
 	public boolean billAuction(String user, long auctionID, double price){
 		bills.put(user, new Bill(user, auctionID, price));
