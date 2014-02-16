@@ -1,6 +1,5 @@
 package managmentclient;
 
-import java.rmi.AccessException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -10,17 +9,18 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import model.Event;
 
 /**
  * 
- * @author alexander auradnik
- * @author Alexander Rieppel
+ * @author alexander auradnik <alexander.auradnik@student.tgm.ac.at>
+ * @author Alexander Rieppel <alexander.rieppel@student.tgm.ac.at>
+ * @version 2014-02-14
  */
-public class ManagmentClient implements RMI,Runnable {
+public class ManagmentClient implements ManagmentClientInterface, Runnable {
 
     private String username;
     private boolean loggedIn;
@@ -30,8 +30,12 @@ public class ManagmentClient implements RMI,Runnable {
     private CLI cli;
     private TaskExecuter t;
 
-    // attribute?
-    public ManagmentClient(String billing,String analytics) {
+    /**
+     * Constructor for setting default Settings
+     * @param billing Address of Remote BillingServer
+     * @param analytics Address of Remote AnalyticsServer
+     */
+    public ManagmentClient(String billing, String analytics) {
         unprintedMessages = new LinkedList<Event>();
         active = true;
         loggedIn = false;
@@ -41,6 +45,7 @@ public class ManagmentClient implements RMI,Runnable {
     }
 
     @Override
+    // TODO Testing and optimize this
     public void run() {
         System.out.println("Client startet");
         String eingabe = "";
@@ -60,49 +65,68 @@ public class ManagmentClient implements RMI,Runnable {
 
 
             // befehle billing server
+            // -- LOGIN --
             if (eingabe.startsWith("!login")) {
                 String[] werte = original.split(" ");		//Original is used
                 if (loggedIn == false) {
                     if (werte.length == 3) {
-                        t.login(werte[1], werte[2]);
-                        //es besteht keine moeglickeit zu ueberprufen ob login serverseitig
-                        // funktioniert hat!!
-                        loggedIn = true;
+                        boolean b = t.login(werte[1], werte[2]);
+                        if (b) {
+                            System.out.println("Successfully logged in as " + werte[1]);
+                            loggedIn = true;
+                        } else {
+                            System.out.println("Access denied for " + werte[1] + " " + werte[2]);
+                        }
                     } else {
                         cli.out("Please enter User like:\n!login Username passwort");
                     }
                 } else {
                     cli.out("Already logged in, logout first!");
                 }
+                // -- STEPS --
             } else if (eingabe.startsWith("!steps")) {
                 if (loggedIn == true) {
                     t.steps();
                 } else {
                     cli.out("Currently not logged in\nPlease login first");
                 }
-            } else if (eingabe.startsWith("!startprice")) {
+                // -- ADDSTEP --
+            } else if (eingabe.startsWith("!addstep")) {
                 if (loggedIn == true) {
                     String[] werte = eingabe.split(" ");
                     if (werte.length == 5) {
+                        boolean b = false;
                         try {
-                            t.addStep(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]),
+                           b = t.addStep(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]),
                                     Double.parseDouble(werte[3]), Integer.parseInt(werte[4]));
+                           if(b){
+                               System.out.println("Pricestepp added successfully");
+                           }else{
+                               System.out.println("Cannot add Pricestep. Check Input.");
+                           }
                         } catch (NumberFormatException e) {
                             cli.out("Values entered incorrect");
                         }
+                        
                     } else {
                         cli.out("Please enter ID and Amount like:\n!bid ID Amount");
                     }
                 } else {
                     cli.out("Currently not logged in\nPlease login first");
                 }
-
+        // -- REMOVE STEPS --
             } else if (eingabe.startsWith("!removestep")) {
                 String[] werte = eingabe.split(" ");
                 if (loggedIn == true) {
                     if (werte.length == 3) {
                         try {
-                            t.remove(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]));
+                            boolean b = false;
+                            b = t.remove(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]));
+                            if(b){
+                               System.out.println("Pricestepp removed successfully");
+                           }else{
+                               System.out.println("Cannot remove Pricestep. Check Input.");
+                           }
                         } catch (NumberFormatException e) {
                             cli.out("Values entered incorrect");
                         }
@@ -112,12 +136,17 @@ public class ManagmentClient implements RMI,Runnable {
                 } else {
                     cli.out("Currently not logged in\nPlease login first");
                 }
+                // -- BILL --
             } else if (eingabe.startsWith("!bill")) {
                 String[] werte = eingabe.split(" ");
                 if (loggedIn == true) {
-                    if (werte.length == 3) {
+                    if (werte.length == 2) {
                         try {
+                            boolean b = false;
                             t.bill(werte[1]);
+                            if(!b){
+                                System.out.println("No Bill found");
+                            }
                         } catch (NumberFormatException e) {
                             cli.out("Values entered incorrect");
                         }
@@ -127,17 +156,17 @@ public class ManagmentClient implements RMI,Runnable {
                 } else {
                     cli.out("Currently not logged in\nPlease login first");
                 }
+                // -- LOGOUT --
             } else if (eingabe.startsWith("!logout")) {
                 if (loggedIn == true) {
                     t.logout(username);
                     username = "";
                     loggedIn = false;
-
-
                 } else {
                     cli.out("Logout not possible, not logged in!");
                 }
             } // befehle analytics server
+            // -- SUBSCRIBE --
             else if (eingabe.startsWith("!subscribe")) {
                 String[] werte = eingabe.split(" ");
                 if (loggedIn == true) {
@@ -149,6 +178,7 @@ public class ManagmentClient implements RMI,Runnable {
                         }
                     }
                 }
+                // -- UNSUBSCRIBE --
             } else if (eingabe.startsWith("!unsubscribe")) {
                 String[] werte = eingabe.split(" ");
                 if (loggedIn == true) {
@@ -176,145 +206,167 @@ public class ManagmentClient implements RMI,Runnable {
         }
     }
 
+    /**
+     * Set Printmode to AUTO
+     */
     public void auto() {
         autoprint = true;
     }
 
+    /**
+     * Set Printmode to HIDE
+     */
     public void hide() {
         autoprint = false;
     }
 
+    /**
+     * Printing all saved Event-Messages
+     */
     public void print() {
         Iterator it = unprintedMessages.iterator();
-
         while (it.hasNext()) {
-            //String iteratorValue = (String) it.next();
-            //System.out.println(iteratorValue);
             Event iteratorValue = (Event) it.next();
-            System.out.println(iteratorValue.getTimestamp()+" "+iteratorValue.getType()+" with ID "+iteratorValue.getID());
+            // TODO optimize output format
+            System.out.println(iteratorValue.getTimestamp() + " " + iteratorValue.getType() + " with ID " + iteratorValue.getID());
         }
     }
 
-    public boolean startService(){
+    /**
+     * Settup and start the Remote Object Server of the Managment-CLient
+     * @return Service-Startus
+     */
+    public boolean startService() {
         try {
-            RMI stub = (RMI) UnicastRemoteObject.exportObject(this, 0);
+            ManagmentClientInterface stub = (ManagmentClientInterface) UnicastRemoteObject.exportObject(this, 0);
             Registry registry = LocateRegistry.getRegistry();
-	    registry.bind("ManagmentClient", stub);
+            // setting up Name of Remote
+            registry.bind("ManagmentClient", stub);
         } catch (RemoteException ex) {
+            // TODO remove printstacktrace in final version
             ex.printStackTrace();
-            return false;           
+            Logger.getLogger(ManagmentClient.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         } catch (AlreadyBoundException ex) {
+            // TODO remove printstacktrace in final version
             ex.printStackTrace();
-            return false;  
-        } 
+            Logger.getLogger(ManagmentClient.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
         return true;
     }
 
+    /**
+     * Prints or saves the occurred Server-Event
+     * @param event incoming Server-Event
+     */
     @Override
     public void processEvent(Event event) {
-        if(autoprint==true){
-            System.out.println(event.getTimestamp()+" "+event.getType()+" with ID "+event.getID());
-        }else{
+        // direct output
+        if (autoprint == true) {
+            // TODO optimize output format
+            System.out.println(event.getTimestamp() + " " + event.getType() + " with ID " + event.getID());
+            // message-save mode
+        } else {
             unprintedMessages.add(event);
         }
     }
 
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
 
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	/**
-	 * @return the loggedIn
-	 */
-	public boolean isLoggedIn() {
-		return loggedIn;
-	}
+    /**
+     * @return the loggedIn
+     */
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
 
-	/**
-	 * @param loggedIn the loggedIn to set
-	 */
-	public void setLoggedIn(boolean loggedIn) {
-		this.loggedIn = loggedIn;
-	}
+    /**
+     * @param loggedIn the loggedIn to set
+     */
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
 
-	/**
-	 * @return the active
-	 */
-	public boolean isActive() {
-		return active;
-	}
+    /**
+     * @return the active
+     */
+    public boolean isActive() {
+        return active;
+    }
 
-	/**
-	 * @param active the active to set
-	 */
-	public void setActive(boolean active) {
-		this.active = active;
-	}
+    /**
+     * @param active the active to set
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-	/**
-	 * @return the unprintedMessages
-	 */
-	public Queue<Event> getUnprintedMessages() {
-		return unprintedMessages;
-	}
+    /**
+     * @return the unprintedMessages
+     */
+    public Queue<Event> getUnprintedMessages() {
+        return unprintedMessages;
+    }
 
-	/**
-	 * @param unprintedMessages the unprintedMessages to set
-	 */
-	public void setUnprintedMessages(Queue<Event> unprintedMessages) {
-		this.unprintedMessages = unprintedMessages;
-	}
+    /**
+     * @param unprintedMessages the unprintedMessages to set
+     */
+    public void setUnprintedMessages(Queue<Event> unprintedMessages) {
+        this.unprintedMessages = unprintedMessages;
+    }
 
-	/**
-	 * @return the cli
-	 */
-	public CLI getCli() {
-		return cli;
-	}
+    /**
+     * @return the cli
+     */
+    public CLI getCli() {
+        return cli;
+    }
 
-	/**
-	 * @param cli the cli to set
-	 */
-	public void setCli(CLI cli) {
-		this.cli = cli;
-	}
+    /**
+     * @param cli the cli to set
+     */
+    public void setCli(CLI cli) {
+        this.cli = cli;
+    }
 
-	/**
-	 * @return the t
-	 */
-	public TaskExecuter getT() {
-		return t;
-	}
+    /**
+     * @return the t
+     */
+    public TaskExecuter getT() {
+        return t;
+    }
 
-	/**
-	 * @param t the t to set
-	 */
-	public void setT(TaskExecuter t) {
-		this.t = t;
-	}
+    /**
+     * @param t the t to set
+     */
+    public void setT(TaskExecuter t) {
+        this.t = t;
+    }
 
-	/**
-	 * @return the autoprint
-	 */
-	public boolean isAutoprint() {
-		return autoprint;
-	}
+    /**
+     * @return the autoprint
+     */
+    public boolean isAutoprint() {
+        return autoprint;
+    }
 
-	/**
-	 * @param autoprint the autoprint to set
-	 */
-	public void setAutoprint(boolean autoprint) {
-		this.autoprint = autoprint;
-	}
-    
+    /**
+     * @param autoprint the autoprint to set
+     */
+    public void setAutoprint(boolean autoprint) {
+        this.autoprint = autoprint;
+    }
 }
