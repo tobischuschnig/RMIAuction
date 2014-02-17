@@ -30,7 +30,6 @@ public class BillingServer implements BillingServerInterface,Serializable {
 
 
 	private static Registry r;
-	private boolean login;
 
 	/**
 	 * The access to the billing server is secured by user authentication. To keep things simple, 
@@ -48,7 +47,7 @@ public class BillingServer implements BillingServerInterface,Serializable {
 	public BillingServerSecureInterface login(String username, String password) throws RemoteException,UserInputException{
 		FileInputStream fis = null;
 		BufferedReader br = null;
-		this.login = false;
+		boolean login = false;
 
 		try {
 			fis = new FileInputStream("user.properties");
@@ -125,20 +124,6 @@ public class BillingServer implements BillingServerInterface,Serializable {
 		catch (Exception e) {
 			System.out.println("Err: " + e.getMessage());
 		}
-	}
-
-	/**
-	 * @return the login
-	 */
-	public boolean isLogin() {
-		return login;
-	}
-
-	/**
-	 * @param login the login to set
-	 */
-	public void setLogin(boolean login) {
-		this.login = login;
 	}
 }
 
