@@ -1,17 +1,13 @@
 package billingServer;
 
 import java.io.Serializable;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
-import billingServer.junit.BillingServerSecureTest;
-
 import model.PriceStep;
 import model.PriceSteps;
 import model.Bill;
-import model.User;
 
 /**
  * This class provides methodes to delete, create and get the current Pricesteps. 
@@ -31,6 +27,7 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 	 */
 	public BillingServerSecure(){
 		this.priceSteps=new PriceSteps();
+		this.bills=new ConcurrentHashMap<String, Bill>();
 	}
 
 	/**

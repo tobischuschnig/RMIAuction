@@ -1,41 +1,106 @@
 package model;
 
 public class Bill {
-	private String username;
-	private long auctionID;
-	private double price;
+	private String user;
+	private long auctionID ;
+	private double feeFixed,strikePrice, feeVariable, feeTotal;
 
-	public Bill(String username, long auctionID, double price) {
-		this.username = username;
+	public Bill(String user, long auctionID, double strikePrice) {
+		this.user = user;
 		this.auctionID = auctionID;
-		this.price=price;
+		this.feeFixed = feeFixed;
+		this.strikePrice = strikePrice;
+		this.feeVariable = feeVariable;
+		this.feeTotal = feeTotal;
 	}
 
-	public String getUsername() {
-		return username;
+	/**
+	 * @return the user
+	 */
+	public String getUser() {
+		return user;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(String user) {
+		this.user = user;
 	}
 
+	/**
+	 * @return the auctionID
+	 */
 	public long getAuctionID() {
 		return auctionID;
 	}
 
-	public void setAuctionID(long auctionID) {
+	/**
+	 * @param auctionID the auctionID to set
+	 */
+	public void setAuctionID(int auctionID) {
 		this.auctionID = auctionID;
 	}
 
-	public double getPrice() {
-		return price;
+	/**
+	 * @return the feeFixed
+	 */
+	public double getFeeFixed() {
+		return feeFixed;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	/**
+	 * @param feeFixed the feeFixed to set
+	 */
+	public void setFeeFixed(int feeFixed) {
+		this.feeFixed = feeFixed;
 	}
 
+	/**
+	 * @return the strikePrice
+	 */
+	public double getStrikePrice() {
+		return strikePrice;
+	}
 
+	/**
+	 * @param strikePrice the strikePrice to set
+	 */
+	public void setStrikePrice(double strikePrice) {
+		this.strikePrice = strikePrice;
+	}
+
+	/**
+	 * @return the feeVariable
+	 */
+	public double getFeeVariable() {
+		return feeVariable;
+	}
+
+	/**
+	 * @param feeVariable the feeVariable to set
+	 */
+	public void setFeeVariable(double feeVariable) {
+		this.feeVariable = feeVariable;
+	}
+
+	/**
+	 * @return the feeTotal
+	 */
+	public double getFeeTotal() {
+		return feeTotal;
+	}
+
+	/**
+	 * @param feeTotal the feeTotal to set
+	 */
+	public void setFeeTotal(double feeTotal) {
+		this.feeTotal = feeTotal;
+	}
+	
+	public String toString(){
+		return this.auctionID+"\t"+this.strikePrice+"\t"+this.feeFixed+"\t"+this.feeVariable+"\t"+this.feeTotal;
+	}
 	
 	
 
