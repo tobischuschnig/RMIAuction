@@ -213,21 +213,6 @@ public class AnalyticServer implements AnalyticServerInterface{
 	}
 
 	/**
-	 * @return the managementClients
-	 */
-	public ConcurrentHashMap<String, String> getManagementClients() {
-		return managementClients;
-	}
-
-	/**
-	 * @param managementClients the managementClients to set
-	 */
-	public void setManagementClients(
-			ConcurrentHashMap<String, String> managementClients) {
-		this.managementClients = managementClients;
-	}
-
-	/**
 	 * @return the bidEventsOverbid
 	 */
 	public ConcurrentHashMap<Integer, ArrayList<BidEvent>> getBidEventsOverbid() {
@@ -256,5 +241,22 @@ public class AnalyticServer implements AnalyticServerInterface{
 			ConcurrentHashMap<Integer, ArrayList<BidEvent>> bidEventsWon) {
 		this.bidEventsWon = bidEventsWon;
 	}
+
+	/**
+	 * @return the managementClients
+	 */
+	public ConcurrentHashMap<EventType, ArrayList<ManagmentClient>> getManagementClients() {
+		return managementClients;
+	}
+
+	/**
+	 * @param managementClients the managementClients to set
+	 */
+	public void setManagementClients(
+			ConcurrentHashMap<EventType, ArrayList<ManagmentClient>> managementClients) {
+		this.managementClients = managementClients;
+	}
+	
+	
 	
 }
