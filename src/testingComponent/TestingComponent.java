@@ -15,7 +15,7 @@ public class TestingComponent {
 
 	//private ManagementClient managementclient;
 	
-	private static final boolean StringIndexOutOfBoundsException = false;
+	//private static final boolean StringIndexOutOfBoundsException = false;
 
 	private static int clients;
 	
@@ -45,6 +45,7 @@ public class TestingComponent {
 		BufferedReader buff = null;
 		String cline;
 		String dataset = System.getProperty("user.dir") + "/loadtest.properties"; 
+		//String dataset = System.getProperty("/home/poezze/Dokumente/WorkspaceJava/RMI/loadtest.properties"); 
 		buff = new BufferedReader(new FileReader(dataset));
 		
 		int i = 0;
@@ -55,19 +56,33 @@ public class TestingComponent {
 		while ((cline = buff.readLine())!=null){
 			try{
 				String ch = cline.substring(0,1);
-				
 				if(!ch.equals("#")){
 					aline = cline.split("(=)|(\\:)");
 					
 					if(aline[1].contains("*")){
 						n = aline[1].split("\\*");
-						
 						int ch1=Integer.parseInt(n[0].replaceAll("\\s+",""));
 						int ch2=Integer.parseInt(n[1].replaceAll("\\s+",""));
 						at[i]= ch1 * ch2;
-					}else
+					}else if(aline[1].contains("+")){
+						n = aline[1].split("\\+");
+						int ch1=Integer.parseInt(n[0].replaceAll("\\s+",""));
+						int ch2=Integer.parseInt(n[1].replaceAll("\\s+",""));
+						at[i]= ch1 + ch2;
+					}else if(aline[1].contains("-")){
+						n = aline[1].split("\\-");
+						int ch1=Integer.parseInt(n[0].replaceAll("\\s+",""));
+						int ch2=Integer.parseInt(n[1].replaceAll("\\s+",""));
+						at[i]= ch1 - ch2;
+					}else if(aline[1].contains("/")){
+						n = aline[1].split("\\/");
+						int ch1=Integer.parseInt(n[0].replaceAll("\\s+",""));
+						int ch2=Integer.parseInt(n[1].replaceAll("\\s+",""));
+						at[i]= ch1 / ch2;
+					}else{
 						at[i]=Integer.parseInt(aline[1].replaceAll("\\s+",""));
 						i++;
+					}
 				}
 			}catch (StringIndexOutOfBoundsException e){
 			}

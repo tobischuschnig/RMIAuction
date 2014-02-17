@@ -34,10 +34,13 @@ public class PriceSteps implements Serializable{
 
 	@Override
 	public String toString(){
-		String returnment="";
+		String returnment="Min_Price\tMax_Price\tFee_Fixed\tFee_Variable";
+		PriceStep c;
 		for (int x=0;x<priceSteps.size();x++){
-			returnment+=" " +priceSteps.get(x).getStartPrice();
+			c=priceSteps.get(x);
+			returnment+="\n"+c.getStartPrice()+"\t"+c.getEndPrice()+"\t"+c.getFixedPrice()+"\t"+c.getVariablePricePercent();
 		}
+	
 		return returnment;
 	}
 	

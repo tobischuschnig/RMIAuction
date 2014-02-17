@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.undo.StateEdit;
 
-import managmentclient.ManagmentClient;
+import managmentclient.ManagementClient;
 import model.*;
 
 public class AnalyticServer implements AnalyticServerInterface{
@@ -26,7 +26,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	
 	private ConcurrentHashMap<EventType,StatisticsEvent> statisticsEvents;
 	
-	private ConcurrentHashMap<EventType,ArrayList<ManagmentClient>> managementClients;
+	private ConcurrentHashMap<EventType,ArrayList<ManagementClient>> managementClients;
 	//String (previously checked with Pattern compile , ArrayList with users with this regex pattern
 
 	
@@ -245,7 +245,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	/**
 	 * @return the managementClients
 	 */
-	public ConcurrentHashMap<EventType, ArrayList<ManagmentClient>> getManagementClients() {
+	public ConcurrentHashMap<EventType, ArrayList<ManagementClient>> getManagementClients() {
 		return managementClients;
 	}
 
@@ -253,7 +253,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	 * @param managementClients the managementClients to set
 	 */
 	public void setManagementClients(
-			ConcurrentHashMap<EventType, ArrayList<ManagmentClient>> managementClients) {
+			ConcurrentHashMap<EventType, ArrayList<ManagementClient>> managementClients) {
 		this.managementClients = managementClients;
 	}
 	
