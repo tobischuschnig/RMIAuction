@@ -77,17 +77,17 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
                             cli.outln("Access denied for " + werte[1] + " " + werte[2]);
                         }
                     } else {
-                        cli.out("Please enter User like:\n!login Username passwort");
+                        cli.outln("Please enter User like:\n!login <Username> <Passwort>");
                     }
                 } else {
-                    cli.out("Already logged in, logout first!");
+                    cli.outln("Already logged in, logout first!");
                 }
                 // -- STEPS --
             } else if (eingabe.startsWith("!steps")) {
                 if (loggedIn == true) {
                     t.steps();
                 } else {
-                    cli.out("Currently not logged in\nPlease login first");
+                    cli.outln("Currently not logged in\nPlease login first");
                 }
                 // -- ADDSTEP --
             } else if (eingabe.startsWith("!addstep")) {
@@ -104,14 +104,15 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
                                cli.outln("Cannot add Pricestep. Check Input.");
                            }
                         } catch (NumberFormatException e) {
-                            cli.out("Values entered incorrect");
+                            cli.outln("Values entered incorrect");
+                            cli.outln("Please enter command like:\n!addstep <Min_Price> <Max_Price> <Fee_Fixed> <Fee_Variable>!removeStep <startPrice> <endPrice>");
                         }
                         
                     } else {
-                        cli.out("Please enter ID and Amount like:\n!bid ID Amount");
+                        cli.outln("Please enter command like:\n!addstep <Min_Price> <Max_Price>	<Fee_Fixed> <Fee_Variable>!removeStep <startPrice> <endPrice>");
                     }
                 } else {
-                    cli.out("Currently not logged in\nPlease login first");
+                    cli.outln("Currently not logged in\nPlease login first");
                 }
         // -- REMOVE STEPS --
             } else if (eingabe.startsWith("!removestep")) {
@@ -128,12 +129,13 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
                            }
                         } catch (NumberFormatException e) {
                             cli.out("Values entered incorrect");
+                            cli.outln("Please enter !removeStep like:\n!removeStep <startPrice> <endPrice>");
                         }
                     } else {
-                        cli.out("Please enter ID and Amount like:\n!bid ID Amount");
+                        cli.outln("Please enter !removeStep like:\n!removeStep <startPrice> <endPrice>");
                     }
                 } else {
-                    cli.out("Currently not logged in\nPlease login first");
+                    cli.outln("Currently not logged in\nPlease login first");
                 }
                 // -- BILL --
             } else if (eingabe.startsWith("!bill")) {
@@ -147,13 +149,14 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
                                 cli.outln("No Bill found");
                             }
                         } catch (NumberFormatException e) {
-                            cli.out("Values entered incorrect");
+                            cli.outln("Values entered incorrect");
+                            cli.outln("Please enter !bill like:\n!bill <userName>");
                         }
                     } else {
-                        cli.out("Please enter ID and Amount like:\n!bid ID Amount");
+                        cli.outln("Please enter !bill like:\n!bill <userName>");
                     }
                 } else {
-                    cli.out("Currently not logged in\nPlease login first");
+                    cli.outln("Currently not logged in\nPlease login first");
                 }
                 // -- LOGOUT --
             } else if (eingabe.startsWith("!logout")) {
@@ -162,7 +165,7 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
                     username = "";
                     loggedIn = false;
                 } else {
-                    cli.out("Logout not possible, not logged in!");
+                    cli.outln("Logout not possible, not logged in!");
                 }
             } // befehle analytics server
             // -- SUBSCRIBE --
@@ -173,8 +176,11 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
                         try {
                             t.subscribe(werte[1]);
                         } catch (NumberFormatException e) {
-                            cli.out("Values entered incorrect");
+                            cli.outln("Values entered incorrect");
                         }
+                    }else{
+                        cli.outln("Please enter !subscribe like:\n!subscribe "
+                                + "<filterRegex>\nExample: !subscribe '(USER_.*)|(BID_.*)'");
                     }
                 }
                 // -- UNSUBSCRIBE --
@@ -185,8 +191,10 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
                         try {
                             t.unsubscribe(Integer.parseInt(werte[1]));
                         } catch (NumberFormatException e) {
-                            cli.out("Values entered incorrect");
+                            cli.outln("Values entered incorrect");
                         }
+                    }else{
+                        cli.outln("Please enter !unsubscribe like:\n!unsubscribe <subscriptionID>");
                     }
                 }
             } // befehle ausgabe modus
@@ -200,7 +208,7 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
             else if (eingabe.startsWith("!end")) {
                 active = false;
             } else {
-                cli.out("Could not recognize input\nPlease try again");
+                cli.outln("Could not recognize input\nPlease try again");
             }
         }
     }

@@ -36,7 +36,7 @@ public class TaskExecuter {
             System.exit(0);
         }
         try {
-            obja = (AnalyticServerInterface) Naming.lookup(analyticsServer);
+          //  obja = (AnalyticServerInterface) Naming.lookup(analyticsServer);
         } catch (Exception ex) {
             cli.outln("Client exit: Cannot connect to AnalyticsServer." + "\n(" + ex.getMessage() + ")");
             System.exit(0);
@@ -93,7 +93,6 @@ public class TaskExecuter {
      */
     public boolean addStep(double startPrice, double endPrice, double fixedPrice,
             double variablePricePercent) {
-        cli.outln("addstep");
         boolean ret = false;
         try {
             ret = secure.createPriceStep(startPrice, endPrice, fixedPrice, fixedPrice);
@@ -145,7 +144,7 @@ public class TaskExecuter {
         try {
             cli.outln("Subscribe: ");
             // TODO filter pruefen ?
-            cli.outln(obja.suscribe(filter));
+            cli.outln(obja.subscribe(filter));
         } catch (Exception ex) {
         }
 
@@ -158,7 +157,7 @@ public class TaskExecuter {
     public void unsubscribe(int subscriptionID) {
         cli.outln("Unsubscribe:");
         try {
-            obja.unsuscribe("" + subscriptionID);
+            obja.unsubscribe("" + subscriptionID);
         } catch (Exception ex) {
         }
 
