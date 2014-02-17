@@ -12,8 +12,8 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 
 @RunWith(Suite.class)
-@SuiteClasses({ server.test.AuctionHandlerTest.class, server.test.ServerTest.class, analyticserver.junit.AnalyticsServerTest.class,
-	billingServer.junit.BillingServerTest.class,billingServer.junit.BillingServerSecureTest.class,managmentclient.junit.ManagementClientTest.class,model.test.AuctionTest.class,
+@SuiteClasses({ server.test.AuctionHandlerTest.class, server.test.ServerTest.class, analyticserver.junit.AnalyticsServerTest.class, analyticserver.junit.EventHandlerTest.class,
+	billingServer.junit.BillingServerTest.class,billingServer.junit.BillingServerSecureTest.class,model.test.AuctionTest.class,
 	model.test.UserTest.class})
 public class AllTest {
 
