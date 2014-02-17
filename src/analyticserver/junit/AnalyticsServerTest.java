@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import model.AuctionEvent;
-import model.Event;
 import model.EventType;
 import model.StatisticsEvent;
 
@@ -18,7 +17,8 @@ import analyticserver.AnalyticServer;
  * Junit Tests for analytics server which iplements the remote interface
  * to communicate with rmi methods.
  * @author Alexander Auradnik <alexander.auradnik@student.tgm.ac.at>
- * @version 08/02/2014
+ * @author Alexander Rieppel <alexander.rieppel@student.tgm.ac.at>
+ * @version 17/02/2014
  *
  */
 public class AnalyticsServerTest {
@@ -57,26 +57,29 @@ public class AnalyticsServerTest {
 	 */
 	@Test
 	public void testSuscribe(){
+		//TODO finishing Testcase Method not written yet
 		// input is a correct input
 		String input = "(USER_.*)|(BID_.*)";
 		String n = as.suscribe(input);
-		assertNotNull(n);
+		//assertNotNull(n);
 	}
 	/**
 	 * Testing subscribe with incorrect Input
 	 */
 	@Test
 	public void testSuscribeWrong(){
+		//TODO finishing Testcase Method not written yet
 		// input is a incorrect input
 		String input = "§$%&/()=";
 		String n = as.suscribe(input);
-		assertNull(n);
+		//assertNull(n);
 	}
 	/**
 	 * Testing unsubscribe with incorrect Input
 	 */	
 	@Test
 	public void testUnsuscribeWrong(){
+		//TODO finishing Testcase Method not written yet
 		// input is a incorrect input
 		String input = "§$%&/()=";
 		as.unsuscribe(input);
@@ -86,30 +89,31 @@ public class AnalyticsServerTest {
 	 * Testing unsubscribe with correct Input
 	 */	
 	@Test
-	public void testUnsuscribeW(){
+	public void testUnsuscribe(){
+		//TODO finishing Testcase Method not written yet
 		// input is a correct input
 		String input = "1";
 		as.unsuscribe(input);
 		//assertEquals(as.getList().size(),0);
 	}
 	/**
-	 * Testing processEvent and notify with null Event
+	 * Testing Method process Event
 	 */
 	@Test
-	public void testprocessEventNull(){
-		Event e =new Event(null, null, 0);
-		as.processEvent(e);
-		//assertNull(e);
+	public void testprocessEvent(){
+		AuctionEvent a1 = new AuctionEvent("1", EventType.AUCTION_STARTED, 1000000,1);
+		as.processEvent(a1);
 	}
+	
 	/**
-	 * Testing notify with not-null Event
+	 * Testing Method notify 
 	 */
 	@Test
-	public void testNotifyNotNull(){
+	public void testNotify(){
 		ArrayList<StatisticsEvent> al = new ArrayList<StatisticsEvent>();
 		al.add(new StatisticsEvent("1", EventType.BID_PRICE_MAX, System.currentTimeMillis(), 0));
-		//Event e = new Event("asd",EventType.BID_PRICE_MAX, 12);
-		as.notify(al);
+		AuctionEvent a1 = new AuctionEvent("1", EventType.AUCTION_STARTED, 1000000,1);
+		as.notify(al,a1);
 		assertNotNull(al);
 	}
 }

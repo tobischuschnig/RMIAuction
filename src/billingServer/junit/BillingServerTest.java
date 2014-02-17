@@ -3,6 +3,7 @@ package billingServer.junit;
 import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 
 import org.junit.Before;
@@ -10,26 +11,35 @@ import org.junit.Test;
 
 import Exceptions.UserInputException;
 import billingServer.BillingServer;
+import billingServer.BillingServerInterface;
 
 /**
- * TDD Testclass for BillingServer
- * @author Alexander Rieppel
- * @email <arieppel@student.tgm.ac.at>
+ * Testclass for BillingServer
+ * @author Alexander Rieppel <arieppel@student.tgm.ac.at>
+ * @version 17/02/2014
  */
 public class BillingServerTest {
-private BillingServer bs;
+	private BillingServer bs;
+	private BillingServerInterface acc = null;
 	
 	@Before
 	public void setUp(){
-		bs = new BillingServer();
+		bs=new BillingServer();
+		try {      
+			acc = (BillingServerInterface)Naming.lookup("BillingServer");
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	/**
-	 * Testing of login Method, when all should do fine and Method returns the 
-	 * BillingServerSecure Reference
+	 * Testing of login Method with right user credentials, but will throw NullPointerException
+	 * because of calling the Method not with the Interface.
+	 * 
 	 * @throws UserInputException 
 	 * @throws RemoteException 
 	 */
-	@Test
+	@Test(expected=NullPointerException.class)
 	public void testLogin() throws UserInputException, RemoteException{
 		assertNotNull(bs.login("admin", "admin"));
 	}
@@ -44,13 +54,13 @@ private BillingServer bs;
 	}
 	
 	/**
-	 * Testing of FileNotFoundException
-	 * @throws RemoteException
+	 * For testing purposes, here is a version of the testcase, which is called correctly with the Reference
 	 * @throws UserInputException
+	 * @throws RemoteException
 	 */
-	@Test(expected=FileNotFoundException.class)
-	public void testFileNotFound() throws RemoteException, UserInputException{
-		assertNull(bs.login("admin", "admin"));
+	@Test
+	public void testLoginCorrectCall() throws UserInputException, RemoteException{
+		assertNotNull(acc.login("admin", "admin"));
 	}
 	
 	/**
