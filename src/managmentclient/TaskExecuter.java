@@ -20,22 +20,27 @@ public class TaskExecuter {
     private BillingServerInterface objb;
     private AnalyticServerInterface obja;
     private BillingServerSecureInterface secure;
+    private CLI cli;
     // not in use yet
-    private ManagmentClient c;
+    private ManagementClient c;
 
-    public TaskExecuter(ManagmentClient c, String billingServer, String analyticsServer) {
+    public TaskExecuter(ManagementClient c, String billingServer, String analyticsServer) {
         this.c = c;
+        cli = new CLI();
+        secure = null;
+        // example: objb = (RMI_Billing)Naming.lookup("//localhost/RmiServer");
         try {
-            // example: objb = (RMI_Billing)Naming.lookup("//localhost/RmiServer");
             objb = (BillingServerInterface) Naming.lookup(billingServer);
-            // TODO ! Remove this
-            // obja = (AnalyticServerInterface) Naming.lookup(analyticsServer);
-            secure = null;
         } catch (Exception ex) {
-            System.out.println("Client exit: Cannot connect." + "\n(" + ex.getMessage() + ")");
+            cli.outln("Client exit: Cannot connect to BillingServer." + "\n(" + ex.getMessage() + ")");
             System.exit(0);
         }
-
+        try {
+            obja = (AnalyticServerInterface) Naming.lookup(analyticsServer);
+        } catch (Exception ex) {
+            cli.outln("Client exit: Cannot connect to AnalyticsServer." + "\n(" + ex.getMessage() + ")");
+            System.exit(0);
+        }
     }
 
     /**
@@ -45,7 +50,7 @@ public class TaskExecuter {
     public void logout(String username) {
         // TODO update this ?  
         secure = null;
-        System.out.println("logout " + username);
+        cli.outln("logout " + username);
     }
 
     /**
@@ -73,7 +78,7 @@ public class TaskExecuter {
     public void steps() {
         try {
             // PriceSteps ps = secure.getPriceSteps();
-            System.out.println("Price Steps:\n" + secure.getPriceSteps().toString());
+            cli.outln("Price Steps:\n" + secure.getPriceSteps().toString());
         } catch (RemoteException ex) {
         }
     }
@@ -88,7 +93,7 @@ public class TaskExecuter {
      */
     public boolean addStep(double startPrice, double endPrice, double fixedPrice,
             double variablePricePercent) {
-        System.out.println("addstep");
+        cli.outln("addstep");
         boolean ret = false;
         try {
             ret = secure.createPriceStep(startPrice, endPrice, fixedPrice, fixedPrice);
@@ -104,7 +109,7 @@ public class TaskExecuter {
      * @return result of remote operation
      */
     public boolean remove(double startPrice, double endPrice) {
-        System.out.println("remove");
+        cli.outln("remove");
         boolean ret = false;
         try {
             ret = secure.deletePriceStep(startPrice, endPrice);
@@ -119,13 +124,13 @@ public class TaskExecuter {
      * @param username 
      */
     public void bill(String username) {
-        System.out.println("bill");
+        cli.outln("bill");
         try {
             Bill b = secure.getBill(username);
             if (b == null) {
-                System.out.println("No Bills for User " + username);
+                cli.outln("No Bills for User " + username);
             } else {
-                System.out.println(b.getUsername() + " with ID "
+                cli.outln(b.getUsername() + " with ID "
                         + b.getAuctionID() + ", Price: " + b.getPrice());
             }
         } catch (RemoteException ex) {
@@ -138,9 +143,9 @@ public class TaskExecuter {
      */
     public void subscribe(String filter) {
         try {
-            System.out.println("subscribe");
+            cli.outln("Subscribe: ");
             // TODO filter pruefen ?
-            System.out.println(obja.subscribe(filter));
+            cli.outln(obja.subscribe(filter));
         } catch (Exception ex) {
         }
 
@@ -151,7 +156,7 @@ public class TaskExecuter {
      * @param subscriptionID 
      */
     public void unsubscribe(int subscriptionID) {
-        System.out.println("unsubscribe");
+        cli.outln("Unsubscribe:");
         try {
             obja.unsubscribe("" + subscriptionID);
         } catch (Exception ex) {

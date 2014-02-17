@@ -1,7 +1,6 @@
 package managmentclient;
 
 import java.io.Serializable;
-import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -12,20 +11,18 @@ import java.util.Queue;
 import java.util.Scanner;
 
 
-import model.Event;
-
 /**
  * 
  * @author alexander auradnik <alexander.auradnik@student.tgm.ac.at>
  * @author Alexander Rieppel <alexander.rieppel@student.tgm.ac.at>
  * @version 2014-02-14
  */
-public class ManagmentClient implements ManagmentClientInterface,Serializable, Runnable {
+public class ManagementClient implements ManagementClientInterface,Serializable, Runnable {
 
     private String username;
     private boolean loggedIn;
     private boolean active;
-    private Queue<Event> unprintedMessages; //Falsch: ArrayList<String> Tobias Schuschnig
+    private Queue<String> unprintedMessages;
     private boolean autoprint;
     private CLI cli;
     private TaskExecuter t;
@@ -35,8 +32,8 @@ public class ManagmentClient implements ManagmentClientInterface,Serializable, R
      * @param billing Address of Remote BillingServer
      * @param analytics Address of Remote AnalyticsServer
      */
-    public ManagmentClient(String billing, String analytics) {
-        unprintedMessages = new LinkedList<Event>();
+    public ManagementClient(String billing, String analytics) {
+        unprintedMessages = new LinkedList<String>();
         active = true;
         loggedIn = false;
         username = "";
@@ -48,7 +45,7 @@ public class ManagmentClient implements ManagmentClientInterface,Serializable, R
     @Override
     // TODO Testing and optimize this
     public void run() {
-        System.out.println("Client startet");
+        cli.outln("Client startet");
         String eingabe = "";
         Scanner in;
         in = new Scanner(System.in);
@@ -73,14 +70,14 @@ public class ManagmentClient implements ManagmentClientInterface,Serializable, R
                     if (werte.length == 3) {
                         boolean b = t.login(werte[1], werte[2]);
                         if (b) {
-                            System.out.println("Successfully logged in as " + werte[1]);
+                            cli.outln("Successfully logged in as " + werte[1]);
                             loggedIn = true;
                             username = werte[1];
                         } else {
-                            System.out.println("Access denied for " + werte[1] + " " + werte[2]);
+                            cli.outln("Access denied for " + werte[1] + " " + werte[2]);
                         }
                     } else {
-                        cli.out("Please enter User like:\n!login Username password");
+                        cli.out("Please enter User like:\n!login Username passwort");
                     }
                 } else {
                     cli.out("Already logged in, logout first!");
@@ -102,9 +99,9 @@ public class ManagmentClient implements ManagmentClientInterface,Serializable, R
                            b = t.addStep(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]),
                                     Double.parseDouble(werte[3]), Double.parseDouble(werte[4]));
                            if(b){
-                               System.out.println("Pricestep added successfully");
+                               cli.outln("Pricestepp added successfully");
                            }else{
-                               System.out.println("Cannot add Pricestep. Check Input.");
+                               cli.outln("Cannot add Pricestep. Check Input.");
                            }
                         } catch (NumberFormatException e) {
                             cli.out("Values entered incorrect");
@@ -125,9 +122,9 @@ public class ManagmentClient implements ManagmentClientInterface,Serializable, R
                             boolean b = false;
                             b = t.remove(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]));
                             if(b){
-                               System.out.println("Pricestepp removed successfully");
+                               cli.outln("Pricestepp removed successfully");
                            }else{
-                               System.out.println("Cannot remove Pricestep. Check Input.");
+                               cli.outln("Cannot remove Pricestep. Check Input.");
                            }
                         } catch (NumberFormatException e) {
                             cli.out("Values entered incorrect");
@@ -147,7 +144,7 @@ public class ManagmentClient implements ManagmentClientInterface,Serializable, R
                             boolean b = false;
                             t.bill(werte[1]);
                             if(!b){
-                                System.out.println("No Bill found");
+                                cli.outln("No Bill found");
                             }
                         } catch (NumberFormatException e) {
                             cli.out("Values entered incorrect");
@@ -228,11 +225,10 @@ public class ManagmentClient implements ManagmentClientInterface,Serializable, R
     public void print() {
         Iterator it = unprintedMessages.iterator();
         while (it.hasNext()) {
-            Event iteratorValue = (Event) it.next();
-            // TODO optimize output format
-            System.out.println(iteratorValue.getTimestamp() + " " + iteratorValue.getType() + " with ID " + iteratorValue.getID());
+            String iteratorValue = (String) it.next();
+            cli.outln("Event: "+iteratorValue);
         }
-        unprintedMessages = new LinkedList<Event>();
+        unprintedMessages = new LinkedList<String>();
         
     }
 
@@ -242,13 +238,13 @@ public class ManagmentClient implements ManagmentClientInterface,Serializable, R
      */
     public boolean startService() {
         try {
-            ManagmentClientInterface stub = (ManagmentClientInterface) UnicastRemoteObject.exportObject(this, 0);
+            ManagementClientInterface stub = (ManagementClientInterface) UnicastRemoteObject.exportObject(this, 0);
             Registry registry = LocateRegistry.getRegistry();
             // setting up Name of Remote
             registry.rebind("ManagmentClient", stub);
-            System.out.println("Service bound");
+            cli.outln("Service bound");
         } catch (RemoteException ex) {
-            System.out.println("Error: "+ex.getMessage());
+            cli.outln("Error: "+ex.getMessage());
             return false;
         }
         return true;
@@ -259,11 +255,11 @@ public class ManagmentClient implements ManagmentClientInterface,Serializable, R
      * @param event incoming Server-Event
      */
     @Override
-    public void processEvent(Event event) {
+    public void processEvent(String event) {
         // direct output      
         if (autoprint == true) {
             // TODO optimize output format
-            System.out.println(event.getTimestamp() + " " + event.getType() + " with ID " + event.getID());
+            cli.outln("Event: "+event);
             // message-save mode
         } else {
             unprintedMessages.add(event);
@@ -315,14 +311,14 @@ public class ManagmentClient implements ManagmentClientInterface,Serializable, R
     /**
      * @return the unprintedMessages
      */
-    public Queue<Event> getUnprintedMessages() {
+    public Queue<String> getUnprintedMessages() {
         return unprintedMessages;
     }
 
     /**
      * @param unprintedMessages the unprintedMessages to set
      */
-    public void setUnprintedMessages(Queue<Event> unprintedMessages) {
+    public void setUnprintedMessages(Queue<String> unprintedMessages) {
         this.unprintedMessages = unprintedMessages;
     }
 

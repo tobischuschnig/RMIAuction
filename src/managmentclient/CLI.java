@@ -10,10 +10,10 @@ public class CLI implements UI{
 
 	@Override
 	public void out(String output) {
-		System.out.println(output);
+		System.out.print(output);
 	}
 	@Override
 	public void outln(String output){
-		System.out.print(output);
+		System.out.println(output);
 	}
 }
