@@ -49,7 +49,6 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 	 * @return boolean	true, if the new pricestep has been successfully set. otherwise throw RemoteException
 	 */
 	public boolean createPriceStep(double startPrice, double endPrice, double fixedPrice, double variablePricePercent) throws RemoteException{
-		priceSteps = new PriceSteps();
 		boolean overlaped = false;
 		ConcurrentHashMap<Integer,PriceStep> psTemp = priceSteps.getPriceSteps();
 		if(startPrice < 0 || endPrice < 0 || fixedPrice < 0 || variablePricePercent < 0)
@@ -89,9 +88,9 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 		while(it.hasNext()){
 			int key = it.next();
 			PriceStep temp = psTemp.get(key);
-			
 			if(temp.getStartPrice() == startPrice && temp.getEndPrice() == endPrice ){
 				psTemp.remove(key);
+				//priceSteps.getPriceSteps().remove(
 				return true;
 			}
 		}

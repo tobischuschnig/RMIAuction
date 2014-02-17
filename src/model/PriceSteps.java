@@ -36,11 +36,15 @@ public class PriceSteps implements Serializable{
 	public String toString(){
 		String returnment="Min_Price\tMax_Price\tFee_Fixed\tFee_Variable";
 		PriceStep c;
+		System.out.println(priceSteps.size());
+		try{
 		for (int x=0;x<priceSteps.size();x++){
 			c=priceSteps.get(x);
 			returnment+="\n"+c.getStartPrice()+"\t"+c.getEndPrice()+"\t"+c.getFixedPrice()+"\t"+c.getVariablePricePercent();
 		}
-	
+		}catch (NullPointerException e){
+			return returnment;
+		}
 		return returnment;
 	}
 	
