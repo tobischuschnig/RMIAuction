@@ -25,7 +25,7 @@ public class ManagmentClient implements ManagmentClientInterface, Runnable {
     private String username;
     private boolean loggedIn;
     private boolean active;
-    private Queue<Event> unprintedMessages;
+    private Queue<Event> unprintedMessages; //Falsch: ArrayList<String> Tobias Schuschnig
     private boolean autoprint;
     private CLI cli;
     private TaskExecuter t;
