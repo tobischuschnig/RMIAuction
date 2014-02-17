@@ -21,7 +21,7 @@ public class EventHandler {
 	}
 	
 	public ArrayList<StatisticsEvent> execute(Event event) {
-		if(event instanceof AuctionEvent) { //fertig
+		if(event instanceof AuctionEvent) { //Auction started or ended
 			if (event.getType().equals(EventType.AUCTION_STARTED)) {
 				a.getAuctionEventsStarted().put(((AuctionEvent) event).getAuctionID(), (AuctionEvent) event);
 			} else {
@@ -30,7 +30,7 @@ public class EventHandler {
 			}
 			
 		}
-		else if(event instanceof UserEvent) {
+		else if(event instanceof UserEvent) { //User Login logout or Disconnect
 			if (event.getType().equals(EventType.USER_LOGIN)) {
 				if (a.getUserEventsLogin().get(((UserEvent) event).getUserName()) == null) {
 					ArrayList<UserEvent> wert = new ArrayList();
@@ -51,7 +51,7 @@ public class EventHandler {
 				}
 			}
 		
-		}else if(event instanceof BidEvent) { //fertig
+		}else if(event instanceof BidEvent) { //Normal Bid
 			if(event.getType().equals(EventType.BID_PLACED)) {
 				if (a.getBidEvents().get(((BidEvent) event).getAuctionID()) == null) {
 					ArrayList<BidEvent> wert = new ArrayList();
@@ -64,7 +64,7 @@ public class EventHandler {
 					return calculateBidEvents.calculate(event);
 				}
 				
-			} else if(event.getType().equals(EventType.BID_OVERBID)) {
+			} else if(event.getType().equals(EventType.BID_OVERBID)) { //Overbid
 				if (a.getBidEventsOverbid().get(((BidEvent) event).getAuctionID()) == null) {
 					ArrayList<BidEvent> wert = new ArrayList();
 					wert.add((BidEvent) event);

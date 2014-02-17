@@ -1,13 +1,16 @@
 package managmentclient.junit;
 
 import static org.junit.Assert.*;
+import managmentclient.CLI;
 import managmentclient.ManagmentClient;
+import managmentclient.TaskExecuter;
 import model.Event;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Queue;
 
 import org.junit.*;
 
@@ -22,7 +25,7 @@ public class ManagementClientTest {
 	
 	@Before
 	public void setUp(){
-		mc = new ManagmentClient("0.0.0.0", "0.0.0.0");
+		mc = new ManagmentClient("127.0.0.1", "127.0.0.1");
 	}
 	
 	/**
@@ -31,7 +34,7 @@ public class ManagementClientTest {
 	@Test
 	public void testAuto(){
 		mc.auto();
-		assertTrue(mc.getAutoprint());
+		assertTrue(mc.isAutoprint());
 	}
 	
 	/**
@@ -40,14 +43,14 @@ public class ManagementClientTest {
 	@Test
 	public void testHide(){
 		mc.hide();
-		assertFalse(mc.getAutoprint());
+		assertFalse(mc.isAutoprint());
 	}
 	/**
 	 * Testing of processEvent Method, when autoprint equals true and no Events are written to the Queue
 	 */
 	@Test
 	public void testProcessEventAutoPrint(){
-		Event e = new Event();
+		Event e = new Event(null, null, 0);
 		mc.setAutoprint(true);
 		mc.processEvent(e);
 		assertEquals(mc.getUnprintedMessages().size(),0);
@@ -57,7 +60,7 @@ public class ManagementClientTest {
 	 */
 	@Test
 	public void testProcessEventHide(){
-		Event e = new Event();
+		Event e = new Event(null, null, 0);
 		mc.setAutoprint(false);
 		mc.processEvent(e);
 		assertEquals(mc.getUnprintedMessages().size(),1);
@@ -84,9 +87,95 @@ public class ManagementClientTest {
 	 */
 	@Test(expected=RemoteException.class)
 	public void testStartServiceFalseBinding(){
-		mc.setBillingAddress("10.0.0.1");
-		mc.setRemoteAddress("10.0.0.2");
-		assertFalse(mc.startService());
+		ManagmentClient mc1 = new ManagmentClient("10.0.0.1","10.0.0.2");
+		assertFalse(mc1.startService());
+	}
+	
+	/**
+	 * Testing of the run Method
+	 */
+	@Test
+	public void testRun(){
+		mc.setActive(true);
+		mc.run();
+	}
+	
+	/**
+	 * Testing of the run Method with loggedIn true
+	 */
+	@Test
+	public void testRun1(){
+		mc.setActive(true);
+		mc.setLoggedIn(true);
+		mc.run();
+	}
+	
+	
+	/**
+	 * Testing of print Method
+	 */
+	@Test
+	public void testPrint(){
+		Queue<Event> um = new LinkedList<Event>();
+		Event e = new Event(null, null, 0);
+		Event e1 = new Event(null, null, 0);
+		um.add(e);
+		um.add(e1);
+		mc.setUnprintedMessages(um);
+		mc.print();
+		assertEquals(mc.getUnprintedMessages().size(),2);
+	}
+	
+	/**
+	 * Testing of username Getters and Setters Methods
+	 */
+	@Test
+	public void testSetUsername(){
+		mc.setUsername("asd");
+		assertEquals("asd",mc.getUsername());
+	}
+	/**
+	 * Testing of LoggedIn Getters and Setters Methods
+	 */
+	@Test
+	public void testSetLoggedIn(){
+		mc.setLoggedIn(true);
+		assertEquals(true,mc.isLoggedIn());
+	}
+	/**
+	 * Testing of Active Getters and Setters Methods
+	 */
+	@Test
+	public void testSetActive(){
+		mc.setActive(true);
+		assertEquals(true,mc.isActive());
+	}
+	/**
+	 * Testing of UnprintedMessages Getters and Setters Methods
+	 */
+	@Test
+	public void testSetUnprintedMessages(){
+		Queue<Event> q = null;
+		mc.setUnprintedMessages(q);
+		assertEquals(q,mc.getUnprintedMessages());
+	}
+	/**
+	 * Testing of CLI Getters and Setters Methods
+	 */
+	@Test
+	public void testSetCli(){
+		CLI cli = new CLI();
+		mc.setCli(cli);
+		assertEquals(cli,mc.getCli());
+	}
+	/**
+	 * Testing of TaskExecuter Getters and Setters Methods
+	 */
+	@Test
+	public void testSetTaskExecuter(){
+		TaskExecuter te = null;
+		mc.setT(te);
+		assertEquals(te,mc.getT());
 	}
 }
 

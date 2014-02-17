@@ -2,6 +2,12 @@ package analyticserver.junit;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
+import model.Event;
+import model.EventType;
+import model.StatisticsEvent;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -73,6 +79,7 @@ public class AnalyticsServerTest {
 		// input is a incorrect input
 		String input = "§$%&/()=";
 		as.unsuscribe(input);
+		//assertEquals(as.getList().size(),1);
 	}
 	/**
 	 * Testing unsubscribe with correct Input
@@ -82,12 +89,26 @@ public class AnalyticsServerTest {
 		// input is a correct input
 		String input = "1";
 		as.unsuscribe(input);
+		//assertEquals(as.getList().size(),0);
 	}
-	/*
-	 * Testing successfall call of the methode calculate()
+	/**
+	 * Testing processEvent and notify with null Event
 	 */
 	@Test
-	public void testCalculate(){
-		as.claculate();
-	}	
+	public void testprocessEventNull(){
+		Event e =new Event(null, null, 0);
+		as.processEvent(e);
+		//assertNull(e);
+	}
+	/**
+	 * Testing notify with not-null Event
+	 */
+	@Test
+	public void testNotifyNotNull(){
+		ArrayList<StatisticsEvent> al = new ArrayList<StatisticsEvent>();
+		al.add(new StatisticsEvent("1", EventType.BID_PRICE_MAX, System.currentTimeMillis(), 0));
+		//Event e = new Event("asd",EventType.BID_PRICE_MAX, 12);
+		as.notify(al);
+		assertNotNull(al);
+	}
 }
