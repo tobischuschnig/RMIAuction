@@ -84,7 +84,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 
 	@Override
 	public void processEvent(Event event) {
-		notify(eventHandler.execute(event));
+		notify(eventHandler.execute(event),event);
 	} 
 
 	
@@ -96,7 +96,8 @@ public class AnalyticServer implements AnalyticServerInterface{
 	}
 	
 	//TODO An Management Client Schicken
-	public void notify(ArrayList<StatisticsEvent> events) {
+	public void notify(ArrayList<StatisticsEvent> events,Event event) {
+		//TODO es muessen alle events ausgebbar sein
 		if(events != null) {
 			for(int i = 0; i < events.size();i++) {
 				System.out.println(events.get(i).getType()+"             "+events.get(i).getValue());

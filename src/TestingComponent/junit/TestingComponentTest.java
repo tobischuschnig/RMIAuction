@@ -3,7 +3,8 @@ package TestingComponent.junit;
 import org.junit.Before;
 import org.junit.Test;
 
-import TestingComponent.TestingComponent;
+import testingComponent.TestingComponent;
+
 
 /**
  * Testclass for TestingComponent

@@ -34,7 +34,7 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 	private ArrayList<StatisticsEvent> calculateBidEventAverageTime() {
 		// einfach nur schauen groesse jeder arraylist zu einer Variable hinzufuegen
 		// Differenz! in Minuten am besten
-		// Bids / Minuten = Bid Count per Minute
+		// Bids / Minuten = Bid Count per Minute 
 		//Ausnahme wenn minute null 
 		//Bid Time Average berechnen
 		Set<Integer> wert = a.getBidEvents().keySet();
@@ -62,7 +62,7 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 		try {
 			while(true) {
 				Thread.sleep(60000);
-				a.notify(this.calculateBidEventAverageTime());
+				a.notify(this.calculateBidEventAverageTime(),null); //TODO passt das hier mit null?
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
