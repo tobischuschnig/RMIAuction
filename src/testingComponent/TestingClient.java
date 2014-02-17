@@ -16,7 +16,7 @@ public class TestingClient{
 
 	private int auctionsPerMin;
 
-	private int auctionDuration;
+	private long auctionDuration;
 
 	private int updateIntervalSec;
 
@@ -34,7 +34,7 @@ public class TestingClient{
 	 * @param updateIntervalSec
 	 * @param bidsPerMin
 	 */
-	public TestingClient(int clientID, int auctionsPerMin, int auctionDuration, int updateIntervalSec, int bidsPerMin) {
+	public TestingClient(int clientID, int auctionsPerMin, long auctionDuration, int updateIntervalSec, int bidsPerMin) {
 		this.clientID = clientID;
 		this.auctionsPerMin = auctionsPerMin;
 		this.auctionDuration = auctionDuration;
@@ -56,5 +56,57 @@ public class TestingClient{
 	 */
 	public void setAuctionsIDs(ArrayList <Integer> ids){
 		this.auctionsIDs = ids;
+	}
+
+	public int getClients() {
+		return clients;
+	}
+
+	public void setClients(int clients) {
+		this.clients = clients;
+	}
+
+	public int getAuctionsPerMin() {
+		return auctionsPerMin;
+	}
+
+	public void setAuctionsPerMin(int auctionsPerMin) {
+		this.auctionsPerMin = auctionsPerMin;
+	}
+
+	public long getAuctionDuration() {
+		return auctionDuration;
+	}
+
+	public void setAuctionDuration(int auctionDuration) {
+		this.auctionDuration = auctionDuration;
+	}
+
+	public int getUpdateIntervalSec() {
+		return updateIntervalSec;
+	}
+
+	public void setUpdateIntervalSec(int updateIntervalSec) {
+		this.updateIntervalSec = updateIntervalSec;
+	}
+
+	public int getBidsPerMin() {
+		return bidsPerMin;
+	}
+
+	public void setBidsPerMin(int bidsPerMin) {
+		this.bidsPerMin = bidsPerMin;
+	}
+
+	public int getClientID() {
+		return clientID;
+	}
+
+	public void setClientID(int clientID) {
+		this.clientID = clientID;
+	}
+
+	public ArrayList<Integer> getAuctionsIDs() {
+		return auctionsIDs;
 	}
 }

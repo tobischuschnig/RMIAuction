@@ -14,7 +14,10 @@ public class Auction {
 	private Date deadline;
 	private boolean finished;
 	
+	private Date startTime;
+	
 	public Auction(User owner,String description,Long duration){
+		startTime = new Date();
 		highestBid=0.0;
 		this.owner=owner;
 		this.description=description;
@@ -24,6 +27,7 @@ public class Auction {
 	}
 	
 	public Auction(User owner,String description,Long duration, int id){
+		startTime = new Date();
 		highestBid=0.0;
 		this.owner=owner;
 		this.description=description;
@@ -124,5 +128,12 @@ public class Auction {
 	 */
 	public void setFinished(boolean finished) {
 		this.finished = finished;
+	}
+	
+	/**
+	 * @return startTime of the specific Auction 
+	 */
+	public Date getStartTime(){
+		return this.startTime;
 	}
 }
