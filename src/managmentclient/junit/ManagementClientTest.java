@@ -1,18 +1,21 @@
 package managmentclient.junit;
 
-import static org.junit.Assert.*;
-import managmentclient.CLI;
-import managmentclient.ManagmentClient;
-import managmentclient.TaskExecuter;
-import model.Event;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import org.junit.*;
+import managmentclient.CLI;
+import managmentclient.ManagementClient;
+import managmentclient.TaskExecuter;
+import model.Event;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * TDD Testclass for ManagementClient
@@ -21,11 +24,11 @@ import org.junit.*;
  */
 public class ManagementClientTest {
 	
-	private ManagmentClient mc;
+	private ManagementClient mc;
 	
 	@Before
 	public void setUp(){
-		mc = new ManagmentClient("127.0.0.1", "127.0.0.1");
+		mc = new ManagementClient("127.0.0.1", "127.0.0.1");
 	}
 	
 	/**
@@ -50,7 +53,7 @@ public class ManagementClientTest {
 	 */
 	@Test
 	public void testProcessEventAutoPrint(){
-		Event e = new Event(null, null, 0);
+		String e = "USER_LOGIN";
 		mc.setAutoprint(true);
 		mc.processEvent(e);
 		assertEquals(mc.getUnprintedMessages().size(),0);
@@ -60,7 +63,7 @@ public class ManagementClientTest {
 	 */
 	@Test
 	public void testProcessEventHide(){
-		Event e = new Event(null, null, 0);
+		String e = "USER_LOGIN";
 		mc.setAutoprint(false);
 		mc.processEvent(e);
 		assertEquals(mc.getUnprintedMessages().size(),1);
@@ -87,7 +90,7 @@ public class ManagementClientTest {
 	 */
 	@Test(expected=RemoteException.class)
 	public void testStartServiceFalseBinding(){
-		ManagmentClient mc1 = new ManagmentClient("10.0.0.1","10.0.0.2");
+		ManagementClient mc1 = new ManagementClient("10.0.0.1","10.0.0.2");
 		assertFalse(mc1.startService());
 	}
 	
@@ -116,9 +119,9 @@ public class ManagementClientTest {
 	 */
 	@Test
 	public void testPrint(){
-		Queue<Event> um = new LinkedList<Event>();
-		Event e = new Event(null, null, 0);
-		Event e1 = new Event(null, null, 0);
+		Queue<String> um = new LinkedList<String>();
+		String e = "USER_LOGIN";
+		String e1 = "USER_LOGOUT";
 		um.add(e);
 		um.add(e1);
 		mc.setUnprintedMessages(um);
@@ -155,9 +158,9 @@ public class ManagementClientTest {
 	 */
 	@Test
 	public void testSetUnprintedMessages(){
-		Queue<Event> q = null;
-		mc.setUnprintedMessages(q);
-		assertEquals(q,mc.getUnprintedMessages());
+		Queue<String> um = new LinkedList<String>();
+		mc.setUnprintedMessages(um);
+		assertEquals(um,mc.getUnprintedMessages());
 	}
 	/**
 	 * Testing of CLI Getters and Setters Methods

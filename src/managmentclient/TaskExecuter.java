@@ -145,7 +145,7 @@ public class TaskExecuter {
         try {
             cli.outln("Subscribe: ");
             // TODO filter pruefen ?
-            cli.outln(obja.subscribe(filter));
+            cli.outln(obja.suscribe(filter));
         } catch (Exception ex) {
         }
 
@@ -158,7 +158,7 @@ public class TaskExecuter {
     public void unsubscribe(int subscriptionID) {
         cli.outln("Unsubscribe:");
         try {
-            obja.unsubscribe("" + subscriptionID);
+            obja.unsuscribe("" + subscriptionID);
         } catch (Exception ex) {
         }
 

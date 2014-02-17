@@ -125,8 +125,6 @@ public class BillingServer implements BillingServerInterface,Serializable {
 			System.out.println("Err: " + e.getMessage());
 		}
 	}
-
-
 }
 
 

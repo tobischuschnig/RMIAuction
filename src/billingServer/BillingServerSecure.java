@@ -120,4 +120,28 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 			return bills.get(user);
 		else return null;		
 	}
+	
+	/**
+	 * For testing Purposes only
+	 * @param priceSteps the priceSteps to set
+	 */
+	public void setPriceSteps(PriceSteps priceSteps){
+		this.priceSteps=priceSteps;
+	}
+
+	/**
+	 * For testing Purposes only
+	 * @return the bills
+	 */
+	public ConcurrentHashMap<String, Bill> getBills() {
+		return bills;
+	}
+
+	/**
+	 * For testing Purposes only
+	 * @param bills the bills to set
+	 */
+	public void setBills(ConcurrentHashMap<String, Bill> bills) {
+		this.bills = bills;
+	}
 }
