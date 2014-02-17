@@ -5,6 +5,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import analyticserver.EventHandler;
+
 
 /**
  * Fügt mit SuitClasses alle Testcaste klassen zusammen.
@@ -14,6 +16,8 @@ import org.junit.runners.Suite.SuiteClasses;
 // run modus suite
 @RunWith(Suite.class)
 // Klassen auswaehlen: 
-@SuiteClasses({ AnalyticsServerInterfaceTest.class,AnalyticsServerTest.class})
+@SuiteClasses({ AnalyticsServerInterfaceTest.class,AnalyticsServerTest.class,
+	CalculateAuctionEventTest.class,CalculateBidEventsTest.class,CalculateUserEventsTest.class,
+	EventHandler.class})
 
 public class AllTest {}

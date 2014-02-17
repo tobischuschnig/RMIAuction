@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import model.AuctionEvent;
 import model.Event;
 import model.EventType;
 import model.StatisticsEvent;

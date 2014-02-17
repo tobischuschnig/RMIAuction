@@ -2,10 +2,13 @@ package analyticserver.junit;
 
 import static org.junit.Assert.*;
 
+import java.rmi.RemoteException;
+
 import model.Event;
 
 import org.junit.Before;
 import org.junit.Test;
+
 
 
 import analyticserver.AnalyticServerInterface;
@@ -47,17 +50,19 @@ public class AnalyticsServerInterfaceTest {
 	}
 	/**
 	 * Testing null initializeing with process event
+	 * @throws RemoteException 
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testProcessEvent() {
+	public void testProcessEvent() throws RemoteException {
 		asi.processEvent(new Event(null, null, 0));	
 		assertNull(asi);
 	}
 	/**
 	 * Testing null initializeing with unsubscribe
+	 * @throws RemoteException 
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testInsuscribe() {
+	public void testInsuscribe() throws RemoteException {
 		asi.unsuscribe("id");
 		assertNull(asi);
 	}
