@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.undo.StateEdit;
 
+import managmentclient.ManagmentClient;
 import model.*;
 
 public class AnalyticServer implements AnalyticServerInterface{
@@ -24,9 +25,9 @@ public class AnalyticServer implements AnalyticServerInterface{
 	//BidWon: Is generated when the bid has won so there are two generated (or three)
 	
 	private ConcurrentHashMap<EventType,StatisticsEvent> statisticsEvents;
-	private ConcurrentHashMap<String,String> managementClients; //incorect 
-	//Important: first String is an ID for the Management Client
-	// 	private ConcurrentHashMap<String,String> managementClients; //correct but not implemented now
+	
+	private ConcurrentHashMap<EventType,ArrayList<ManagmentClient>> managementClients;
+	//String (previously checked with Pattern compile , ArrayList with users with this regex pattern
 
 	
 	EventHandler eventHandler;
@@ -48,7 +49,6 @@ public class AnalyticServer implements AnalyticServerInterface{
 		
 		managementClients = new ConcurrentHashMap();
 		
-		
 		StatisticsEvent wert1 = new StatisticsEvent("1", EventType.USER_SESSIONTIME_MIN, System.currentTimeMillis(), Double.MAX_VALUE);
 		StatisticsEvent wert2 = new StatisticsEvent("1", EventType.USER_SESSIONTIME_MAX, System.currentTimeMillis(), 0);
 		StatisticsEvent wert3 = new StatisticsEvent("1", EventType.USER_SESSIONTIME_AVG, System.currentTimeMillis(), 0);
@@ -61,14 +61,21 @@ public class AnalyticServer implements AnalyticServerInterface{
 		
 		//TODO weis nicht wie ich die ID's machen soll
 		statisticsEvents.put(EventType.USER_SESSIONTIME_MIN,wert1); //fertig		 //funkt
-		statisticsEvents.put(EventType.USER_SESSIONTIME_MAX,wert2); //fertig			 //funkt
-		statisticsEvents.put(EventType.USER_SESSIONTIME_AVG,wert3); //fertig		     //funkt
-		statisticsEvents.put(EventType.BID_PRICE_MAX,wert4); // fertig                //funkt
-		statisticsEvents.put(EventType.BID_COUNT_PER_MINUTE,wert5); //fertig          //funkt
-		statisticsEvents.put(EventType.AUCTION_TIME_AVG,wert6); // fertig             //funkt
+		statisticsEvents.put(EventType.USER_SESSIONTIME_MAX,wert2); //fertig	     //funkt
+		statisticsEvents.put(EventType.USER_SESSIONTIME_AVG,wert3); //fertig	     //funkt
+		statisticsEvents.put(EventType.BID_PRICE_MAX,wert4); // fertig               //funkt
+		statisticsEvents.put(EventType.BID_COUNT_PER_MINUTE,wert5); //fertig         //funkt
+		statisticsEvents.put(EventType.AUCTION_TIME_AVG,wert6); // fertig            //funkt
 		statisticsEvents.put(EventType.ACUTION_SUCCESS_RATIO,wert7); // fertig		 //funkt
+
 	}
 	
+	//TODO The method returns a unique subscription identifier string. (ANGABE)
+	//TODO Unique ID maybe uuid? (Daniel)
+	//TODO dieser dann als identifier fuer Map?
+	//TODO Braucht Objekt reference
+	//TODO aentweder in ManagementClient auf Regex pruefen oder hier mit Exception
+	//TODO Map mit zwei Keys??
 	@Override
 	public String suscribe(String filter) {
 		// TODO Auto-generated method stub
@@ -80,12 +87,15 @@ public class AnalyticServer implements AnalyticServerInterface{
 		notify(eventHandler.execute(event));
 	} 
 
+	
+	//TODO bekomme nur meine uuid und schaue diese in der Map nach und loesche diese dann
 	@Override
 	public void unsuscribe(String uid) {
 		// TODO Auto-generated method stub
 		
 	}
 	
+	//TODO An Management Client Schicken
 	public void notify(ArrayList<StatisticsEvent> events) {
 		if(events != null) {
 			for(int i = 0; i < events.size();i++) {
