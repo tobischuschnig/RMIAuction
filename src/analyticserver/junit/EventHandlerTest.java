@@ -1,6 +1,6 @@
 package analyticserver.junit;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import model.AuctionEvent;
 import model.BidEvent;
 import model.EventType;
@@ -24,37 +24,45 @@ public class EventHandlerTest {
 	@Test
 	public void calculateTestAuctionStarted(){
 		AuctionEvent a1 = new AuctionEvent("1", EventType.AUCTION_STARTED, 1000000,1);
-		assertEquals(eh.execute(a1).size(),1);
+		assertNull(eh.execute(a1));
 	}
 	
 	@Test
 	public void calculateTestAuctionEnded(){
+		AuctionEvent a1 = new AuctionEvent("1", EventType.AUCTION_STARTED, 1000000,1);
 		AuctionEvent a2 = new AuctionEvent("1", EventType.AUCTION_ENDED,   1000010,1);
-		assertEquals(eh.execute(a2).size(),1);
+		eh.execute(a1);
+		assertEquals(eh.execute(a2).size(),2);
 	}
 	
 	@Test
 	public void calculateTestBidPlaced(){
+		AuctionEvent a1 = new AuctionEvent("1", EventType.AUCTION_STARTED, 1000000,1);
 		BidEvent b1 = new BidEvent("1", EventType.BID_PLACED,1000001 , "b1", 1,  10);
+		eh.execute(a1);
 		assertEquals(eh.execute(b1).size(),1);
 	}
 	
 	@Test
 	public void calculateTestUserLogin(){
 		UserEvent u1 = new UserEvent("1", EventType.USER_LOGIN, 1000000, "u1");
-		assertEquals(eh.execute(u1).size(),1);
+		assertNull(eh.execute(u1));
 	}
 	
 	@Test
 	public void calculateTestUserLogout(){
+		UserEvent u1 = new UserEvent("1", EventType.USER_LOGIN, 1000000, "u1");
 		UserEvent u2 = new UserEvent("1", EventType.USER_LOGOUT,1000010, "u1");
-		assertEquals(eh.execute(u2).size(),1);
+		eh.execute(u1);
+		assertEquals(eh.execute(u2).size(),2);
 	}
 	
 	@Test
 	public void calculateTestUserDisconnected(){
-		UserEvent u2 = new UserEvent("1", EventType.USER_LOGOUT,1000010, "u1");
-		assertEquals(eh.execute(u2).size(),1);
+		UserEvent u1 = new UserEvent("1", EventType.USER_LOGIN, 1000000, "u1");
+		UserEvent u2 = new UserEvent("1", EventType.USER_DISCONNECTED,1000010, "u1");
+		eh.execute(u1);
+		assertEquals(eh.execute(u2).size(),2);
 	}
 	
 	@Test
