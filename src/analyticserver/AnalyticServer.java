@@ -3,6 +3,8 @@ package analyticserver;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import javax.swing.undo.StateEdit;
 
@@ -28,11 +30,32 @@ public class AnalyticServer implements AnalyticServerInterface{
 	
 	private ConcurrentHashMap<EventType,ArrayList<ManagementClient>> managementClients;
 	//String (previously checked with Pattern compile , ArrayList with users with this regex pattern
-
 	
-	EventHandler eventHandler;
+	private ArrayList<String> pattern;
+	
+	private EventHandler eventHandler;
 	
 	public AnalyticServer() {
+		pattern= new ArrayList();
+		pattern.add(EventType.USER_SESSIONTIME_MIN.toString());
+		pattern.add(EventType.USER_SESSIONTIME_MAX.toString());
+		pattern.add(EventType.USER_SESSIONTIME_AVG.toString());
+		pattern.add(EventType.BID_PRICE_MAX.toString());
+		pattern.add(EventType.BID_COUNT_PER_MINUTE.toString());
+		pattern.add(EventType.AUCTION_TIME_AVG.toString());
+		pattern.add(EventType.ACUTION_SUCCESS_RATIO.toString());
+		
+		pattern.add(EventType.AUCTION_STARTED.toString());
+		pattern.add(EventType.AUCTION_ENDED.toString());
+		
+		pattern.add(EventType.USER_LOGIN.toString());
+		pattern.add(EventType.USER_LOGOUT.toString());
+		pattern.add(EventType.USER_DISCONNECTED.toString());
+		
+		pattern.add(EventType.BID_PLACED.toString());
+		pattern.add(EventType.BID_OVERBID.toString());
+		pattern.add(EventType.BID_WON.toString());
+		
 		eventHandler = new EventHandler(this);
 		
 		auctionEventsStarted = new ConcurrentHashMap();
@@ -76,9 +99,19 @@ public class AnalyticServer implements AnalyticServerInterface{
 	//TODO Braucht Objekt reference
 	//TODO aentweder in ManagementClient auf Regex pruefen oder hier mit Exception
 	//TODO Map mit zwei Keys??
+	
+	//TODO hier eigene Exception werfen wenn Pattern nicht stimmt
 	@Override
-	public String suscribe(String filter) {
-		// TODO Auto-generated method stub
+	public String suscribe(String filter) throws PatternSyntaxException {
+		int wert =0;
+		for (int i = 0; i < pattern.size();i++) {
+			if(Pattern.matches("(USER_.*)|(BID_.*)",pattern.get(i))) wert++;
+		}
+		if (wert==0) {
+			throw new InvalidFilterException();
+		} else {
+			
+		}
 		return null;
 	}
 

@@ -1,11 +1,16 @@
 package analyticserver;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import model.EventType;
 
 public class Spielwiese {
 	public static void main(String[] args) {
@@ -34,5 +39,35 @@ public class Spielwiese {
 		System.out.println(wert12-wert13);
 		System.out.println(wert12);
 		System.out.println( new Date().getTime());
+		System.out.println("--------------------------------");
+		ArrayList<String> pattern = new ArrayList();
+		
+		pattern.add(EventType.USER_SESSIONTIME_MIN.toString());
+		pattern.add(EventType.USER_SESSIONTIME_MAX.toString());
+		pattern.add(EventType.USER_SESSIONTIME_AVG.toString());
+		pattern.add(EventType.BID_PRICE_MAX.toString());
+		pattern.add(EventType.BID_COUNT_PER_MINUTE.toString());
+		pattern.add(EventType.AUCTION_TIME_AVG.toString());
+		pattern.add(EventType.ACUTION_SUCCESS_RATIO.toString());
+		
+		pattern.add(EventType.AUCTION_STARTED.toString());
+		pattern.add(EventType.AUCTION_ENDED.toString());
+		
+		pattern.add(EventType.USER_LOGIN.toString());
+		pattern.add(EventType.USER_LOGOUT.toString());
+		pattern.add(EventType.USER_DISCONNECTED.toString());
+		
+		pattern.add(EventType.BID_PLACED.toString());
+		pattern.add(EventType.BID_OVERBID.toString());
+		pattern.add(EventType.BID_WON.toString());
+		
+		Pattern p = Pattern.compile("(USER_.*)|(BID_.*)");
+		
+		for (i = 0; i < pattern.size();i++) {
+			System.out.println(Pattern.matches("(USER_.*)|(BID_.*)",pattern.get(i)));
+			
+			
+		}
+		
 	}
 }
