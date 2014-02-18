@@ -326,7 +326,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	/**
 	 * @return the managementClients
 	 */
-	public ConcurrentHashMap<EventType, ArrayList<ManagementClient>> getManagementClients() {
+	public ConcurrentHashMap<String, ConcurrentHashMap<UUID, ManagementClient>> getManagementClients() {
 		return managementClients;
 	}
 
@@ -334,10 +334,36 @@ public class AnalyticServer implements AnalyticServerInterface{
 	 * @param managementClients the managementClients to set
 	 */
 	public void setManagementClients(
-			ConcurrentHashMap<EventType, ArrayList<ManagementClient>> managementClients) {
+			ConcurrentHashMap<String, ConcurrentHashMap<UUID, ManagementClient>> managementClients) {
 		this.managementClients = managementClients;
 	}
-	
-	
+
+	/**
+	 * @return the pattern
+	 */
+	public ArrayList<String> getPattern() {
+		return pattern;
+	}
+
+	/**
+	 * @param pattern the pattern to set
+	 */
+	public void setPattern(ArrayList<String> pattern) {
+		this.pattern = pattern;
+	}
+
+	/**
+	 * @return the eventHandler
+	 */
+	public EventHandler getEventHandler() {
+		return eventHandler;
+	}
+
+	/**
+	 * @param eventHandler the eventHandler to set
+	 */
+	public void setEventHandler(EventHandler eventHandler) {
+		this.eventHandler = eventHandler;
+	}
 	
 }
