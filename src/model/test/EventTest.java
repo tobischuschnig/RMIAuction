@@ -6,6 +6,12 @@ import model.Event;
 import org.junit.Before;
 import org.junit.Test;
 
+
+/**
+ * Testclass for Event
+ * @author Alexander Rieppel <alexander.rieppel@tgm.ac.at>
+ *
+ */
 public class EventTest {
 	private Event e;
 
@@ -14,4 +20,30 @@ public class EventTest {
 		e = new Event(null, null, 0);
 	}
 
+	/**
+	 * Testing of getID Method in Event
+	 */
+	@Test
+	public void testGetID() {
+		e.setID("asd");
+		assertEquals(e.getID(), "asd");
+	}
+	
+	/**
+	 * Testing of getType Method in Event
+	 */
+	@Test
+	public void testGetType() {
+		e.setType(null);
+		assertEquals(e.getType(), null);
+	}
+	
+	/**
+	 * Testing of getTimestamp Method in Event
+	 */
+	@Test
+	public void testGetTimestamp() {
+		e.setTimestamp(100L);
+		assertEquals(e.getTimestamp(), 100L);
+	}
 }

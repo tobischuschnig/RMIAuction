@@ -7,6 +7,12 @@ import org.junit.Test;
 
 import model.Bill;
 
+
+/**
+ * Testclass for Bill 
+ * @author Alexander Rieppel <alexander.rieppel@tgm.ac.at>
+ *
+ */
 public class BillTest {
 	private Bill b;
 
@@ -20,8 +26,8 @@ public class BillTest {
 	 */
 	@Test
 	public void testGetUsername() {
-		b.setUsername("asd");
-		assertEquals(b.getUsername(), "asd");
+		b.setUser("asd");
+		assertEquals(b.getUser(), "asd");
 	}
 
 	/**
@@ -38,7 +44,7 @@ public class BillTest {
 	 */
 	@Test
 	public void testGetPrice() {
-		b.setPrice(1.0);
-		assertEquals(b.getPrice(), 1.0, 0);
+		b.setStrikePrice(1.0);
+		assertEquals(b.getStrikePrice(), 1.0, 0);
 	}
 }

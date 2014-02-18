@@ -6,6 +6,11 @@ import model.AuctionEvent;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Testclass for AuctionEvent 
+ * @author Alexander Rieppel <alexander.rieppel@tgm.ac.at>
+ *
+ */
 public class AuctionEventTest {
 
 	private AuctionEvent ae, ae1;
