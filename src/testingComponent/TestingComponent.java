@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
+import managmentclient.ManagementClient;
+import managmentclient.TaskExecuter;
+
 /**
  * Class TestingComponent to read the loadtest.properties-File and create the Clients with the Data from the File
  * @author Patrick Poelzlbauer
@@ -13,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TestingComponent {
 
-	//private ManagementClient managementclient;
+	private static ManagementClient managementClient;
 	
 	//private static final boolean StringIndexOutOfBoundsException = false;
 
@@ -105,6 +108,11 @@ public class TestingComponent {
 	 * @param args
 	 */
 	public static void main(String [] args){
+		
+		managementClient = new ManagementClient("BillingServer", "AnalyticsServer");
+		TaskExecuter t = managementClient.getT();
+		t.subscribe(".*");
+		
 		int clientID;
 		TestingClient c;
 		try {
