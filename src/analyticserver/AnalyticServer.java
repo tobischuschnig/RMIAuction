@@ -2,6 +2,9 @@ package analyticserver;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -10,6 +13,7 @@ import javax.swing.undo.StateEdit;
 
 import managmentclient.ManagementClient;
 import model.*;
+import Exceptions.InvalidFilterException;
 
 public class AnalyticServer implements AnalyticServerInterface{
 	
@@ -28,7 +32,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	
 	private ConcurrentHashMap<EventType,StatisticsEvent> statisticsEvents;
 	
-	private ConcurrentHashMap<EventType,ArrayList<ManagementClient>> managementClients;
+	private ConcurrentHashMap<String,ConcurrentHashMap<UUID,ManagementClient>> managementClients;
 	//String (previously checked with Pattern compile , ArrayList with users with this regex pattern
 	
 	private ArrayList<String> pattern;
@@ -102,17 +106,24 @@ public class AnalyticServer implements AnalyticServerInterface{
 	
 	//TODO hier eigene Exception werfen wenn Pattern nicht stimmt
 	@Override
-	public String suscribe(String filter) throws PatternSyntaxException {
+	public String suscribe(String filter, ManagementClient managementClient) throws PatternSyntaxException, InvalidFilterException {
+		UUID uuid = UUID.randomUUID();
 		int wert =0;
 		for (int i = 0; i < pattern.size();i++) {
-			if(Pattern.matches("(USER_.*)|(BID_.*)",pattern.get(i))) wert++;
+			if(Pattern.matches(filter,pattern.get(i))) wert++;
 		}
 		if (wert==0) {
 			throw new InvalidFilterException();
 		} else {
-			
+			if (managementClients.get(filter) == null) {
+				ConcurrentHashMap<UUID, ManagementClient> hilf = new ConcurrentHashMap();
+				hilf.put(uuid, managementClient);
+				managementClients.put(filter, hilf);
+			} else {
+				managementClients.get(filter).put(uuid, managementClient);
+			}
 		}
-		return null;
+		return uuid.toString();
 	}
 
 	@Override
@@ -124,19 +135,55 @@ public class AnalyticServer implements AnalyticServerInterface{
 	//TODO bekomme nur meine uuid und schaue diese in der Map nach und loesche diese dann
 	@Override
 	public void unsuscribe(String uid) {
-		// TODO Auto-generated method stub
+		Set<String> wert = managementClients.keySet();
+		Iterator<String> it = wert.iterator();
+		while(it.hasNext()) {
+			try {
+				managementClients.get(it.next()).remove(uid);
+			} catch(NullPointerException ex) {}
+		}
 		
 	}
 	
 	//TODO An Management Client Schicken
-	public void notify(ArrayList<StatisticsEvent> events,Event event) {
+	public void notify(ArrayList<StatisticsEvent> statisticEvent,Event event) {
 		//TODO es muessen alle events ausgebbar sein
-		if(events != null) {
-			for(int i = 0; i < events.size();i++) {
-				System.out.println(events.get(i).getType()+"             "+events.get(i).getValue());
+//		if(events != null) {
+//			for(int i = 0; i < events.size();i++) {
+//				System.out.println(events.get(i).getType()+"             "+events.get(i).getValue());
+//			}
+//		} else {
+//			System.out.println("null");
+//		}
+		if(event != null) {
+			Set<String> wert = managementClients.keySet();
+			Iterator<String> it = wert.iterator();
+			while(it.hasNext()) {
+				String hilf = it.next();
+				if(Pattern.matches(hilf,event.getType().toString())) {
+					Set<UUID> wert1 = managementClients.get(hilf).keySet();
+					Iterator<UUID> it1 = wert1.iterator();
+					while(it1.hasNext()) {
+						managementClients.get(hilf).get(it1.next()).processEvent(event.toString());
+					}
+				}
 			}
-		} else {
-			System.out.println("null");
+		}
+		if(statisticEvent != null) {
+			Set<String> wert = managementClients.keySet();
+			Iterator<String> it = wert.iterator();
+			while(it.hasNext()) {
+				String hilf = it.next();
+				for (int i = 0; i < statisticEvent.size();i++) {
+					if(Pattern.matches(hilf, statisticEvent.get(i).getType().toString())) { //Weil arrayList
+						Set<UUID> wert1 = managementClients.get(hilf).keySet();
+						Iterator<UUID> it1 = wert1.iterator();
+						while(it1.hasNext()) {
+							managementClients.get(hilf).get(it1.next()).processEvent(statisticEvent.toString());
+						}
+					}
+				}
+			}
 		}
 		
 	}

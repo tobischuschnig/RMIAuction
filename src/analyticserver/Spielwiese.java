@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -68,6 +69,7 @@ public class Spielwiese {
 			
 			
 		}
+		System.out.println(UUID.randomUUID().toString());
 		
 	}
 }
