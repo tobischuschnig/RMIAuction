@@ -3,6 +3,7 @@ package analyticserver;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.UUID;
 
 import model.*;
 
@@ -19,9 +20,8 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 	@Override
 	public ArrayList<StatisticsEvent> calculate(Event event) {
 		if(((BidEvent) event).getPrice()  >= a.getStatisticsEvents().get(EventType.BID_PRICE_MAX).getValue()) {
-			StatisticsEvent wert = new StatisticsEvent("1", EventType.BID_PRICE_MAX, System.currentTimeMillis(),
+			StatisticsEvent wert = new StatisticsEvent(UUID.randomUUID().toString(), EventType.BID_PRICE_MAX, System.currentTimeMillis(),
 					((BidEvent) event).getPrice());
-			//TODO weis nicht wie ich die ID's machen soll
 			
 			a.getStatisticsEvents().put(EventType.BID_PRICE_MAX, wert);
 			ArrayList<StatisticsEvent> ret = new ArrayList();
@@ -47,9 +47,8 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 		//System.out.println(((Math.round(System.currentTimeMillis()-startTime)/60000)));
 		double value = (double) (bids / ((double)(Math.round(System.currentTimeMillis()-startTime)/60000)));
 		//System.out.println(value);
-		StatisticsEvent wert1 = new StatisticsEvent("1", EventType.BID_COUNT_PER_MINUTE, System.currentTimeMillis(),
+		StatisticsEvent wert1 = new StatisticsEvent(UUID.randomUUID().toString(), EventType.BID_COUNT_PER_MINUTE, System.currentTimeMillis(),
 				value);
-		//TODO weis nicht wie ich die ID's machen soll
 
 		a.getStatisticsEvents().put(EventType.BID_COUNT_PER_MINUTE, wert1);
 		ArrayList<StatisticsEvent> ret = new ArrayList();
@@ -62,7 +61,7 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 		try {
 			while(true) {
 				Thread.sleep(60000);
-				a.notify(this.calculateBidEventAverageTime(),null); //TODO passt das hier mit null?
+				a.notify(this.calculateBidEventAverageTime(),null); 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

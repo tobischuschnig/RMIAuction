@@ -78,17 +78,14 @@ public class AnalyticServer implements AnalyticServerInterface{
 		
 		managementClients = new ConcurrentHashMap();
 		
-		StatisticsEvent wert1 = new StatisticsEvent("1", EventType.USER_SESSIONTIME_MIN, System.currentTimeMillis(), Double.MAX_VALUE);
-		StatisticsEvent wert2 = new StatisticsEvent("1", EventType.USER_SESSIONTIME_MAX, System.currentTimeMillis(), 0);
-		StatisticsEvent wert3 = new StatisticsEvent("1", EventType.USER_SESSIONTIME_AVG, System.currentTimeMillis(), 0);
-		StatisticsEvent wert4 = new StatisticsEvent("1", EventType.BID_PRICE_MAX, System.currentTimeMillis(), 0);
-		StatisticsEvent wert5 = new StatisticsEvent("1", EventType.BID_COUNT_PER_MINUTE, System.currentTimeMillis(), 0);
-		StatisticsEvent wert6 = new StatisticsEvent("1", EventType.AUCTION_TIME_AVG, System.currentTimeMillis(), 0);
-		StatisticsEvent wert7 = new StatisticsEvent("1", EventType.ACUTION_SUCCESS_RATIO, System.currentTimeMillis(), 0);
+		StatisticsEvent wert1 = new StatisticsEvent(UUID.randomUUID().toString(), EventType.USER_SESSIONTIME_MIN, System.currentTimeMillis(), Double.MAX_VALUE);
+		StatisticsEvent wert2 = new StatisticsEvent(UUID.randomUUID().toString(), EventType.USER_SESSIONTIME_MAX, System.currentTimeMillis(), 0);
+		StatisticsEvent wert3 = new StatisticsEvent(UUID.randomUUID().toString(), EventType.USER_SESSIONTIME_AVG, System.currentTimeMillis(), 0);
+		StatisticsEvent wert4 = new StatisticsEvent(UUID.randomUUID().toString(), EventType.BID_PRICE_MAX, System.currentTimeMillis(), 0);
+		StatisticsEvent wert5 = new StatisticsEvent(UUID.randomUUID().toString(), EventType.BID_COUNT_PER_MINUTE, System.currentTimeMillis(), 0);
+		StatisticsEvent wert6 = new StatisticsEvent(UUID.randomUUID().toString(), EventType.AUCTION_TIME_AVG, System.currentTimeMillis(), 0);
+		StatisticsEvent wert7 = new StatisticsEvent(UUID.randomUUID().toString(), EventType.ACUTION_SUCCESS_RATIO, System.currentTimeMillis(), 0);
 
-		
-		
-		//TODO weis nicht wie ich die ID's machen soll
 		statisticsEvents.put(EventType.USER_SESSIONTIME_MIN,wert1); //fertig		 //funkt
 		statisticsEvents.put(EventType.USER_SESSIONTIME_MAX,wert2); //fertig	     //funkt
 		statisticsEvents.put(EventType.USER_SESSIONTIME_AVG,wert3); //fertig	     //funkt
@@ -99,14 +96,13 @@ public class AnalyticServer implements AnalyticServerInterface{
 
 	}
 	
-	//TODO The method returns a unique subscription identifier string. (ANGABE)
-	//TODO Unique ID maybe uuid? (Daniel)
-	//TODO dieser dann als identifier fuer Map?
-	//TODO Braucht Objekt reference
-	//TODO aentweder in ManagementClient auf Regex pruefen oder hier mit Exception
-	//TODO Map mit zwei Keys??
+	//The method returns a unique subscription identifier string. (ANGABE)
 	
-	//TODO hier eigene Exception werfen wenn Pattern nicht stimmt
+	//TODO Braucht Objekt reference (TESTEN
+	
+	//Regex pruefung hier mit exception
+	
+	//eigene Exception wird geworfen wenn Pattern nicht stimmt
 	@Override
 	public String suscribe(String filter, ManagementClientInterface managementClient) throws PatternSyntaxException, InvalidFilterException {
 		UUID uuid = UUID.randomUUID();
@@ -134,7 +130,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	} 
 
 	
-	//TODO bekomme nur meine uuid und schaue diese in der Map nach und loesche diese dann
+	//bekomme nur meine uuid und schaue diese in der Map nach und loesche diese dann
 	@Override
 	public void unsuscribe(String uid) {
 		Set<String> wert = managementClients.keySet();
@@ -142,14 +138,14 @@ public class AnalyticServer implements AnalyticServerInterface{
 		while(it.hasNext()) {
 			try {
 				managementClients.get(it.next()).remove(uid);
+				System.out.println("removed:" +uid);
 			} catch(NullPointerException ex) {}
 		}
 		
 	}
 	
-	//TODO An Management Client Schicken
+	//TODO An Management Client Schicken testen
 	public void notify(ArrayList<StatisticsEvent> statisticEvent,Event event) {
-		//TODO es muessen alle events ausgebbar sein
 //		if(events != null) {
 //			for(int i = 0; i < events.size();i++) {
 //				System.out.println(events.get(i).getType()+"             "+events.get(i).getValue());

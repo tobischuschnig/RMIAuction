@@ -3,6 +3,7 @@ package analyticserver;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.UUID;
 
 import model.*;
 
@@ -15,7 +16,6 @@ public class CalculateUserEvents implements InterfaceCalculate {
 	
 	@Override
 	public ArrayList<StatisticsEvent> calculate(Event event) {
-		// TODO Auto-generated method stub
 		ArrayList<StatisticsEvent> ret = new ArrayList();
 		
 		/////////////////////////////////////////////////////////////////////////////////
@@ -26,9 +26,8 @@ public class CalculateUserEvents implements InterfaceCalculate {
 				.get(a.getUserEventsLogin().get(((UserEvent) event).getUserName())
 						.size()-1).getTimestamp();
 		if(time >= a.getStatisticsEvents().get(EventType.USER_SESSIONTIME_MAX).getValue()) {
-			StatisticsEvent wert = new StatisticsEvent("1", EventType.USER_SESSIONTIME_MAX, System.currentTimeMillis(),
+			StatisticsEvent wert = new StatisticsEvent(UUID.randomUUID().toString(), EventType.USER_SESSIONTIME_MAX, System.currentTimeMillis(),
 					time);
-			//TODO weis nicht wie ich die ID's machen soll
 			
 			a.getStatisticsEvents().put(EventType.USER_SESSIONTIME_MAX, wert);
 			ret = new ArrayList();
@@ -36,9 +35,8 @@ public class CalculateUserEvents implements InterfaceCalculate {
 		}
 		//System.out.println(a.getStatisticsEvents().get(EventType.USER_SESSIONTIME_MIN).getValue()+"        "+time);
 		if(time <= a.getStatisticsEvents().get(EventType.USER_SESSIONTIME_MIN).getValue()) {
-			StatisticsEvent wert = new StatisticsEvent("1", EventType.USER_SESSIONTIME_MIN, System.currentTimeMillis(),
+			StatisticsEvent wert = new StatisticsEvent(UUID.randomUUID().toString(), EventType.USER_SESSIONTIME_MIN, System.currentTimeMillis(),
 					time);
-			//TODO weis nicht wie ich die ID's machen soll
 			
 			a.getStatisticsEvents().put(EventType.USER_SESSIONTIME_MIN, wert);
 			ret = new ArrayList();
@@ -58,10 +56,9 @@ public class CalculateUserEvents implements InterfaceCalculate {
 				* (logouts-1) + time) / logouts;
 		//System.out.println(a.getStatisticsEvents().get(EventType.USER_SESSIONTIME_AVG).getValue()+"\n"+ time);
 	
-		StatisticsEvent wert2 = new StatisticsEvent("1", EventType.USER_SESSIONTIME_AVG, System.currentTimeMillis(),
+		StatisticsEvent wert2 = new StatisticsEvent(UUID.randomUUID().toString(), EventType.USER_SESSIONTIME_AVG, System.currentTimeMillis(),
 				value);
 		a.getStatisticsEvents().put(EventType.USER_SESSIONTIME_AVG,wert2);
-		//TODO weis nicht wie ich die ID's machen soll
 		ret.add(wert2);
 		return ret;
 	}

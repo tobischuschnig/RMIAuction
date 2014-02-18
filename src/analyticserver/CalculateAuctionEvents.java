@@ -1,6 +1,7 @@
 package analyticserver;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import model.*;
 
@@ -36,9 +37,8 @@ public class CalculateAuctionEvents implements InterfaceCalculate {
 		// (AlterDurchschnitt * auctionEventsEnded.size()-1 + newtime) : auctionEventsEnded.size()
 		// (AtlerDurchschnitt * alterDivident + NeueZeit) : NeuerDivident
 		
-		StatisticsEvent newEvent = new StatisticsEvent("1",EventType.AUCTION_TIME_AVG, 
+		StatisticsEvent newEvent = new StatisticsEvent(UUID.randomUUID().toString(),EventType.AUCTION_TIME_AVG, 
 				System.currentTimeMillis(),value);
-		//TODO Wie mach ich das mit der ID;
 		//Neues Event erstellen
 		
 		a.getStatisticsEvents().put(EventType.AUCTION_TIME_AVG, newEvent);
@@ -56,7 +56,7 @@ public class CalculateAuctionEvents implements InterfaceCalculate {
 		else {
 			newwert = (alt + 100) /  (a.getAuctionEventsEnded().size());
 		}
-		StatisticsEvent newEventRadio = new StatisticsEvent("1", EventType.ACUTION_SUCCESS_RATIO,
+		StatisticsEvent newEventRadio = new StatisticsEvent(UUID.randomUUID().toString(), EventType.ACUTION_SUCCESS_RATIO,
 				System.currentTimeMillis(),newwert);
 		
 		a.getStatisticsEvents().put(EventType.ACUTION_SUCCESS_RATIO, newEventRadio);
