@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class PriceSteps implements Serializable{
@@ -35,14 +36,21 @@ public class PriceSteps implements Serializable{
 	@Override
 	public String toString(){
 		String returnment="Min_Price\tMax_Price\tFee_Fixed\tFee_Variable";
-		PriceStep c;
+//		PriceStep c;
 		System.out.println(priceSteps.size());
 		try{
-		for (int x=0;x<priceSteps.size();x++){
-			c=priceSteps.get(x);
-			returnment+="\n"+c.getStartPrice()+"\t"+c.getEndPrice()+"\t"+c.getFixedPrice()+"\t"+c.getVariablePricePercent();
-		}
+			Iterator<Integer> it = priceSteps.keySet().iterator();
+			while(it.hasNext()){
+				int key = it.next();
+				PriceStep temp = priceSteps.get(key);
+				returnment+="\n"+temp.getStartPrice()+"\t"+temp.getEndPrice()+"\t"+temp.getFixedPrice()+"\t"+temp.getVariablePricePercent();
+			}
+//		for (int x=0;x<priceSteps.size();x++){
+//			c=priceSteps.get(x);
+//			returnment+="\n"+c.getStartPrice()+"\t"+c.getEndPrice()+"\t"+c.getFixedPrice()+"\t"+c.getVariablePricePercent();
+//		}
 		}catch (NullPointerException e){
+			e.printStackTrace();
 			return returnment;
 		}
 		return returnment;

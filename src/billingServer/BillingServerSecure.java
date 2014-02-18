@@ -90,6 +90,7 @@ public class BillingServerSecure implements Serializable,BillingServerSecureInte
 			PriceStep temp = psTemp.get(key);
 			if(temp.getStartPrice() == startPrice && temp.getEndPrice() == endPrice ){
 				psTemp.remove(key);
+				priceSteps.setPriceSteps(psTemp);
 				//priceSteps.getPriceSteps().remove(
 				return true;
 			}
