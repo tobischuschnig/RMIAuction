@@ -1,5 +1,9 @@
 package model;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UserEvent extends Event {
 
 	private String userName;
@@ -28,6 +32,19 @@ public class UserEvent extends Event {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
 	
+	@Override
+	public String toString() {
+		String hilf = "";
+		Date date = new Date(this.getTimestamp());
+		Format format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss:ms");
+		if(this.getType().equals(EventType.USER_LOGIN)) {
+			hilf+= this.getType()+": "+format.format(date).toString()+" - user "+userName+" logged in";
+		} else if(this.getType().equals(EventType.USER_LOGOUT)) {
+			hilf+= this.getType()+": "+format.format(date).toString()+" - user "+userName+" logged out";
+		} else if(this.getType().equals(EventType.USER_DISCONNECTED)) {
+			hilf+= this.getType()+": "+format.format(date).toString()+" - user "+userName+" disconnected";
+		}
+		return hilf;
+	}
 }

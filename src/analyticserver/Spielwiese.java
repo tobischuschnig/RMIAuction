@@ -1,6 +1,8 @@
 package analyticserver;
 
 import java.sql.Timestamp;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -71,5 +73,9 @@ public class Spielwiese {
 		}
 		System.out.println(UUID.randomUUID().toString());
 		
+		long hilf = System.currentTimeMillis();
+		Date date = new Date(hilf);
+		Format format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss:ms");
+		System.out.println(format.format(date).toString());
 	}
 }

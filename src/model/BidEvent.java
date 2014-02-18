@@ -1,5 +1,9 @@
 package model;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class BidEvent extends Event {
 
 	private String userName;
@@ -69,6 +73,19 @@ public class BidEvent extends Event {
 		this.price = price;
 	}
 
-	
+	@Override
+	public String toString() {
+		String hilf = "";
+		Date date = new Date(this.getTimestamp());
+		Format format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss:ms");
+		if(this.getType().equals(EventType.BID_PLACED)) {
+			hilf+= this.getType()+": "+format.format(date).toString()+" - user "+userName+" placed bid "+price+" on auction "+auctionID;
+		} else if(this.getType().equals(EventType.BID_OVERBID)) {
+			hilf+= this.getType()+": "+format.format(date).toString()+" - user "+userName+" got overbid with bid "+price+" on auction "+auctionID;
+		} else if(this.getType().equals(EventType.BID_WON)) {
+			hilf+= this.getType()+": "+format.format(date).toString()+" - user "+userName+" won auction "+auctionID+" with bid price "+price;
+		}
+		return hilf;
+	}
 	
 }
