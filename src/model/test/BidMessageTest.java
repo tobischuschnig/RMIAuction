@@ -6,6 +6,12 @@ import model.BidMessage;
 import org.junit.Before;
 import org.junit.Test;
 
+
+/**
+ * Testclass for BidMessageEvent
+ * @author Alexander Rieppel <alexander.rieppel@tgm.ac.at>
+ *
+ */
 public class BidMessageTest {
 	private BidMessage bm, bm1;
 
@@ -19,9 +25,8 @@ public class BidMessageTest {
 	 * Testing of getName Method in BidMessage
 	 */
 	@Test
-	public void testGetNameBidMessage() {
+	public void testGetName() {
 		bm.setName("asd");
-		;
 		assertEquals(bm.getName(), "asd");
 	}
 
@@ -29,7 +34,7 @@ public class BidMessageTest {
 	 * Testing of getId Method in BidMessage
 	 */
 	@Test
-	public void testGetIDBidMessage() {
+	public void testGetID() {
 		bm.setId(1);
 		assertEquals(1, bm.getId());
 	}
@@ -38,7 +43,7 @@ public class BidMessageTest {
 	 * Testing of getAmount Method in BidMessage
 	 */
 	@Test
-	public void testGetAmountBidMessage() {
+	public void testGetAmount() {
 		bm.setAmount(1);
 		assertEquals(1, bm.getAmount(), 0);
 	}

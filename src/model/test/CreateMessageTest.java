@@ -6,6 +6,12 @@ import model.CreateMessage;
 import org.junit.Before;
 import org.junit.Test;
 
+
+/**
+ * Testclass for CreateMessage
+ * @author Alexander Rieppel <alexander.rieppel@tgm.ac.at>
+ *
+ */
 public class CreateMessageTest {
 
 	private CreateMessage cm, cm1;
@@ -20,7 +26,7 @@ public class CreateMessageTest {
 	 * Testing of getName Method in CreateMessage
 	 */
 	@Test
-	public void testGetNameCreateMessage() {
+	public void testGetName() {
 		cm.setName("asd");
 		assertEquals(cm.getName(), "asd");
 	}
@@ -29,7 +35,7 @@ public class CreateMessageTest {
 	 * Testing of getDesc Method in CreateMessage
 	 */
 	@Test
-	public void testGetDescCreateMessage() {
+	public void testGetDesc() {
 		cm.setDesc("asd");
 		assertEquals(cm.getDesc(), "asd");
 	}
@@ -38,7 +44,7 @@ public class CreateMessageTest {
 	 * Testing of getDuration Method in CreateMessage
 	 */
 	@Test
-	public void testGetDurationCreateMessage() {
+	public void testGetDuration() {
 		cm.setDuration((long)1000);
 		assertNotNull(cm.getDuration());
 	}

@@ -45,21 +45,21 @@ public class BillingServerSecureTest {
 	}
 	
 	//TODO not working yet
-//	/**
-//	 * Testing of CreatePriceStep Method when no Exception should occur and 2
-//	 * PriceSteps are created properly
-//	 */
-//	@Test
-//	public void testCreatePriceStepNormalWithTwoElements() throws RemoteException{
-//		bss.createPriceStep(0, 100, 3, 5);
-//		bss.createPriceStep(101, 200, 5, 6);
-//		assertEquals(bss.getPriceSteps().getPriceSteps().size(),2);
-//	}
+	/**
+	 * Testing of CreatePriceStep Method when no Exception should occur and 2
+	 * PriceSteps are created properly
+	 */
+	@Test
+	public void testCreatePriceStepNormalWithTwoElements() throws RemoteException{
+		bss.createPriceStep(0, 100, 3, 5);
+		bss.createPriceStep(101, 200, 5, 6);
+		assertEquals(bss.getPriceSteps().getPriceSteps().size(),2);
+	}
 	/**
 	 * Testing of CreatePriceStep Method when no Exception should occur, but the
 	 * two PriceSteps overlapse and so only the first is created properly
 	 */
-	@Test//TODO not counting as coverage
+	@Test(expected=RemoteException.class)
 	public void testCreatePriceStepOverlapse() throws RemoteException{
 		bss.createPriceStep(0, 100, 3, 5);
 		bss.createPriceStep(50, 80, 3, 5);
