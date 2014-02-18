@@ -44,7 +44,6 @@ public class BillingServerSecureTest {
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),1);
 	}
 	
-	//TODO not working yet
 	/**
 	 * Testing of CreatePriceStep Method when no Exception should occur and 2
 	 * PriceSteps are created properly
@@ -145,31 +144,6 @@ public class BillingServerSecureTest {
 		assertEquals( bss.getBills().size(),1);
 	}
 	
-	//TODO not checked in BillingServerSecure yet
-//	/**
-//	 * Testing of billAuction Method, when the bill was created for not existing user
-//	 * It checks if the created Bill is in the list, which should not
-//	 */
-//	@Test
-//	public void testbillAuctionUserNotExisting(){
-//		ConcurrentHashMap<String,Bill> bills = new ConcurrentHashMap<String,Bill>();
-//		bss.setBills(bills);
-//		bss.billAuction("none", 123, 100);
-//		//assertNull(bss.getBill("none"));
-//		assertEquals(bss.getBills().size(),0);
-//	}
-//	/**
-//	 * Testing of billAuction Method, when the bill was created for not existing auction
-//	 * It checks if the created Bill is in the list, which should not
-//	 */
-//	@Test
-//	public void testbillAuctionAuctionNotExisting(){
-//		ConcurrentHashMap<String,Bill> bills = new ConcurrentHashMap<String,Bill>();
-//		bss.setBills(bills);
-//		bss.billAuction("test", 123454, 100);
-//		//assertNull(bss.getBill("test"));
-//		assertEquals(bss.getBills().size(),0);
-//	}
 	/**
 	 * Testing of getBill Method
 	 * It checks if the bills of the corresponding user are in the list

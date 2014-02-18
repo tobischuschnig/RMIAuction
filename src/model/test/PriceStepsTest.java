@@ -36,14 +36,14 @@ public class PriceStepsTest {
 	/**
 	 * Testing of toString Method in PriceSteps with filled List
 	 */
-	@Test//TODO Funktioniert noch nicht gscheit
+	@Test
 	public void testToStringFilled() {
 		ConcurrentHashMap<Integer, PriceStep> ps = new ConcurrentHashMap<Integer, PriceStep>();
 		PriceStep price = new PriceStep(2, 5, 8, 10);
 		ps.put(100,price);
 		pss.setPriceSteps(ps);
 		assertEquals(pss.getPriceSteps().size(),1);
-		assertEquals(pss.toString(),"Min_Price\tMax_Price\tFee_Fixed\tFee_Variable");
+		assertEquals(pss.toString(),"Min_Price	Max_Price	Fee_Fixed	Fee_Variable\n2.0	5.0	8.0	10.0");
 	}
 	
 	/**
