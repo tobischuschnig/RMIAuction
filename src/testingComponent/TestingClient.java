@@ -2,6 +2,11 @@ package testingComponent;
 
 import java.util.ArrayList;
 
+import Client.CLI;
+import Client.Client;
+import Client.TCPConnector;
+import Client.UI;
+
 import model.Auction;
 import model.User;
 /**
@@ -26,6 +31,8 @@ public class TestingClient{
 	
 	private ArrayList <Integer> auctionsIDs;
 	
+	private TCPConnector tcp;
+	
 	/**
 	 * 
 	 * @param clientID
@@ -40,6 +47,7 @@ public class TestingClient{
 		this.auctionDuration = auctionDuration;
 		this.updateIntervalSec = updateIntervalSec;
 		this.bidsPerMin = bidsPerMin;
+		this.tcp = new TCPConnector(1234,new CLI(),new Client("localhost",1234,4321));
 	}
 	
 	/**
@@ -108,5 +116,9 @@ public class TestingClient{
 
 	public ArrayList<Integer> getAuctionsIDs() {
 		return auctionsIDs;
+	}
+	
+	public TCPConnector getTCPConnector(){
+		return tcp;
 	}
 }

@@ -1,8 +1,10 @@
 package testingComponent;
 
-import java.util.ArrayList;
+
+import model.CreateMessage;
 
 import Client.Client;
+import Client.TCPConnector;
 import Client.TaskExecuter;
 /**
  * 
@@ -18,7 +20,6 @@ private TestingClient testingClient;
  * change Request
  * Diese beiden attribute sind nicht in KLassendiagramm
  */
-private TaskExecuter te;
 private int incrementer=0;
 /**
  * 
@@ -26,7 +27,6 @@ private int incrementer=0;
  */
 	public CreateThread(TestingClient testingClient){
 		this.testingClient = testingClient;
-		te = new TaskExecuter(new Client("localhost",80,1241));
 	}
 	
 /**
@@ -35,7 +35,10 @@ private int incrementer=0;
 	@Override
 	public void run() {
 		
-		te.create(testingClient.getAuctionDuration(), "TestAuction_No"+incrementer);
+		CreateMessage cm = new CreateMessage("admin", "Beschreibung"+String.valueOf(incrementer), testingClient.getAuctionDuration());
+		TCPConnector tcp = testingClient.getTCPConnector();
+//		te.create(testingClient.getAuctionDuration(), "TestAuction_No"+incrementer);
+		tcp.sendMessage(cm);
 		incrementer++;
 		try {
 			Thread.sleep((testingClient.getAuctionsPerMin()/60)*1000);
