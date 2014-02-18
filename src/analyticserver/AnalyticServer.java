@@ -1,5 +1,6 @@
 package analyticserver;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.regex.PatternSyntaxException;
 import javax.swing.undo.StateEdit;
 
 import managmentclient.ManagementClient;
+import managmentclient.ManagementClientInterface;
 import model.*;
 import Exceptions.InvalidFilterException;
 
@@ -32,7 +34,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	
 	private ConcurrentHashMap<EventType,StatisticsEvent> statisticsEvents;
 	
-	private ConcurrentHashMap<String,ConcurrentHashMap<UUID,ManagementClient>> managementClients;
+	private ConcurrentHashMap<String,ConcurrentHashMap<UUID,ManagementClientInterface>> managementClients;
 	//String (previously checked with Pattern compile , ArrayList with users with this regex pattern
 	
 	private ArrayList<String> pattern;
@@ -106,7 +108,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	
 	//TODO hier eigene Exception werfen wenn Pattern nicht stimmt
 	@Override
-	public String suscribe(String filter, ManagementClient managementClient) throws PatternSyntaxException, InvalidFilterException {
+	public String suscribe(String filter, ManagementClientInterface managementClient) throws PatternSyntaxException, InvalidFilterException {
 		UUID uuid = UUID.randomUUID();
 		int wert =0;
 		for (int i = 0; i < pattern.size();i++) {
@@ -116,7 +118,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 			throw new InvalidFilterException();
 		} else {
 			if (managementClients.get(filter) == null) {
-				ConcurrentHashMap<UUID, ManagementClient> hilf = new ConcurrentHashMap();
+				ConcurrentHashMap<UUID, ManagementClientInterface> hilf = new ConcurrentHashMap();
 				hilf.put(uuid, managementClient);
 				managementClients.put(filter, hilf);
 			} else {
@@ -164,7 +166,12 @@ public class AnalyticServer implements AnalyticServerInterface{
 					Set<UUID> wert1 = managementClients.get(hilf).keySet();
 					Iterator<UUID> it1 = wert1.iterator();
 					while(it1.hasNext()) {
-						managementClients.get(hilf).get(it1.next()).processEvent(event.toString());
+						try {
+							managementClients.get(hilf).get(it1.next()).processEvent(event.toString());
+						} catch (RemoteException e) {
+							System.err.println("Couldn't callback Client!");
+							e.printStackTrace();
+						}
 					}
 				}
 			}
@@ -179,7 +186,12 @@ public class AnalyticServer implements AnalyticServerInterface{
 						Set<UUID> wert1 = managementClients.get(hilf).keySet();
 						Iterator<UUID> it1 = wert1.iterator();
 						while(it1.hasNext()) {
-							managementClients.get(hilf).get(it1.next()).processEvent(statisticEvent.toString());
+							try {
+								managementClients.get(hilf).get(it1.next()).processEvent(statisticEvent.toString());
+							} catch (RemoteException e) {
+								System.err.println("Couldn't callback Client!");
+								e.printStackTrace();
+							}
 						}
 					}
 				}
@@ -326,7 +338,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	/**
 	 * @return the managementClients
 	 */
-	public ConcurrentHashMap<String, ConcurrentHashMap<UUID, ManagementClient>> getManagementClients() {
+	public ConcurrentHashMap<String, ConcurrentHashMap<UUID, ManagementClientInterface>> getManagementClients() {
 		return managementClients;
 	}
 
@@ -334,7 +346,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	 * @param managementClients the managementClients to set
 	 */
 	public void setManagementClients(
-			ConcurrentHashMap<String, ConcurrentHashMap<UUID, ManagementClient>> managementClients) {
+			ConcurrentHashMap<String, ConcurrentHashMap<UUID, ManagementClientInterface>> managementClients) {
 		this.managementClients = managementClients;
 	}
 

@@ -6,6 +6,8 @@ import billingServer.BillingServerInterface;
 import billingServer.BillingServerSecureInterface;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
 import model.Bill;
 
 /**
@@ -142,9 +144,25 @@ public class TaskExecuter {
      */
     public void subscribe(String filter) {
         try {
+        	//TODO for tobi ip maybe useless? because of lookup port would be 1099
+        	
+        	
+        	//TODO Brauche die IP des AnalyticServers eingelesen //Edid tobi
+        	String ip = "127.0.0.1"; //TODO wenn gemacht variable entfernen //Edid tobi
+        	String registryURL = "";
             cli.outln("Subscribe: ");
-            // TODO filter pruefen ?
-            cli.outln(obja.subscribe(filter));
+            // TODO filter pruefen ? //Edid tobi: mache ich exceptions pruefen und ausgeben
+            AnalyticServerInterface analyticServerInterface = (AnalyticServerInterface)Naming.lookup(registryURL); //Edid tobi
+            //TODO Exceptions bei verbinden abfangen //Edid tobi
+            System.out.println("Lookup completed " );
+            ManagementClientInterface managementClientInterface = (ManagementClientInterface)UnicastRemoteObject.exportObject(c, 0);
+            System.out.println("Server said: " + analyticServerInterface.suscribe(filter, managementClientInterface));
+            //TODO change ausgabe
+           
+            System.out.println("Registered for callback.");
+            //cli.outln(obja.subscribe(filter)); //TODO now useless pls change to the correct output
+            //TODO UUID speichern diese braucht man zum abmelden
+            //TODO abmelden mit UUID
         } catch (Exception ex) {
         }
 

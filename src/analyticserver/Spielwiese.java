@@ -13,6 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import model.BidEvent;
 import model.EventType;
 
 public class Spielwiese {
@@ -77,5 +78,8 @@ public class Spielwiese {
 		Date date = new Date(hilf);
 		Format format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss:ms");
 		System.out.println(format.format(date).toString());
+		
+		BidEvent bid = new BidEvent("1", EventType.BID_PLACED, System.currentTimeMillis(), "tobi", 1, 1010.0);
+		System.out.println(bid.toString()); // funkt
 	}
 }
