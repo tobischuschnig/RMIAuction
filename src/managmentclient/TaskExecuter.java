@@ -131,8 +131,7 @@ public class TaskExecuter {
             if (b == null) {
                 cli.outln("No Bills for User " + username);
             } else {
-                cli.outln(b.getUsername() + " with ID "
-                        + b.getAuctionID() + ", Price: " + b.getPrice());
+                cli.outln(b.toString());
             }
         } catch (RemoteException ex) {
         }
@@ -175,7 +174,7 @@ public class TaskExecuter {
     public void unsubscribe(int subscriptionID) {
         cli.outln("Unsubscribe:");
         try {
-            obja.unsubscribe("" + subscriptionID);
+            obja.unsuscribe("" + subscriptionID);
         } catch (Exception ex) {
         }
 
