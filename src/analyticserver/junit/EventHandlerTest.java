@@ -25,7 +25,14 @@ public class EventHandlerTest {
 		as = new AnalyticServer();
 		eh = new EventHandler(as);
 	}
-	
+	//TODO LOGIN LOGOUT mit selbem User 
+	//TODO Zweimal alle bid events auf gleiche Auction mit
+	//TODO Einam lmit tausend auf eine Auktion BID_PLACED und eine andere mit 10 auf BID
+	//TODO Testfall mit run in calculate BID events
+	//TODO setter Methoden testen in AnalyticsServer
+	//TODO Auktion erstellen mit BID_PLACED
+	//TODO Model Bill setter testen
+	//TODO Probleme (BillingServer etc. ins Protokoll schreiben)
 	/**
 	 * Testing of execute Method with Event AUCTION_STARTED
 	 */

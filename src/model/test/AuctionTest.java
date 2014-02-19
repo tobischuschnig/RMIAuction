@@ -5,6 +5,7 @@ package model.test;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -162,7 +163,33 @@ public class AuctionTest {
 	@Test
 	public void testSetFinished() {
 		auction.setFinished(true);
-		assertEquals(auction.isFinished(),true);;
+		assertEquals(auction.isFinished(),true);
 	}
 
+	/**
+	 * Testing of Method bid
+	 */
+	@Test
+	public void testBid() {
+		assertEquals(auction.bid(new User(), 100),false);
+	}
+	
+	/**
+	 * Testing of Method getHighestBid
+	 */
+	@Test
+	public void testGetHighestBid() {
+		auction.setHighestBid(100.0);
+		assertEquals(auction.getHighestBid(),100.0,0);
+	}
+	
+	/**
+	 * Testing of Method getHighestBid
+	 */
+	@Test
+	public void testGetStartTime() {
+		Date date = new Date();
+		auction.setStartTime(date);
+		assertEquals(auction.getStartTime(),date);
+	}
 }
