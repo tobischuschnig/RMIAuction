@@ -1,107 +1,110 @@
 package model;
 
 public class Bill {
-	private String user;
-	private long auctionID ;
-	private double feeFixed,strikePrice, feeVariable, feeTotal;
 
-	public Bill(String user, long auctionID, double strikePrice,double feeFixed, double feeVariable, double feeTotal) {
-		this.user = user;
-		this.auctionID = auctionID;
-		this.feeFixed = feeFixed;
-		this.strikePrice = strikePrice;
-		this.feeVariable = feeVariable;
-		this.feeTotal = feeTotal;
-	}
+    private String user;
+    private long auctionID;
+    private double feeFixed, strikePrice, feeVariable, feeTotal;
 
-	/**
-	 * @return the user
-	 */
-	public String getUser() { 
-		return user;
-	}
+    public Bill(String user, long auctionID, double strikePrice, double feeFixed, double feeVariable, double feeTotal) {
+        this.user = user;
+        this.auctionID = auctionID;
+        this.feeFixed = feeFixed;
+        this.strikePrice = strikePrice;
+        this.feeVariable = feeVariable;
+        this.feeTotal = feeTotal;
+    }
 
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(String user) {
-		this.user = user;
-	}
+    /**
+     * @return the user
+     */
+    public String getUser() {
+        return user;
+    }
 
-	/**
-	 * @return the auctionID
-	 */
-	public long getAuctionID() {
-		return auctionID;
-	}
+    /**
+     * @param user the user to set
+     */
+    public void setUser(String user) {
+        this.user = user;
+    }
 
-	/**
-	 * @param auctionID the auctionID to set
-	 */
-	public void setAuctionID(int auctionID) {
-		this.auctionID = auctionID;
-	}
+    /**
+     * @return the auctionID
+     */
+    public long getAuctionID() {
+        return auctionID;
+    }
 
-	/**
-	 * @return the feeFixed
-	 */
-	public double getFeeFixed() {
-		return feeFixed;
-	}
+    /**
+     * @param auctionID the auctionID to set
+     */
+    public void setAuctionID(int auctionID) {
+        this.auctionID = auctionID;
+    }
 
-	/**
-	 * @param feeFixed the feeFixed to set
-	 */
-	public void setFeeFixed(double feeFixed) {
-		this.feeFixed = feeFixed;
-	}
+    /**
+     * @return the feeFixed
+     */
+    public double getFeeFixed() {
+        return feeFixed;
+    }
 
-	/**
-	 * @return the strikePrice
-	 */
-	public double getStrikePrice() {
-		return strikePrice;
-	}
+    /**
+     * @param feeFixed the feeFixed to set
+     */
+    public void setFeeFixed(double feeFixed) {
+        this.feeFixed = feeFixed;
+    }
 
-	/**
-	 * @param strikePrice the strikePrice to set
-	 */
-	public void setStrikePrice(double strikePrice) {
-		this.strikePrice = strikePrice;
-	}
+    /**
+     * @return the strikePrice
+     */
+    public double getStrikePrice() {
+        return strikePrice;
+    }
 
-	/**
-	 * @return the feeVariable
-	 */
-	public double getFeeVariable() {
-		return feeVariable;
-	}
+    /**
+     * @param strikePrice the strikePrice to set
+     */
+    public void setStrikePrice(double strikePrice) {
+        this.strikePrice = strikePrice;
+    }
 
-	/**
-	 * @param feeVariable the feeVariable to set
-	 */
-	public void setFeeVariable(double feeVariable) {
-		this.feeVariable = feeVariable;
-	}
+    /**
+     * @return the feeVariable
+     */
+    public double getFeeVariable() {
+        return feeVariable;
+    }
 
-	/**
-	 * @return the feeTotal
-	 */
-	public double getFeeTotal() {
-		return feeTotal;
-	}
+    /**
+     * @param feeVariable the feeVariable to set
+     */
+    public void setFeeVariable(double feeVariable) {
+        this.feeVariable = feeVariable;
+    }
 
-	/**
-	 * @param feeTotal the feeTotal to set
-	 */
-	public void setFeeTotal(double feeTotal) {
-		this.feeTotal = feeTotal;
-	}
-	
-	public String toString(){
-		return this.auctionID+"\t"+this.strikePrice+"\t"+this.feeFixed+"\t"+this.feeVariable+"\t"+this.feeTotal;
-	}
-	
-	
+    /**
+     * @return the feeTotal
+     */
+    public double getFeeTotal() {
+        return feeTotal;
+    }
 
+    /**
+     * @param feeTotal the feeTotal to set
+     */
+    public void setFeeTotal(double feeTotal) {
+        this.feeTotal = feeTotal;
+    }
+
+    public String toString() {
+        String returnment = String.format("%10s%15s%15s%15s%15s", "auction_ID",
+                "strike_Price", "fee_Fixed", "fee_Variable", "fee_Total");
+        returnment += String.format("\n%10s%15s%15s%15s", this.auctionID,
+                this.strikePrice, this.feeFixed, this.feeVariable, this.feeTotal);
+
+        return returnment;
+    }
 }
