@@ -52,7 +52,7 @@ public class Bill {
 	/**
 	 * @param feeFixed the feeFixed to set
 	 */
-	public void setFeeFixed(int feeFixed) {
+	public void setFeeFixed(double feeFixed) {
 		this.feeFixed = feeFixed;
 	}
 

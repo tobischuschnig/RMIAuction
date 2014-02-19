@@ -136,4 +136,11 @@ public class Auction {
 	public Date getStartTime(){
 		return this.startTime;
 	}
+
+	/**
+	 * @param startTime the startTime to set
+	 */
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
 }

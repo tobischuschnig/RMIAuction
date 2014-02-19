@@ -18,7 +18,7 @@ public class BillTest {
 
 	@Before
 	public void setUp() {
-		b = new Bill(null, 0, 0);
+		b = new Bill("asd", 5, 100);
 	}
 
 	/**
@@ -46,5 +46,41 @@ public class BillTest {
 	public void testGetPrice() {
 		b.setStrikePrice(1.0);
 		assertEquals(b.getStrikePrice(), 1.0, 0);
+	}
+	
+	/**
+	 * Testing of getFeeFixed Method in Bill
+	 */
+	@Test
+	public void testGetFeeFixed() {
+		b.setFeeFixed(100.0);
+		assertEquals(b.getFeeFixed(), 100.0, 0);
+	}
+	
+	/**
+	 * Testing of getFeeVariable Method in Bill
+	 */
+	@Test
+	public void testGetFeeVariable() {
+		b.setFeeVariable(100.0);
+		assertEquals(b.getFeeVariable(), 100.0, 0);
+	}
+	
+	/**
+	 * Testing of getFeeTotal Method in Bill
+	 */
+	@Test
+	public void testGetFeeTotal() {
+		b.setFeeTotal(100.0);
+		assertEquals(b.getFeeTotal(), 100.0, 0);
+	}
+	
+	/**
+	 * Testing of toString Method in Bill
+	 */
+	@Test
+	public void testToString() {
+		System.out.println(b.toString());
+		assertEquals(b.toString(), "5	100.0	0.0	0.0	0.0");
 	}
 }
