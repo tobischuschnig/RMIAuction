@@ -5,7 +5,7 @@ public class Bill {
 	private long auctionID ;
 	private double feeFixed,strikePrice, feeVariable, feeTotal;
 
-	public Bill(String user, long auctionID, double strikePrice) {
+	public Bill(String user, long auctionID, double strikePrice,double feeFixed, double feeVariable, double feeTotal) {
 		this.user = user;
 		this.auctionID = auctionID;
 		this.feeFixed = feeFixed;
@@ -17,7 +17,7 @@ public class Bill {
 	/**
 	 * @return the user
 	 */
-	public String getUser() {
+	public String getUser() { 
 		return user;
 	}
 
