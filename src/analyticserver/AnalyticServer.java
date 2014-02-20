@@ -105,10 +105,15 @@ public class AnalyticServer implements AnalyticServerInterface{
 	//eigene Exception wird geworfen wenn Pattern nicht stimmt
 	@Override
 	public String suscribe(String filter, ManagementClientInterface managementClient) throws PatternSyntaxException, InvalidFilterException {
+		if(managementClient == null) System.out.println("Fuck you!");
+		
+		filter = filter.toUpperCase();
+		System.out.println(filter);
 		UUID uuid = UUID.randomUUID();
 		int wert =0;
 		for (int i = 0; i < pattern.size();i++) {
 			if(Pattern.matches(filter,pattern.get(i))) wert++;
+			System.out.println(Pattern.matches(filter,pattern.get(i)));
 		}
 		if (wert==0) {
 			throw new InvalidFilterException();
@@ -126,7 +131,8 @@ public class AnalyticServer implements AnalyticServerInterface{
 
 	@Override
 	public void processEvent(Event event) {
-		notify(eventHandler.execute(event),event);
+		notify(null,event);
+		notify(eventHandler.execute(event),null);
 	} 
 
 	
@@ -146,13 +152,16 @@ public class AnalyticServer implements AnalyticServerInterface{
 	
 	//TODO An Management Client Schicken testen
 	public void notify(ArrayList<StatisticsEvent> statisticEvent,Event event) {
-//		if(events != null) {
-//			for(int i = 0; i < events.size();i++) {
-//				System.out.println(events.get(i).getType()+"             "+events.get(i).getValue());
-//			}
-//		} else {
-//			System.out.println("null");
-//		}
+		if(statisticEvent != null) {
+			for(int i = 0; i < statisticEvent.size();i++) {
+				//System.out.println(statisticEvent.get(i).getType()+"             "+statisticEvent.get(i).getValue());
+				System.out.println(statisticEvent.get(i).toString());
+			}
+		} else {
+			System.out.println("null");
+		}
+		if(event != null)
+		System.out.println(event.toString());
 		if(event != null) {
 			Set<String> wert = managementClients.keySet();
 			Iterator<String> it = wert.iterator();
@@ -166,7 +175,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 							managementClients.get(hilf).get(it1.next()).processEvent(event.toString());
 						} catch (RemoteException e) {
 							System.err.println("Couldn't callback Client!");
-							e.printStackTrace();
+							e.printStackTrace(); 
 						}
 					}
 				}
