@@ -25,7 +25,11 @@ public class TestServer {
 			//Login hat zwei parameter (username, password) aber unverschluesselt.
 			secure=(BillingServerSecureInterface)acc.login("admin", "admin");
 			secure.createPriceStep(3335.0, 3314.0, 2.0, 5.0);
-			secure.createPriceStep(111.0, 123.0, 2.0, 5.0);
+			secure.createPriceStep(1.0, 10.0, 2.0, 5.0);
+			secure.createPriceStep(11.0, 20.0, 2.0, 5.0);
+			secure.createPriceStep(21.0, 30.0, 2.0, 5.0);
+			secure.createPriceStep(31.0, 40.0, 2.0, 5.0);
+			
 			System.out.println(secure.getPriceSteps().toString());
 			//secure.billAuction("admin", 1, 1.2);
 

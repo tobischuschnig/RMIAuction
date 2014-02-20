@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.mockito.cglib.transform.impl.AddPropertyTransformer;
+//import org.mockito.cglib.transform.impl.AddPropertyTransformer;
 
 public class PriceSteps implements Serializable {
 	private CopyOnWriteArrayList<PriceStep> priceSteps;
@@ -59,6 +59,19 @@ public class PriceSteps implements Serializable {
 
 	@Override
 	public String toString() {
+		
+		//BUBBLE SORT
+		PriceStep tmp = null;
+		  for(int i = 0;i<priceSteps.size();i++){
+		    for(int j = (priceSteps.size()-1);j>=(i+1);j--){
+		      if(priceSteps.get(j).getStartPrice() < priceSteps.get(j-1).getStartPrice()){
+		        tmp = priceSteps.get(j);
+		        priceSteps.set(j, priceSteps.get(j-1));
+		        priceSteps.set(j-1, tmp);
+		      }
+		    }
+		  }
+		//------------------------------
 
 		PriceStep temp;
 		String returnment = String.format("%10s%15s%15s%15s", "Min_Price",
@@ -120,6 +133,9 @@ public class PriceSteps implements Serializable {
 		if (startPrice < 0 || endPrice < 0 || fixedPrice < 0
 				|| variablePricePercent < 0)
 			throw new RemoteException();
+		
+		if(startPrice > endPrice)
+			overlaped = true;
 
 		for (int x = 0; x < priceSteps.size(); x++) {
 			PriceStep temp = priceSteps.get(x);
@@ -143,7 +159,7 @@ public class PriceSteps implements Serializable {
 			return true;
 		} else {
 			System.out
-					.println("Es konnte kein neuer PriceStep angelgegt werden, da er sich mit einem vorhandnen ueberschneidet oder dieser bereits existiert.");
+					.println("Es konnte kein neuer PriceStep angelgegt werden, da er sich mit einem vorhandnen ueberschneidet oder dieser bereits existiert oder startTime > endTime.");
 			throw new RemoteException();
 		}
 	}
