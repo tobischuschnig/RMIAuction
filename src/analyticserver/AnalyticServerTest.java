@@ -6,8 +6,8 @@ import model.EventType;
 import model.UserEvent;
 
 public class AnalyticServerTest {
-	public static void main(String [] args) {
-		AnalyticServer a = new AnalyticServer();
+	public static void wert(AnalyticServer a) {
+		
 		AuctionEvent a1 = new AuctionEvent("1", EventType.AUCTION_STARTED, 1000000,1);
 		AuctionEvent a2 = new AuctionEvent("1", EventType.AUCTION_ENDED,   1000010,1);
 		AuctionEvent a3 = new AuctionEvent("1", EventType.AUCTION_STARTED, 1000000,2);
