@@ -20,8 +20,8 @@ public class StartManagementClient {
     public static void main(String[] args) {
         String bname;
         String aname;
-        String[] args2 = {"BillingServer", "AnalyticsServer"};
-        
+        String[] args2 = {"BillingServer", "AnalyticServer"};
+
         args = args2;
         if (args.length != 2) {
             System.out.println("Wrong arguments\n Please type in this:<BillingServer Remote Adress> <AnalyticsServer Remote Adress>");
@@ -36,13 +36,13 @@ public class StartManagementClient {
             mc = new ManagementClient(args[0], args[1]);
             //ManagmentClient mc = new ManagmentClient(bname, aname);
             // remote object
-             mc.startService();
+            mc.startService();
             // thread for user input
             mc.run();
+
 
 
         }
 
     }
-
 }

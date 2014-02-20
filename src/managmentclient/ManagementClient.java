@@ -50,7 +50,7 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
         Scanner in;
         in = new Scanner(System.in);
         while (active) {
-            cli.outln("\n" + username + "> ");
+            cli.out("\n" + username + "> ");
             eingabe = in.nextLine();	//The current command saved as String
 
             if (eingabe.startsWith(" ")) {
@@ -170,8 +170,9 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
             } // befehle analytics server
             // -- SUBSCRIBE --
             else if (eingabe.startsWith("!subscribe")) {
+                System.out.println("Start subscribe..");
                 String[] werte = eingabe.split(" ");
-                if (loggedIn == true) {
+
                     if (werte.length == 2) {
                         try {
                             t.subscribe(werte[1]);
@@ -182,7 +183,7 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
                         cli.outln("Please enter !subscribe like:\n!subscribe "
                                 + "<filterRegex>\nExample: !subscribe '(USER_.*)|(BID_.*)'");
                     }
-                }
+                
                 // -- UNSUBSCRIBE --
             } else if (eingabe.startsWith("!unsubscribe")) {
                 String[] werte = eingabe.split(" ");

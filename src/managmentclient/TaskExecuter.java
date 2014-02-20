@@ -1,5 +1,6 @@
 package managmentclient;
 
+import Exceptions.InvalidFilterException;
 import Exceptions.UserInputException;
 import analyticserver.AnalyticServerInterface;
 import billingServer.BillingServerInterface;
@@ -22,6 +23,7 @@ public class TaskExecuter {
     private BillingServerInterface objb;
     private AnalyticServerInterface obja;
     private BillingServerSecureInterface secure;
+    private ManagementClientInterface managementClientInterface;
     private CLI cli;
     // not in use yet
     private ManagementClient c;
@@ -32,17 +34,19 @@ public class TaskExecuter {
         secure = null;
         // example: objb = (RMI_Billing)Naming.lookup("//localhost/RmiServer");
         try {
+            managementClientInterface = (ManagementClientInterface) UnicastRemoteObject.exportObject(c, 0);
+            obja = (AnalyticServerInterface) Naming.lookup(analyticsServer);
+        } catch (Exception ex) {
+            cli.outln("Client exit: Cannot connect to AnalyticsServer." + "\n(" + ex.getMessage() + ")");
+            System.exit(0);
+        }
+        try {
             objb = (BillingServerInterface) Naming.lookup(billingServer);
         } catch (Exception ex) {
             cli.outln("Client exit: Cannot connect to BillingServer." + "\n(" + ex.getMessage() + ")");
             System.exit(0);
         }
-        try {
-          //  obja = (AnalyticServerInterface) Naming.lookup(analyticsServer);
-        } catch (Exception ex) {
-            cli.outln("Client exit: Cannot connect to AnalyticsServer." + "\n(" + ex.getMessage() + ")");
-            System.exit(0);
-        }
+
     }
 
     /**
@@ -125,7 +129,6 @@ public class TaskExecuter {
      * @param username 
      */
     public void bill(String username) {
-        cli.outln("bill");
         try {
             Bill b = secure.getBill(username);
             if (b == null) {
@@ -143,26 +146,31 @@ public class TaskExecuter {
      */
     public void subscribe(String filter) {
         try {
-        	//TODO for tobi ip maybe useless? because of lookup port would be 1099
-        	
-        	
-        	//TODO Brauche die IP des AnalyticServers eingelesen //Edid tobi
-        	String ip = "127.0.0.1"; //TODO wenn gemacht variable entfernen //Edid tobi
-        	String registryURL = "";
+            //TODO for tobi ip maybe useless? because of lookup port would be 1099
+
+
+            //TODO Brauche die IP des AnalyticServers eingelesen //Edid tobi
+            String ip = "127.0.0.1"; //TODO wenn gemacht variable entfernen //Edid tobi
+            String registryURL = "";
             cli.outln("Subscribe: ");
             // TODO filter pruefen ? //Edid tobi: mache ich exceptions pruefen und ausgeben
-            AnalyticServerInterface analyticServerInterface = (AnalyticServerInterface)Naming.lookup(registryURL); //Edid tobi
+            // AnalyticServerInterface analyticServerInterface = (AnalyticServerInterface)Naming.lookup(registryURL); //Edid tobi
             //TODO Exceptions bei verbinden abfangen //Edid tobi
-            System.out.println("Lookup completed " );
-            ManagementClientInterface managementClientInterface = (ManagementClientInterface)UnicastRemoteObject.exportObject(c, 0);
-            System.out.println("Server said: " + analyticServerInterface.suscribe(filter, managementClientInterface));
+            System.out.println("Lookup completed ");
+
+            System.out.println("Server said: " + obja.suscribe(filter, managementClientInterface));
             //TODO change ausgabe
-           
+
             System.out.println("Registered for callback.");
             //cli.outln(obja.subscribe(filter)); //TODO now useless pls change to the correct output
             //TODO UUID speichern diese braucht man zum abmelden
             //TODO abmelden mit UUID
+        } catch (InvalidFilterException ex) {
+            // !subscribe (USER_.*)|(BID_.*)
+            cli.outln(ex.getMessage());
+            // ex.printStackTrace();
         } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
     }
