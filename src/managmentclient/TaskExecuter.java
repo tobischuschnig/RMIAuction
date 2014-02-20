@@ -15,7 +15,6 @@ import model.Bill;
  * Managmant of Remote Object calls (Analytics + Billing Server)
  * 
  * @author alexander auradnik <alexander.auradnik@student.tgm.ac.at>
- * @author Alexander Rieppel <alexander.rieppel@student.tgm.ac.at>
  * @version 2014-02-14
  */
 public class TaskExecuter {
@@ -32,18 +31,19 @@ public class TaskExecuter {
         this.c = c;
         cli = new CLI();
         secure = null;
-        // example: objb = (RMI_Billing)Naming.lookup("//localhost/RmiServer");
+        
         try {
             managementClientInterface = (ManagementClientInterface) UnicastRemoteObject.exportObject(c, 0);
             obja = (AnalyticServerInterface) Naming.lookup(analyticsServer);
         } catch (Exception ex) {
-            cli.outln("Client exit: Cannot connect to AnalyticsServer." + "\n(" + ex.getMessage() + ")");
+            cli.outln("Client exit: Cannot connect to AnalyticsServer.");
             System.exit(0);
         }
         try {
-            objb = (BillingServerInterface) Naming.lookup(billingServer);
+            // TODO Remove //
+            // objb = (BillingServerInterface) Naming.lookup(billingServer);
         } catch (Exception ex) {
-            cli.outln("Client exit: Cannot connect to BillingServer." + "\n(" + ex.getMessage() + ")");
+            cli.outln("Client exit: Cannot connect to BillingServer.");
             System.exit(0);
         }
 
@@ -54,7 +54,6 @@ public class TaskExecuter {
      * @param username user to be logged out
      */
     public void logout(String username) {
-        // TODO update this ?  
         secure = null;
         cli.outln("logout " + username);
     }
@@ -146,31 +145,15 @@ public class TaskExecuter {
      */
     public void subscribe(String filter) {
         try {
-            //TODO for tobi ip maybe useless? because of lookup port would be 1099
-
-
-            //TODO Brauche die IP des AnalyticServers eingelesen //Edid tobi
-            String ip = "127.0.0.1"; //TODO wenn gemacht variable entfernen //Edid tobi
-            String registryURL = "";
-            cli.outln("Subscribe: ");
-            // TODO filter pruefen ? //Edid tobi: mache ich exceptions pruefen und ausgeben
-            // AnalyticServerInterface analyticServerInterface = (AnalyticServerInterface)Naming.lookup(registryURL); //Edid tobi
-            //TODO Exceptions bei verbinden abfangen //Edid tobi
-            System.out.println("Lookup completed ");
-
-            System.out.println("Server said: " + obja.suscribe(filter, managementClientInterface));
-            //TODO change ausgabe
-
-            System.out.println("Registered for callback.");
-            //cli.outln(obja.subscribe(filter)); //TODO now useless pls change to the correct output
-            //TODO UUID speichern diese braucht man zum abmelden
-            //TODO abmelden mit UUID
+            //TODO ausgabe aendern?
+            cli.outln("Lookup completed ");
+            cli.outln("Server said: " + obja.suscribe(filter, managementClientInterface));
+            cli.outln("Registered for Event callback.");
         } catch (InvalidFilterException ex) {
-            // !subscribe (USER_.*)|(BID_.*)
             cli.outln(ex.getMessage());
             // ex.printStackTrace();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            cli.outln("failed to subscribe " + filter + ": " + ex.getMessage());
         }
 
     }
@@ -179,11 +162,12 @@ public class TaskExecuter {
      * Unsubscribe Client to a specific Event of the AnalyticsServer
      * @param subscriptionID 
      */
-    public void unsubscribe(int subscriptionID) {
-        cli.outln("Unsubscribe:");
+    public void unsubscribe(String subscriptionID) {
+        cli.outln("Unsubscribe: " + subscriptionID);
         try {
-            obja.unsuscribe("" + subscriptionID);
+            obja.unsuscribe(subscriptionID);
         } catch (Exception ex) {
+            cli.outln("Failed unsubscribe " + subscriptionID + ": " + ex.getMessage());
         }
 
     }

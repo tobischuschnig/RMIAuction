@@ -10,14 +10,13 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-
 /**
  * 
  * @author alexander auradnik <alexander.auradnik@student.tgm.ac.at>
  * @author Alexander Rieppel <alexander.rieppel@student.tgm.ac.at>
  * @version 2014-02-14
  */
-public class ManagementClient implements ManagementClientInterface,Serializable, Runnable {
+public class ManagementClient implements ManagementClientInterface, Serializable, Runnable {
 
     private String username;
     private boolean loggedIn;
@@ -96,25 +95,25 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
                     if (werte.length == 5) {
                         boolean b = false;
                         try {
-                           b = t.addStep(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]),
+                            b = t.addStep(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]),
                                     Double.parseDouble(werte[3]), Double.parseDouble(werte[4]));
-                           if(b){
-                               cli.outln("Pricestepp added successfully");
-                           }else{
-                               cli.outln("Cannot add Pricestep. Check Input.");
-                           }
+                            if (b) {
+                                cli.outln("Pricestepp added successfully");
+                            } else {
+                                cli.outln("Cannot add Pricestep. Check Input.");
+                            }
                         } catch (NumberFormatException e) {
                             cli.outln("Values entered incorrect");
                             cli.outln("Please enter command like:\n!addstep <Min_Price> <Max_Price> <Fee_Fixed> <Fee_Variable>!removeStep <startPrice> <endPrice>");
                         }
-                        
+
                     } else {
                         cli.outln("Please enter command like:\n!addstep <Min_Price> <Max_Price>	<Fee_Fixed> <Fee_Variable>!removeStep <startPrice> <endPrice>");
                     }
                 } else {
                     cli.outln("Currently not logged in\nPlease login first");
                 }
-        // -- REMOVE STEPS --
+                // -- REMOVE STEPS --
             } else if (eingabe.startsWith("!removestep")) {
                 String[] werte = eingabe.split(" ");
                 if (loggedIn == true) {
@@ -122,11 +121,11 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
                         try {
                             boolean b = false;
                             b = t.remove(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]));
-                            if(b){
-                               cli.outln("Pricestepp removed successfully");
-                           }else{
-                               cli.outln("Cannot remove Pricestep. Check Input.");
-                           }
+                            if (b) {
+                                cli.outln("Pricestepp removed successfully");
+                            } else {
+                                cli.outln("Cannot remove Pricestep. Check Input.");
+                            }
                         } catch (NumberFormatException e) {
                             cli.out("Values entered incorrect");
                             cli.outln("Please enter !removeStep like:\n!removeStep <startPrice> <endPrice>");
@@ -145,7 +144,7 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
                         try {
                             boolean b = false;
                             t.bill(werte[1]);
-                            if(!b){
+                            if (!b) {
                                 cli.outln("No Bill found");
                             }
                         } catch (NumberFormatException e) {
@@ -170,33 +169,26 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
             } // befehle analytics server
             // -- SUBSCRIBE --
             else if (eingabe.startsWith("!subscribe")) {
-                System.out.println("Start subscribe..");
                 String[] werte = eingabe.split(" ");
 
-                    if (werte.length == 2) {
-                        try {
-                            t.subscribe(werte[1]);
-                        } catch (NumberFormatException e) {
-                            cli.outln("Values entered incorrect");
-                        }
-                    }else{
-                        cli.outln("Please enter !subscribe like:\n!subscribe "
-                                + "<filterRegex>\nExample: !subscribe '(USER_.*)|(BID_.*)'");
-                    }
-                
+                if (werte.length == 2) {
+                    t.subscribe(werte[1]);
+                } else {
+                    cli.outln("Please enter !subscribe like:\n!subscribe "
+                            + "<filterRegex>\nExample: !subscribe '(USER_.*)|(BID_.*)'");
+                }
+
                 // -- UNSUBSCRIBE --
             } else if (eingabe.startsWith("!unsubscribe")) {
                 String[] werte = eingabe.split(" ");
-                if (loggedIn == true) {
-                    if (werte.length == 2) {
-                        try {
-                            t.unsubscribe(Integer.parseInt(werte[1]));
-                        } catch (NumberFormatException e) {
-                            cli.outln("Values entered incorrect");
-                        }
-                    }else{
-                        cli.outln("Please enter !unsubscribe like:\n!unsubscribe <subscriptionID>");
+                if (werte.length == 2) {
+                    try {
+                        t.unsubscribe(werte[1]);
+                    } catch (NumberFormatException e) {
+                        cli.outln("Values entered incorrect");
                     }
+                } else {
+                    cli.outln("Please enter !unsubscribe like:\n!unsubscribe <subscriptionID>");
                 }
             } // befehle ausgabe modus
             else if (eingabe.startsWith("!auto")) {
@@ -235,28 +227,10 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
         Iterator it = unprintedMessages.iterator();
         while (it.hasNext()) {
             String iteratorValue = (String) it.next();
-            cli.outln("Event: "+iteratorValue);
+            cli.outln("Event: " + iteratorValue);
         }
         unprintedMessages = new LinkedList<String>();
-        
-    }
 
-    /**
-     * Settup and start the Remote Object Server of the Managment-CLient
-     * @return Service-Startus
-     */
-    public boolean startService() {
-        try {
-            ManagementClientInterface stub = (ManagementClientInterface) UnicastRemoteObject.exportObject(this, 0);
-            Registry registry = LocateRegistry.getRegistry();
-            // setting up Name of Remote
-            registry.rebind("ManagmentClient", stub);
-            cli.outln("Service bound");
-        } catch (RemoteException ex) {
-            cli.outln("Error: "+ex.getMessage());
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -265,10 +239,11 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
      */
     @Override
     public void processEvent(String event) {
+
         // direct output      
         if (autoprint == true) {
             // TODO optimize output format
-            cli.outln("Event: "+event);
+            cli.outln("Event: " + event);
             // message-save mode
         } else {
             unprintedMessages.add(event);
@@ -371,5 +346,25 @@ public class ManagementClient implements ManagementClientInterface,Serializable,
      */
     public void setAutoprint(boolean autoprint) {
         this.autoprint = autoprint;
+    }
+
+    /**
+     * Settup and start the Remote Object Server of the Managment-CLient
+     * @return Service-Startus
+     * @Deprecated Use Call-Back instead
+     */
+    @Deprecated
+    public boolean startService() {
+        try {
+            ManagementClientInterface stub = (ManagementClientInterface) UnicastRemoteObject.exportObject(this, 0);
+            Registry registry = LocateRegistry.getRegistry();
+            // setting up Name of Remote
+            registry.rebind("ManagmentClient", stub);
+            cli.outln("Service bound");
+        } catch (RemoteException ex) {
+            cli.outln("Error: " + ex.getMessage());
+            return false;
+        }
+        return true;
     }
 }
