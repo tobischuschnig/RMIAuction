@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import model.PriceStep;
 import model.PriceSteps;
@@ -23,7 +24,6 @@ public class BillingServerSecure implements Serializable,
 
 	private PriceSteps priceSteps;
 	private ConcurrentHashMap<String, Bill> bills;
-
 	/**
 	 * Konstructor wich sets the concurrenthashmap for the pricesteps
 	 */
@@ -62,41 +62,8 @@ public class BillingServerSecure implements Serializable,
 	 */
 	public boolean createPriceStep(double startPrice, double endPrice,
 			double fixedPrice, double variablePricePercent)
-			throws RemoteException {
-		boolean overlaped = false;
-		ConcurrentHashMap<Integer, PriceStep> psTemp = priceSteps
-				.getPriceSteps();
-		if (startPrice < 0 || endPrice < 0 || fixedPrice < 0
-				|| variablePricePercent < 0)
-			throw new RemoteException();
-
-		Iterator<Integer> it = psTemp.keySet().iterator();
-		while (it.hasNext()) {
-			int key = it.next();
-			PriceStep temp = psTemp.get(key);
-			if (temp.getStartPrice() < startPrice
-					&& startPrice < temp.getEndPrice())
-				overlaped = true;
-
-			if (temp.getStartPrice() < endPrice
-					&& endPrice < temp.getEndPrice())
-				overlaped = true;
-			if(temp.getStartPrice() == startPrice && temp.getEndPrice() == endPrice)
-				overlaped = true;
-
-		}
-
-		if (!overlaped) {
-			psTemp.put(psTemp.size(), new PriceStep(startPrice, endPrice,
-					fixedPrice, variablePricePercent));
-			priceSteps.setPriceSteps(psTemp);
-			return true;
-		} else {
-			System.out
-					.println("Es konnte kein neuer PriceStep angelgegt werden, da er sich mit einem vorhandnen ueberschneidet oder dieser bereits existiert.");
-			throw new RemoteException();
-		}
-
+			throws RemoteException {		
+		return priceSteps.addPricestep(startPrice, endPrice, fixedPrice, variablePricePercent);
 	}
 
 	/**
@@ -109,21 +76,7 @@ public class BillingServerSecure implements Serializable,
 	 *            endprice of the pricestep to be deleted
 	 */
 	public boolean deletePriceStep(double startPrice, double endPrice) {
-		ConcurrentHashMap<Integer, PriceStep> psTemp = priceSteps
-				.getPriceSteps();
-		Iterator<Integer> it = psTemp.keySet().iterator();
-		while (it.hasNext()) {
-			int key = it.next();
-			PriceStep temp = psTemp.get(key);
-			if (temp.getStartPrice() == startPrice
-					&& temp.getEndPrice() == endPrice) {
-				psTemp.remove(key);
-				priceSteps.setPriceSteps(psTemp);
-				// priceSteps.getPriceSteps().remove(
-				return true;
-			}
-		}
-		return false;
+		return priceSteps.removePricestep(startPrice, endPrice);
 	}
 
 	/**
@@ -142,19 +95,16 @@ public class BillingServerSecure implements Serializable,
 		Double feeVariable = 0.0;
 		Double feeFixed = 0.0;
 
-		ConcurrentHashMap<Integer, PriceStep> psTemp = priceSteps
-				.getPriceSteps();
-		Iterator<Integer> it = psTemp.keySet().iterator();
-		while (it.hasNext()) {
-			int key = it.next();
-			PriceStep temp = psTemp.get(key);
+		CopyOnWriteArrayList<PriceStep> psTemp = priceSteps.getPriceSteps();
+		
+		for(int x=0;x<psTemp.size();x++){
+			PriceStep temp = psTemp.get(x);
 			if (price >= temp.getStartPrice()
 					&& (price <= temp.getEndPrice() || temp.getEndPrice() == 0)) {
 				feeVariable = price * temp.getVariablePricePercent() / 100;
 				feeFixed = temp.getFixedPrice();
 			}
 		}
-
 		bills.put(user, new Bill(user, auctionID, price, feeFixed, feeVariable,
 				feeFixed + feeVariable));
 		return true;
