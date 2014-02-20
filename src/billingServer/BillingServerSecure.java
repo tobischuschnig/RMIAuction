@@ -81,6 +81,8 @@ public class BillingServerSecure implements Serializable,
 			if (temp.getStartPrice() < endPrice
 					&& endPrice < temp.getEndPrice())
 				overlaped = true;
+			if(temp.getStartPrice() == startPrice && temp.getEndPrice() == endPrice)
+				overlaped = true;
 
 		}
 
@@ -91,7 +93,7 @@ public class BillingServerSecure implements Serializable,
 			return true;
 		} else {
 			System.out
-					.println("Es konnte kein neuer PriceStep angelgegt werden, da er sich mit einem vorhandnen ueberschneidet");
+					.println("Es konnte kein neuer PriceStep angelgegt werden, da er sich mit einem vorhandnen ueberschneidet oder dieser bereits existiert.");
 			throw new RemoteException();
 		}
 
