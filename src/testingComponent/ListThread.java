@@ -45,18 +45,18 @@ private TestingClient testingClient;
 			String [] temp = auctions[i].split("\t");
 			arl.add(temp);
 			
-			String id = temp[0].substring(3,temp[0].length());
-			String desc = temp[1].substring(12,temp[1].length());
-			String hbid = temp[2].substring(12,temp[2].length());;
-			String from = temp[3].substring(6,temp[1].length());;
-			String sTime = temp[4].substring(11,temp[1].length());;
-			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			try {
-				Date startTime = sdf.parse(sTime);
-			} catch (ParseException e) {
-				System.err.println("Fehler beim umformatieren des Datums in ListThread");
-			}
+//			String id = temp[0].substring(3,temp[0].length());
+//			String desc = temp[1].substring(12,temp[1].length());
+//			String hbid = temp[2].substring(12,temp[2].length());;
+//			String from = temp[3].substring(6,temp[1].length());;
+//			String sTime = temp[4].substring(11,temp[1].length());;
+//			
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			try {
+//				Date startTime = sdf.parse(sTime);
+//			} catch (ParseException e) {
+//				System.err.println("Fehler beim umformatieren des Datums in ListThread");
+//			}
 			
 			
 	
@@ -67,6 +67,7 @@ private TestingClient testingClient;
 		} catch (InterruptedException e) {
 			System.err.println("Fehler beim schlafen legen des ListThreads");
 		}
+		testingClient.setAuctionsIDs(arl);
 		
 	}
 
