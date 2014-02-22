@@ -1,4 +1,4 @@
-package testingComponent;
+package TestingComponent;
 
 import java.util.ArrayList;
 
@@ -29,9 +29,11 @@ public class TestingClient{
 	
 	private int clientID;
 	
-	private ArrayList <Integer> auctionsIDs;
+	private ArrayList <String[]> auctions;
 	
 	private TCPConnector tcp;
+	
+	private testingCompCLI tcc;
 	
 	/**
 	 * 
@@ -47,7 +49,8 @@ public class TestingClient{
 		this.auctionDuration = auctionDuration;
 		this.updateIntervalSec = updateIntervalSec;
 		this.bidsPerMin = bidsPerMin;
-		this.tcp = new TCPConnector(1234,new CLI(),new Client("localhost",1234,4321));
+		tcc = new testingCompCLI();
+		this.tcp = new TCPConnector(1234,tcc,new Client("localhost",1234,4321));
 	}
 	
 	/**
@@ -62,8 +65,8 @@ public class TestingClient{
 	 * 
 	 * @param ids
 	 */
-	public void setAuctionsIDs(ArrayList <Integer> ids){
-		this.auctionsIDs = ids;
+	public void setAuctionsIDs(ArrayList <String[]> auctions){
+		this.auctions = auctions;
 	}
 
 	public int getClients() {
@@ -114,11 +117,15 @@ public class TestingClient{
 		this.clientID = clientID;
 	}
 
-	public ArrayList<Integer> getAuctionsIDs() {
-		return auctionsIDs;
+	public ArrayList<String[]> getAuctionsIDs() {
+		return auctions;
 	}
 	
 	public TCPConnector getTCPConnector(){
 		return tcp;
+	}
+	
+	public testingCompCLI getTestingCompCLI(){
+		return this.tcc;
 	}
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 /**
  * Saves important data for an auction
@@ -142,5 +143,10 @@ public class Auction {
 	 */
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
+	}
+	
+	public String getStartTimeFormat(){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sdf.format(this.startTime);
 	}
 }

@@ -1,4 +1,4 @@
-package testingComponent;
+package TestingComponent;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

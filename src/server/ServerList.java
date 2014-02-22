@@ -31,9 +31,10 @@ public class ServerList implements ServerAction {
 					hilf=server.getAuction().get(i).getLastUser().getName();
 				}
 				out+=   "ID: "+ server.getAuction().get(i).getId()+ 
-						"    Description: " +server.getAuction().get(i).getDescription()+ 
-						"    Highestbid: " + server.getAuction().get(i).getHighestBid() + 
-						"    from: "+hilf+"\n";
+						"\tDescription: " +server.getAuction().get(i).getDescription()+ 
+						"\tHighestbid: " + server.getAuction().get(i).getHighestBid() + 
+						"\tfrom: "+hilf+
+						"\tstartTime: " + server.getAuction().get(i).getStartTimeFormat() + "\n";
 			}
 		}
 		if(out.equals(""))
