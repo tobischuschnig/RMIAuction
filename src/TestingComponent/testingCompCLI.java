@@ -1,4 +1,4 @@
-package TestingComponent;
+package testingComponent;
 
 import Client.UI;
 
@@ -9,7 +9,7 @@ import Client.UI;
  * @author Alexander Klune <aklune@student.tgm.ac.at>
  * @version 1.0
  */
-public class testingCompCLI implements UI{
+public class TestingCompCLI implements UI{
 
 	private String output;
 	@Override

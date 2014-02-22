@@ -1,4 +1,4 @@
-package TestingComponent;
+package testingComponent;
 
 import java.util.ArrayList;
 
