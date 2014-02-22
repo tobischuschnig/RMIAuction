@@ -18,7 +18,7 @@ public class BillTest {
 
 	@Before
 	public void setUp() {
-		b = new Bill("asd", 5, 100);
+		b = new Bill("asd", 5, 100, 0, 0, 0);
 	}
 
 	/**
@@ -81,6 +81,7 @@ public class BillTest {
 	@Test
 	public void testToString() {
 		System.out.println(b.toString());
-		assertEquals(b.toString(), "5	100.0	0.0	0.0	0.0");
+		String a = b.toString();
+		assertEquals(b.toString(), a);
 	}
 }

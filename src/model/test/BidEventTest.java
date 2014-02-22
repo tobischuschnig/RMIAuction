@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import model.AuctionEvent;
 import model.BidEvent;
+import model.EventType;
 
 
 /**
@@ -15,12 +16,13 @@ import model.BidEvent;
  *
  */
 public class BidEventTest {
-	private BidEvent be,be1;
+	private BidEvent be1,be2,be3;
 	
 	@Before
 	public void setUp() {
-		be = new BidEvent(null, null, 0);
-		be1 = new BidEvent(null, null, 0, null, 0, 0);
+		be1 = new BidEvent("1", EventType.BID_PLACED,1000001 , "b1", 1,  10);
+		be2 = new BidEvent("1", EventType.BID_OVERBID,1000001 , "b1", 1,  10);
+		be3 = new BidEvent("1", EventType.BID_WON,1000001 , "b1", 1,  10);
 	}
 	
 	/**
@@ -28,8 +30,8 @@ public class BidEventTest {
 	 */
 	@Test
 	public void testGetAuctionID() {
-		be.setAuctionID(10);
-		assertEquals(be.getAuctionID(),10);
+		be1.setAuctionID(10);
+		assertEquals(be1.getAuctionID(),10);
 	}
 	
 	/**
@@ -37,8 +39,8 @@ public class BidEventTest {
 	 */
 	@Test
 	public void testGetUsername(){
-		be.setUserName("asd");
-		assertEquals(be.getUserName(),"asd");
+		be1.setUserName("asd");
+		assertEquals(be1.getUserName(),"asd");
 	}
 	
 	/**
@@ -46,7 +48,37 @@ public class BidEventTest {
 	 */
 	@Test
 	public void testGetPrice(){
-		be.setPrice(1.0);
-		assertEquals(1.0, be.getPrice(), 0);
+		be1.setPrice(1.0);
+		assertEquals(1.0, be1.getPrice(), 0);
+	}
+	
+	/**
+	 * Testing of toString Method in BidEvent
+	 */
+	@Test
+	public void testToString() {
+		String a = be1.toString();
+		System.out.println(a);
+		assertEquals(be1.toString(), a);
+	}
+	
+	/**
+	 * Testing of toString Method in BidEvent
+	 */
+	@Test
+	public void testToString1() {
+		String a = be2.toString();
+		System.out.println(a);
+		assertEquals(be2.toString(), a);
+	}
+	
+	/**
+	 * Testing of toString Method in BidEvent
+	 */
+	@Test
+	public void testToString2() {
+		String a = be3.toString();
+		System.out.println(a);
+		assertEquals(be3.toString(), a);
 	}
 }

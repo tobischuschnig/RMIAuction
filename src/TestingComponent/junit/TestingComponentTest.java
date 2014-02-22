@@ -1,9 +1,7 @@
-package testingComponent.junit;
+package TestingComponent.junit;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import testingComponent.TestingComponent;
 
 
 /**
@@ -20,10 +18,10 @@ public class TestingComponentTest {
 	}
 	
 	/**
-	 * Testing of auto Method, when autoprint should equals true
+	 * Testing of Method, when something should happen
 	 */
 	@Test
-	public void testAuto(){
+	public void test(){
 
 	}
 }
