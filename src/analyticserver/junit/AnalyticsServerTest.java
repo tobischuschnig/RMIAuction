@@ -3,17 +3,23 @@ package analyticserver.junit;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.PatternSyntaxException;
 
+import managmentclient.ManagementClientInterface;
 import model.AuctionEvent;
+import model.BidEvent;
 import model.EventType;
 import model.StatisticsEvent;
+import model.UserEvent;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import Exceptions.InvalidFilterException;
 import analyticserver.AnalyticServer;
+import analyticserver.EventHandler;
 
 /**
  * Junit Tests for analytics server which iplements the remote interface
@@ -63,8 +69,9 @@ public class AnalyticsServerTest {
 	public void testSuscribe() throws PatternSyntaxException, InvalidFilterException{
 		//TODO finishing Testcase Method not written yet
 		// input is a correct input
+		ManagementClientInterface man = null;
 		String input = "(USER_.*)|(BID_.*)";
-		String n = as.suscribe(input, null);
+		String n = as.suscribe(input, man);
 		//assertNotNull(n);
 	}
 	/**
@@ -121,5 +128,115 @@ public class AnalyticsServerTest {
 		AuctionEvent a1 = new AuctionEvent("1", EventType.AUCTION_STARTED, 1000000,1);
 		as.notify(al,a1);
 		assertNotNull(al);
+	}
+	
+	/**
+	 * Testing Method getAuctionEventsStarted
+	 */
+	@Test
+	public void testGetAuctionEventsStarted(){
+		ConcurrentHashMap<Integer,AuctionEvent> a = null;
+		as.setAuctionEventsStarted(a);
+		assertEquals(as.getAuctionEventsStarted(),a);
+	}
+	
+	/**
+	 * Testing Method getAuctionEventsEnded
+	 */
+	@Test
+	public void testGetAuctionEventsEnded(){
+		ArrayList<AuctionEvent> a = null;
+		as.setAuctionEventsEnded(a);
+		assertEquals(as.getAuctionEventsEnded(),a);
+	}
+	
+	/**
+	 * Testing Method getUserEventsLogin
+	 */
+	@Test
+	public void testGetUserEventsLogin(){
+		ConcurrentHashMap<String,ArrayList<UserEvent>> a = null;
+		as.setUserEventsLogin(a);
+		assertEquals(as.getUserEventsLogin(),a);
+	}
+	
+	/**
+	 * Testing Method getUserEventsLogout
+	 */
+	@Test
+	public void testGetUserEventsLogout(){
+		ConcurrentHashMap<String,ArrayList<UserEvent>> a = null;
+		as.setUserEventsLogout(a);
+		assertEquals(as.getUserEventsLogout(),a);
+	}
+	
+	/**
+	 * Testing Method getUserEventsLogout
+	 */
+	@Test
+	public void testGetBidEvents(){
+		ConcurrentHashMap<Integer,ArrayList<BidEvent>> a = null;
+		as.setBidEvents(a);
+		assertEquals(as.getBidEvents(),a);
+	}
+	
+	/**
+	 * Testing Method GetStatisticsEvents
+	 */
+	@Test
+	public void testGetStatisticsEvents(){
+		ConcurrentHashMap<EventType,StatisticsEvent> a = null;
+		as.setStatisticsEvents(a);
+		assertEquals(as.getStatisticsEvents(),a);
+	}
+	
+	/**
+	 * Testing Method GetBidEventsOverbid
+	 */
+	@Test
+	public void testGetBidEventsOverbid(){
+		ConcurrentHashMap<Integer,ArrayList<BidEvent>> a = null;
+		as.setBidEventsOverbid(a);
+		assertEquals(as.getBidEventsOverbid(),a);
+	}
+	
+	/**
+	 * Testing Method GetBidEventsWon
+	 */
+	@Test
+	public void testGetBidEventsWon(){
+		ConcurrentHashMap<Integer,ArrayList<BidEvent>> a = null;
+		as.setBidEventsWon(a);
+		assertEquals(as.getBidEventsWon(),a);
+	}
+	
+	/**
+	 * Testing Method GetManagementClients
+	 */
+	@Test
+	public void testGetManagementClients(){
+		ConcurrentHashMap<String, ConcurrentHashMap<UUID, ManagementClientInterface>> a = null;
+		as.setManagementClients(a);
+		assertEquals(as.getManagementClients(),a);
+	}
+	
+	/**
+	 * Testing Method GetPattern
+	 */
+	@Test
+	public void testGetPattern(){
+		ArrayList<String> a = null;
+		as.setPattern(a);
+		assertEquals(as.getPattern(),a);
+	}
+	
+	/**
+	 * Testing Method GetEventHandler
+	 */
+	@Test
+	public void testGetEventHandler(){
+		EventHandler a = null;
+		as.setEventHandler(a);
+		assertEquals(as.getEventHandler(),a);
 	}
 }

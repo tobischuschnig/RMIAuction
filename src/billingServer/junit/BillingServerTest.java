@@ -3,16 +3,20 @@ package billingServer.junit;
 import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.rmi.ConnectException;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.mockito.Mockito.*;
 
 import Exceptions.UserInputException;
 import billingServer.BillingServer;
 import billingServer.BillingServerInterface;
+import billingServer.BillingServerSecureInterface;
 
 /**
  * Testclass for BillingServer
@@ -25,17 +29,18 @@ public class BillingServerTest {
 	
 	@Before
 	public void setUp(){
+		acc = mock(BillingServerInterface.class);
 		bs=new BillingServer();
 		try {      
 			acc = (BillingServerInterface)Naming.lookup("BillingServer");
 		} 
 		catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("");
 		}
 	}
 	/**
 	 * Testing of login Method with right user credentials, but will throw NullPointerException
-	 * because of calling the Method not with the Interface.
+	 * because of calling the Method not with the reference.
 	 * 
 	 * @throws UserInputException 
 	 * @throws RemoteException 
@@ -58,6 +63,7 @@ public class BillingServerTest {
 	 * For testing purposes, here is a version of the testcase, which is called correctly with the Reference
 	 * @throws UserInputException
 	 * @throws RemoteException
+	 * 
 	 */
 	@Test
 	public void testLoginCorrectCall() throws UserInputException, RemoteException{
