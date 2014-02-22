@@ -33,7 +33,7 @@ public class TestingClient{
 	
 	private TCPConnector tcp;
 	
-	private testingCompCLI tcc;
+	private TestingCompCLI tcc;
 	
 	/**
 	 * 
@@ -49,7 +49,7 @@ public class TestingClient{
 		this.auctionDuration = auctionDuration;
 		this.updateIntervalSec = updateIntervalSec;
 		this.bidsPerMin = bidsPerMin;
-		tcc = new testingCompCLI();
+		tcc = new TestingCompCLI();
 		this.tcp = new TCPConnector(1234,tcc,new Client("localhost",1234,4321));
 	}
 	
@@ -125,7 +125,7 @@ public class TestingClient{
 		return tcp;
 	}
 	
-	public testingCompCLI getTestingCompCLI(){
+	public TestingCompCLI getTestingCompCLI(){
 		return this.tcc;
 	}
 }
