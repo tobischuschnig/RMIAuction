@@ -3,6 +3,7 @@ package analyticserver.junit;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.regex.PatternSyntaxException;
 
 import model.AuctionEvent;
 import model.EventType;
@@ -11,6 +12,7 @@ import model.StatisticsEvent;
 import org.junit.Before;
 import org.junit.Test;
 
+import Exceptions.InvalidFilterException;
 import analyticserver.AnalyticServer;
 
 /**
@@ -54,24 +56,28 @@ public class AnalyticsServerTest {
 	}
 	/**
 	 * Testing subscribe with correct Input
+	 * @throws InvalidFilterException 
+	 * @throws PatternSyntaxException 
 	 */
 	@Test
-	public void testSuscribe(){
+	public void testSuscribe() throws PatternSyntaxException, InvalidFilterException{
 		//TODO finishing Testcase Method not written yet
 		// input is a correct input
 		String input = "(USER_.*)|(BID_.*)";
-		String n = as.suscribe(input);
+		String n = as.suscribe(input, null);
 		//assertNotNull(n);
 	}
 	/**
 	 * Testing subscribe with incorrect Input
+	 * @throws InvalidFilterException 
+	 * @throws PatternSyntaxException 
 	 */
 	@Test
-	public void testSuscribeWrong(){
+	public void testSuscribeWrong() throws PatternSyntaxException, InvalidFilterException{
 		//TODO finishing Testcase Method not written yet
 		// input is a incorrect input
 		String input = "§$%&/()=";
-		String n = as.suscribe(input);
+		String n = as.suscribe(input, null);
 		//assertNull(n);
 	}
 	/**
