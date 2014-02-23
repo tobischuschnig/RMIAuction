@@ -1,5 +1,7 @@
 package alltest;
 
+import managmentclient.junit.ManagementClientTest;
+
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

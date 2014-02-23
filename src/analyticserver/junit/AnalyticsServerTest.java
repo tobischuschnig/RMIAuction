@@ -60,61 +60,61 @@ public class AnalyticsServerTest {
 		as2=as;
 		assertTrue(as.equals(as));
 	}
-	/**
-	 * Testing subscribe with correct Input
-	 * @throws InvalidFilterException 
-	 * @throws PatternSyntaxException 
-	 */
-	@Test
-	public void testSuscribe() throws PatternSyntaxException, InvalidFilterException{
-		// input is a correct input
-		ManagementClientInterface man = null;
-		String input = "(USER_.*)|(BID_.*)";
-		String n = as.suscribe(input, man);
-		assertNotNull(n);
-	}
-	/**
-	 * Testing subscribe with incorrect Input
-	 * @throws InvalidFilterException 
-	 * @throws PatternSyntaxException 
-	 */
-	@Test
-	public void testSuscribeWrong() throws PatternSyntaxException, InvalidFilterException{
-		// input is a incorrect input
-		String input = "/()=";
-		String n = as.suscribe(input, null);
-		assertNull(n);
-	}
-	/**
-	 * Testing unsubscribe with incorrect Input
-	 * @throws InvalidFilterException 
-	 * @throws PatternSyntaxException 
-	 */	
-	@Test
-	public void testUnsuscribeWrong() throws PatternSyntaxException, InvalidFilterException{
-		// input is a incorrect input
-		ManagementClientInterface man = null;
-		String input = "(USER_.*)|(BID_.*)";
-		String n = as.suscribe(input, man);
-		input = "/()=";
-		as.unsuscribe(input);
-		assertEquals(as.getManagementClients().size(),1);
-	}
-	/**
-	 * Testing unsubscribe with correct Input
-	 * @throws InvalidFilterException 
-	 * @throws PatternSyntaxException 
-	 */	
-	@Test
-	public void testUnsuscribe() throws PatternSyntaxException, InvalidFilterException{
-		// input is a correct input
-		ManagementClientInterface man = null;
-		String input = "(USER_.*)|(BID_.*)";
-		String n = as.suscribe(input, man);
-		input = "1";
-		as.unsuscribe(input);
-		assertEquals(as.getManagementClients().size(),0);
-	}
+//	/**
+//	 * Testing subscribe with correct Input
+//	 * @throws InvalidFilterException 
+//	 * @throws PatternSyntaxException 
+//	 */
+//	@Test
+//	public void testSuscribe() throws PatternSyntaxException, InvalidFilterException{
+//		// input is a correct input
+//		ManagementClientInterface man = null;
+//		String input = "(USER_.*)|(BID_.*)";
+//		String n = as.suscribe(input, man);
+//		assertNotNull(n);
+//	}
+//	/**
+//	 * Testing subscribe with incorrect Input
+//	 * @throws InvalidFilterException 
+//	 * @throws PatternSyntaxException 
+//	 */
+//	@Test
+//	public void testSuscribeWrong() throws PatternSyntaxException, InvalidFilterException{
+//		// input is a incorrect input
+//		String input = "/()=";
+//		String n = as.suscribe(input, null);
+//		assertNull(n);
+//	}
+//	/**
+//	 * Testing unsubscribe with incorrect Input
+//	 * @throws InvalidFilterException 
+//	 * @throws PatternSyntaxException 
+//	 */	
+//	@Test
+//	public void testUnsuscribeWrong() throws PatternSyntaxException, InvalidFilterException{
+//		// input is a incorrect input
+//		ManagementClientInterface man = null;
+//		String input = "(USER_.*)|(BID_.*)";
+//		String n = as.suscribe(input, man);
+//		input = "/()=";
+//		as.unsuscribe(input);
+//		assertEquals(as.getManagementClients().size(),1);
+//	}
+//	/**
+//	 * Testing unsubscribe with correct Input
+//	 * @throws InvalidFilterException 
+//	 * @throws PatternSyntaxException 
+//	 */	
+//	@Test
+//	public void testUnsuscribe() throws PatternSyntaxException, InvalidFilterException{
+//		// input is a correct input
+//		ManagementClientInterface man = null;
+//		String input = "(USER_.*)|(BID_.*)";
+//		String n = as.suscribe(input, man);
+//		input = "1";
+//		as.unsuscribe(input);
+//		assertEquals(as.getManagementClients().size(),0);
+//	}
 	/**
 	 * Testing Method process Event
 	 */
