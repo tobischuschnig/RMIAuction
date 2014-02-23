@@ -83,7 +83,7 @@ public class AnalyticsServerTest {
 	public void testSuscribeWrong() throws PatternSyntaxException, InvalidFilterException{
 		//TODO finishing Testcase Method not written yet
 		// input is a incorrect input
-		String input = "§$%&/()=";
+		String input = "ï¿½$%&/()=";
 		String n = as.suscribe(input, null);
 		//assertNull(n);
 	}
@@ -94,7 +94,7 @@ public class AnalyticsServerTest {
 	public void testUnsuscribeWrong(){
 		//TODO finishing Testcase Method not written yet
 		// input is a incorrect input
-		String input = "§$%&/()=";
+		String input = "/()=";
 		as.unsuscribe(input);
 		//assertEquals(as.getList().size(),1);
 	}
