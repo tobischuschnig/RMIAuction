@@ -1,5 +1,7 @@
 package billingServer;
 
+import Exceptions.*;
+
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.Iterator;
@@ -24,6 +26,7 @@ public class BillingServerSecure implements Serializable,
 
 	private PriceSteps priceSteps;
 	private ConcurrentHashMap<String, Bill> bills;
+
 	/**
 	 * Konstructor wich sets the concurrenthashmap for the pricesteps
 	 */
@@ -62,8 +65,9 @@ public class BillingServerSecure implements Serializable,
 	 */
 	public boolean createPriceStep(double startPrice, double endPrice,
 			double fixedPrice, double variablePricePercent)
-			throws RemoteException {		
-		return priceSteps.addPricestep(startPrice, endPrice, fixedPrice, variablePricePercent);
+			throws  RemoteException,InvalidParameterException,InvalidInputException,OverlappedPricestepException{
+		return priceSteps.addPricestep(startPrice, endPrice, fixedPrice,
+				variablePricePercent);
 	}
 
 	/**
@@ -96,8 +100,8 @@ public class BillingServerSecure implements Serializable,
 		Double feeFixed = 0.0;
 
 		CopyOnWriteArrayList<PriceStep> psTemp = priceSteps.getPriceSteps();
-		
-		for(int x=0;x<psTemp.size();x++){
+
+		for (int x = 0; x < psTemp.size(); x++) {
 			PriceStep temp = psTemp.get(x);
 			if (price >= temp.getStartPrice()
 					&& (price <= temp.getEndPrice() || temp.getEndPrice() == 0)) {

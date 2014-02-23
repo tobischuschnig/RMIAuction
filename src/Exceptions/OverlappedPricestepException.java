@@ -14,7 +14,7 @@ public class OverlappedPricestepException extends RemoteException{
 	 * Constructor of the class
 	 * sets the Exception message
 	 */
-	OverlappedPricestepException(){
+	public OverlappedPricestepException(){
 		super("Two pricesteps are overlapping.");
 	}
 	

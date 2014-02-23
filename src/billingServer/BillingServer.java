@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -44,7 +45,7 @@ public class BillingServer implements BillingServerInterface,Serializable {
 	 * @param password	password from this user
 	 * @return	reference von BillingServerSecure
 	 */
-	public BillingServerSecureInterface login(String username, String password) throws RemoteException,UserInputException{
+	public BillingServerSecureInterface login(String username, String password) throws UserInputException{
 		FileInputStream fis = null;
 		BufferedReader br = null;
 		boolean login = false;
@@ -74,6 +75,10 @@ public class BillingServer implements BillingServerInterface,Serializable {
 				return (BillingServerSecureInterface)r.lookup("BillingServerSecure");
 			} catch (NotBoundException e) {
 				System.out.println("Service not bound");
+			} catch (AccessException e) {
+				
+			} catch (RemoteException e) {
+				
 			}
 		}else{
 			throw new UserInputException();	

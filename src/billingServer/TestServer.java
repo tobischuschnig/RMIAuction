@@ -3,6 +3,9 @@ package billingServer;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 
+import Exceptions.InvalidInputException;
+import Exceptions.InvalidParameterException;
+import Exceptions.OverlappedPricestepException;
 import Exceptions.UserInputException;
 
 import model.Bill;
@@ -34,13 +37,17 @@ public class TestServer {
 			//secure.billAuction("admin", 1, 1.2);
 
 			//	b.
-		} catch (RemoteException e) {
 		}catch (UserInputException e1) {
-			System.err.println(e1.getMessage());
+			System.err.println(e1.getCause());
+		} catch (InvalidInputException e) {
+			System.err.println(e.getCause());
+		} catch (InvalidParameterException e) {
+			System.err.println(e.getCause());
+		} catch (OverlappedPricestepException e) {
+			System.err.println(e.getCause());
+		} catch (RemoteException e) {
+			System.err.println(e.getCause());
 		}
-
-
-		
 	}
 
 }

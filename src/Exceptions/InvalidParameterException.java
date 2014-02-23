@@ -15,7 +15,7 @@ public class InvalidParameterException extends RemoteException{
 	 * sets the Exception message
 	 */
 	InvalidParameterException(){
-		super("The value of a parameter is invalid.");
+		super("The value of one parameter is invalid.");
 	}
 	
 	/**

@@ -8,12 +8,16 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import Exceptions.InvalidInputException;
+import Exceptions.OverlappedPricestepException;
 
 //import org.mockito.cglib.transform.impl.AddPropertyTransformer;
 
@@ -128,15 +132,15 @@ public class PriceSteps implements Serializable {
 	}
 
 	public boolean addPricestep(double startPrice, double endPrice,
-			double fixedPrice, double variablePricePercent) throws RemoteException {
+			double fixedPrice, double variablePricePercent) throws RemoteException,InvalidInputException,InvalidParameterException,OverlappedPricestepException {
 		boolean overlaped = false;
 		if (startPrice < 0 || endPrice < 0 || fixedPrice < 0
 				|| variablePricePercent < 0)
-			throw new RemoteException();
+			throw new InvalidParameterException();
 		System.out.println(startPrice + " < "+endPrice);
 		if(startPrice > endPrice){
 			overlaped = true;
-			System.out.println("startprice should be smaller than endprice");
+			throw new InvalidInputException("The startprice should be smaller than endprice");
 		}
 		
 
@@ -163,7 +167,7 @@ public class PriceSteps implements Serializable {
 		} else {
 			System.out
 					.println("Es konnte kein neuer PriceStep angelgegt werden, da er sich mit einem vorhandnen ueberschneidet oder dieser bereits existiert oder startTime > endTime.");
-			throw new RemoteException();
+			throw new OverlappedPricestepException();
 		}
 	}
 }
