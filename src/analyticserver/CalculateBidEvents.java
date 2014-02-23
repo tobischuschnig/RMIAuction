@@ -11,12 +11,12 @@ import model.*;
 public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 	private AnalyticServer a; // a...AnalyticServer (Variable is often used so its better when its a shortcut
 	private long startTime;
-	private int cout;
+	//private int cout;
 	
 	public CalculateBidEvents (AnalyticServer a) {
 		this.a = a;
 		startTime = System.currentTimeMillis();
-		cout = 0;
+		//cout = 0;
 	}
 	
 	@Override
@@ -67,8 +67,8 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 			while(true) {
 				Thread.sleep(60000);
 				a.notify(this.calculateBidEventAverageTime(),null); 
-				if(cout ==0)AnalyticServerTest.wert(a);
-				cout++;
+				//if(cout ==0)AnalyticServerTest.wert(a);
+				//cout++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

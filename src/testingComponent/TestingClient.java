@@ -88,11 +88,15 @@ public class TestingClient{
 			
 			
 			taskExecuter.login(username, tcpPort, udpPort); //TODO brauche den rueckgabewert
-			
+			try {
+				Thread.sleep(100);
+			} catch(InterruptedException e) {}
 			//System.out.println("hallo "+tcpPort+udpPort+host);
 			
 			//BidThread bidThread = new BidThread(this);
 			//bidThread.run();
+			CreateThread createThread = new CreateThread(this);
+			createThread.run();
 			//c.run();		// i dont need this
 		}catch(Exception e){
 			System.out.println("Can not connect to Server");

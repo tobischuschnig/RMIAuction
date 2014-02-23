@@ -15,60 +15,60 @@ import Client.TCPConnector;
  *@email aklune@student.tgm.ac.at
  */
 public class ListThread implements Runnable{
-
-/**
- * 
- */
-private TestingClient testingClient;
+	
+	private TestingClient testingClient;
+	private long end;
 	
 	public ListThread(TestingClient testingClient){
 		this.testingClient = testingClient;
+		end = System.currentTimeMillis()*1000*60*2;//TODO Endet mit Math.random zwischen 7 und 10
 	}
-
-	/**
-	 * 
-	 */
+	
+/**
+ * 
+ */
 	@Override
 	public void run() {
-		ListMessage lm = new ListMessage("admin");
-		TCPConnector tcp = testingClient.getTCPConnector();
-		tcp.sendMessage(lm);
-		String list = testingClient.getTestingCompCLI().getOutput();
-		String[] auctions = list.split("\n");
-		//ID: "+ server.getAuction().get(i).getId()+ 
-//		"\tDescription: " +server.getAuction().get(i).getDescription()+ 
-//		"\tHighestbid: " + server.getAuction().get(i).getHighestBid() + 
-//		"\tfrom: "+hilf+
-//		"\tstartTime:
-		ArrayList<String[]> arl = new ArrayList<String[]>();
-		for(int i = 0;i<list.length();i++){
-			String [] temp = auctions[i].split("\t");
-			arl.add(temp);
-			
-//			String id = temp[0].substring(3,temp[0].length());
-//			String desc = temp[1].substring(12,temp[1].length());
-//			String hbid = temp[2].substring(12,temp[2].length());;
-//			String from = temp[3].substring(6,temp[1].length());;
-//			String sTime = temp[4].substring(11,temp[1].length());;
-//			
-//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//			try {
-//				Date startTime = sdf.parse(sTime);
-//			} catch (ParseException e) {
-//				System.err.println("Fehler beim umformatieren des Datums in ListThread");
-//			}
-			
-			
-	
+		while(System.currentTimeMillis() <= end) {//TODO Fehler nicht einmal eine Schleife im Thread
+			ListMessage lm = new ListMessage("admin");
+			TCPConnector tcp = testingClient.getTCPConnector();
+			tcp.sendMessage(lm);
+			String list = testingClient.getTestingCompCLI().getOutput();
+			String[] auctions = list.split("\n");
+			//ID: "+ server.getAuction().get(i).getId()+ 
+			//		"\tDescription: " +server.getAuction().get(i).getDescription()+ 
+			//		"\tHighestbid: " + server.getAuction().get(i).getHighestBid() + 
+			//		"\tfrom: "+hilf+
+			//		"\tstartTime:
+			ArrayList<String[]> arl = new ArrayList<String[]>();
+			for(int i = 0;i<list.length();i++){
+				String [] temp = auctions[i].split("\t");
+				arl.add(temp);
+
+				//			String id = temp[0].substring(3,temp[0].length());
+				//			String desc = temp[1].substring(12,temp[1].length());
+				//			String hbid = temp[2].substring(12,temp[2].length());;
+				//			String from = temp[3].substring(6,temp[1].length());;
+				//			String sTime = temp[4].substring(11,temp[1].length());;
+				//			
+				//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				//			try {
+				//				Date startTime = sdf.parse(sTime);
+				//			} catch (ParseException e) {
+				//				System.err.println("Fehler beim umformatieren des Datums in ListThread");
+				//			}
+
+
+
+			}
+
+			try {
+				Thread.sleep(testingClient.getUpdateIntervalSec()*1000);
+			} catch (InterruptedException e) {
+				System.err.println("Fehler beim schlafen legen des ListThreads");
+			}
+			testingClient.setAuctionsIDs(arl);
 		}
-		
-		try {
-			Thread.sleep(testingClient.getUpdateIntervalSec()*1000);
-		} catch (InterruptedException e) {
-			System.err.println("Fehler beim schlafen legen des ListThreads");
-		}
-		testingClient.setAuctionsIDs(arl);
-		
 	}
 
 }

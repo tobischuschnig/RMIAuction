@@ -147,6 +147,13 @@ public class TestingComponent {
 				//System.out.println(clientID+"\n" +auctionsPerMin+"\n" + auctionDuration+"\n" + updateIntervalSec+"\n" + bidsPerMin);
 				c = new TestingClient(clientID,host,tcpPort,udpPort, auctionsPerMin, auctionDuration, updateIntervalSec, bidsPerMin);
 				testingclients.put(clientID, c);	//TODO Fehler jetzt try catch unedig
+				if (i == 0 ) {
+					try {
+						Thread.sleep(1000);
+					} catch(InterruptedException e) {
+
+					}
+				}
 
 			}
 		}catch(NumberFormatException e){
