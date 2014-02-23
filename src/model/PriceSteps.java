@@ -145,7 +145,7 @@ public class PriceSteps implements Serializable {
 			throw new InvalidParameterException();
 		System.out.println(startPrice + " < "+endPrice);
 		if(endPrice==0){
-			
+			endPrice = Double.MAX_VALUE;
 		}else if(startPrice > endPrice){
 			throw new InvalidInputException("The startprice should be smaller than endprice");
 		}
@@ -168,7 +168,7 @@ public class PriceSteps implements Serializable {
 
 		if (!overlaped) {
 			if(endPrice==0){
-				priceSteps.add(new PriceStep(startPrice, endPrice+99999999, fixedPrice, variablePricePercent));
+				priceSteps.add(new PriceStep(startPrice, endPrice, fixedPrice, variablePricePercent));
 
 			}else{
 				priceSteps.add(new PriceStep(startPrice, endPrice, fixedPrice, variablePricePercent));
