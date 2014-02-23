@@ -6,8 +6,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * Diese Klasse ruft alle Testklassen um Dreieck zu testen auf.
- * @author Tobias Schuschnig
+ * Overall Testsuite for all Testcases which are written so far
+ * @author Alexander Rieppel <alexander.rieppel@student.tgm.ac.at>
  * @version 13-01-2013
  */
 

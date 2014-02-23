@@ -54,9 +54,10 @@ public class BillingServerSecureTest {
 		bss.createPriceStep(101, 200, 5, 6);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),2);
 	}
+	
 	/**
-	 * Testing of CreatePriceStep Method when no Exception should occur, but the
-	 * two PriceSteps overlapse and so only the first is created properly
+	 * Testing of CreatePriceStep Method when an Exception should occur, but the
+	 * second PriceSteps overlapse and so only the first is created properly
 	 */
 	@Test(expected=RemoteException.class)
 	public void testCreatePriceStepOverlapse() throws RemoteException{
@@ -64,6 +65,28 @@ public class BillingServerSecureTest {
 		bss.createPriceStep(50, 80, 3, 5);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),1);
 	}
+	
+	/**
+	 * Testing of CreatePriceStep Method when an Exception should occur, but the
+	 * second PriceSteps overlapse and so only the first is created properly
+	 */
+	@Test(expected=RemoteException.class)
+	public void testCreatePriceStepOverlapse1() throws RemoteException{
+		bss.createPriceStep(0, 100, 3, 5);
+		bss.createPriceStep(0, 100, 3, 5);
+		assertEquals(bss.getPriceSteps().getPriceSteps().size(),1);
+	}
+	
+	/**
+	 * Testing of CreatePriceStep Method when an Exception should occur, because
+	 * startPrice > EndPrice
+	 */
+	@Test(expected=RemoteException.class)
+	public void testCreatePriceStepOverlapse2() throws RemoteException{
+		bss.createPriceStep(200, 100, 3, 5);
+		assertEquals(bss.getPriceSteps().getPriceSteps().size(),1);
+	}
+	
 	/**
 	 * Testing of CreatePriceStep Method when an Exception is expected, 
 	 * because of negative startPrice
@@ -119,6 +142,18 @@ public class BillingServerSecureTest {
 		bss.deletePriceStep(0, 100);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),0);
 	}
+	
+	/**
+	 * Testing of DeletePriceStep Method, when a priceStep is created and the same deleted after that
+	 * It checks if the priceStep wasnt deleted because of false startPrice
+	 * @throws RemoteException 
+	 */
+	@Test
+	public void testdeletePriceStep1() throws RemoteException{
+		bss.createPriceStep(0, 100,3,5);
+		bss.deletePriceStep(1, 100);
+		assertEquals(bss.getPriceSteps().getPriceSteps().size(),1);
+	}
 	/**
 	 * Testing of DeletePriceStep Method, when a priceStep is created and some other not existing
 	 * PriceStep should be deleted
@@ -140,8 +175,29 @@ public class BillingServerSecureTest {
 		ConcurrentHashMap<String,Bill> bills = new ConcurrentHashMap<String,Bill>();
 		bss.setBills(bills);
 		bss.billAuction("test", 123, 100);
-		//assertNotNull(bss.getBill("test"));
 		assertEquals( bss.getBills().size(),1);
+	}
+	/**
+	 * Testing of billAuction Method, when the bill was created
+	 * It checks if the created Bill is in the list
+	 * @throws RemoteException 
+	 */
+	@Test
+	public void testbillAuction1() throws RemoteException{
+		ConcurrentHashMap<String,Bill> bills = new ConcurrentHashMap<String,Bill>();
+		bss.createPriceStep(0,100, 3, 5);
+		bss.createPriceStep(101,200, 5, 6);
+		bss.createPriceStep(201,400, 7, 8);
+		bss.setBills(bills);
+		//TODO Solve Problem with infinite priceStep
+		bss.billAuction("test", 123, 50);
+		bss.billAuction("test1", 123, 100);
+		bss.billAuction("test2", 123, 100);
+		bss.billAuction("test3", 123, 100);
+		bss.billAuction("test4", 123, 100);
+		bss.billAuction("test5", 123, 100);
+		assertEquals( bss.getBills().size(),6);
+		assertEquals(bss.getPriceSteps().getPriceSteps().size(),3);
 	}
 	
 	/**

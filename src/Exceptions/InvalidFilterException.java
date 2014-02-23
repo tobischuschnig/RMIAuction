@@ -4,7 +4,7 @@ package Exceptions;
 	 * class InvalidFilterException extends Exception 
 	 * thrown if the param filter for the subscribe method in the class TaskExecuter contains wrong arguments
 	 * @author PatrickPoelzlbauer
-	 * @version 09.02.2014 1.0
+	 * @version 19.02.2014 1.0
 	 */
 public class InvalidFilterException extends Exception{
 		  
@@ -13,7 +13,7 @@ public class InvalidFilterException extends Exception{
 	 * sets the Exception message
 	 */
 	 public InvalidFilterException(){
-		super("Thats not a valid argument for the Filter");
+		super("Thats not a valid argument for the Filter.");
 	 }
 			
 	/**
