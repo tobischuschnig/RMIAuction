@@ -39,7 +39,8 @@ public class CreateThread implements Runnable {
 
 			incrementer++;
 			try {
-				Thread.sleep((testingClient.getAuctionsPerMin()/60)*1000);
+				System.out.println(testingClient.getAuctionsPerMin()+""+((testingClient.getAuctionsPerMin()/60)*1000));
+				Thread.sleep(((60/testingClient.getAuctionsPerMin())*1000));//TODO Fehler falsche Formel 60/x richtig!!
 			} catch (InterruptedException e) {
 				System.err.println("Error by pausing the Thread."); 
 			}

@@ -29,6 +29,7 @@ public class TCPConnector implements Runnable{
 	private ObjectInputStream input; //Stream for Input
 	UI ui; //Output into CLI/GUI
 	Client client; //Client
+	private String output;
 	
 	public TCPConnector(int p, UI ui,Client c){
 		tcpPort = p;
@@ -58,11 +59,12 @@ public class TCPConnector implements Runnable{
 	 * Gives the Connector a message to send to the server
 	 * Notifies the Thread that it has to work
 	 */
-	public void sendMessage(Message m){
+	public String sendMessage(Message m){
 		lock.lock();
 		message = m;
 		con.signal();
 		lock.unlock();
+		return output;
 	}
 
 	@Override
@@ -92,6 +94,7 @@ public class TCPConnector implements Runnable{
 								client.setUsername(message.getName());
 							}
 						}
+						output = s;
 						ui.out(s);
 					} catch (ClassNotFoundException e) {
 						

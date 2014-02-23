@@ -31,7 +31,7 @@ public class TestingClient{
 
 	private int clientID;
 
-	private ArrayList <String[]> auctions;
+	private ArrayList<Integer> auctions;
 
 	private TCPConnector tcp; //TODO brauch ich eig net?
 	private TaskExecuter taskExecuter;
@@ -84,7 +84,7 @@ public class TestingClient{
 			taskExecuter = c.getTaskExecuter();
 			username = UUID.randomUUID().toString();
 			
-			System.out.println("hallo"+tcpPort+udpPort+host);
+			//System.out.println("hallo"+tcpPort+udpPort+host);
 			
 			
 			taskExecuter.login(username, tcpPort, udpPort); //TODO brauche den rueckgabewert
@@ -93,11 +93,15 @@ public class TestingClient{
 			} catch(InterruptedException e) {}
 			//System.out.println("hallo "+tcpPort+udpPort+host);
 			
-			//BidThread bidThread = new BidThread(this);
-			//bidThread.run();
-			CreateThread createThread = new CreateThread(this);
-			createThread.run();
-			//c.run();		// i dont need this
+			CreateThread creater = new CreateThread(this);
+			Thread createThread = new Thread(creater);
+			createThread.start();
+			System.out.println("hallo");
+			ListThread lister = new ListThread(this);
+			Thread listThread = new Thread(lister);
+			listThread.start();
+			Thread bidThread = new Thread(new BidThread(this));
+			bidThread.start();
 		}catch(Exception e){
 			System.out.println("Can not connect to Server");
 		}
@@ -115,7 +119,7 @@ public class TestingClient{
 	 * 
 	 * @param ids
 	 */
-	public void setAuctionsIDs(ArrayList <String[]> auctions){
+	public void setAuctionsIDs(ArrayList <Integer> auctions){
 		this.auctions = auctions;
 	}
 
@@ -167,7 +171,7 @@ public class TestingClient{
 		this.clientID = clientID;
 	}
 
-	public ArrayList<String[]> getAuctionsIDs() {
+	public ArrayList<Integer> getAuctionsIDs() {
 		return auctions;
 	}
 	
