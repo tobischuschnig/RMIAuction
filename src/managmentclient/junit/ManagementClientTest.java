@@ -98,9 +98,9 @@ public class ManagementClientTest {
 	 * Testing of the run Method
 	 */
 	@Test
-	public void testRun(){
+	public void testsetActive(){
 		mc.setActive(true);
-		mc.run();
+	//	mc.run();
 	}
 	
 //	/**
