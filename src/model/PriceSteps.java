@@ -134,12 +134,13 @@ public class PriceSteps implements Serializable {
 	public boolean addPricestep(double startPrice, double endPrice,
 			double fixedPrice, double variablePricePercent) throws RemoteException,InvalidInputException,InvalidParameterException,OverlappedPricestepException {
 		boolean overlaped = false;
-		if (startPrice < 0 || endPrice < 0 || fixedPrice < 0
-				|| variablePricePercent < 0)
+		if (startPrice <= -1 || endPrice <= -1 || fixedPrice <= -1
+				|| variablePricePercent <= -1)
 			throw new InvalidParameterException();
 		System.out.println(startPrice + " < "+endPrice);
-		if(startPrice > endPrice){
-			overlaped = true;
+		if(endPrice==0){
+			
+		}else if(startPrice > endPrice){
 			throw new InvalidInputException("The startprice should be smaller than endprice");
 		}
 		
@@ -160,7 +161,12 @@ public class PriceSteps implements Serializable {
 		}
 
 		if (!overlaped) {
-			priceSteps.add(new PriceStep(startPrice, endPrice, fixedPrice, variablePricePercent));
+			if(endPrice==0){
+				priceSteps.add(new PriceStep(startPrice, endPrice+99999999, fixedPrice, variablePricePercent));
+
+			}else{
+				priceSteps.add(new PriceStep(startPrice, endPrice, fixedPrice, variablePricePercent));
+			}
 			// Collections.sort((List)priceSteps);
 			 
 			return true;
