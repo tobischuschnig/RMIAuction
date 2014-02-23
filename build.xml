@@ -11,6 +11,10 @@
     <property name="server.host" value="127.0.0.1"/><!-- Server's host -->
     <property name="client.name" value="Client.MainClient"/><!-- Client's full class name (including the package) -->
     <property name="server.port" value="12345"/><!-- Server's TCP port -->
+
+    <property name="billingserver.name" value="billingServer.BillingServer"/>
+    <property name="analyticsserver.name" value="analyticsserver.AnalyticServerMain"/>
+
     <property name="client1.port" value="20001"/><!-- 1st Client's UDP port -->
     <property name="client2.port" value="20002"/><!-- 2nd Client's UDP port -->
     <property name="client3.port" value="20003"/><!-- 3rd Client's UDP port -->
@@ -37,6 +41,18 @@
     <target name="run-server" depends="compile" description="Run Server.">
         <java classname="${server.name}" fork="true" classpathref="project.classpath">
             <arg value="${server.port}"/>
+        </java>
+    </target>
+
+    <target name="run-analytics-server" depends="compile" description="Run analytics-server.">
+        <java classname="${analyticsserver.name}" fork="true" classpathref="project.classpath">
+            
+        </java>
+    </target>
+
+    <target name="run-billing-server" depends="compile" description="Run billing-server.">
+        <java classname="${billingserver.name}" fork="true" classpathref="project.classpath">
+            
         </java>
     </target>
 
