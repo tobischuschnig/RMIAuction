@@ -80,11 +80,17 @@ public class PriceSteps implements Serializable {
 		PriceStep temp;
 		String returnment = String.format("%10s%15s%15s%15s", "Min_Price",
 				"Max_Price", "Fee_Fixed", "Fee_Variable");
-
+		String endp="";
 		for (int x = 0; x < priceSteps.size(); x++) {
 			temp = priceSteps.get(x);
+			if(temp.getEndPrice()==99999999){
+				endp="infinity";
+			}else{
+				endp=temp.getEndPrice()+"";
+			}
+			
 			returnment += String.format("\n%10s%15s%15s%15s",
-					temp.getStartPrice(), temp.getEndPrice(),
+					temp.getStartPrice(), endp,
 					temp.getFixedPrice(), temp.getVariablePricePercent());
 		}
 		return returnment;
