@@ -359,23 +359,5 @@ public class ManagementClient implements ManagementClientInterface, Serializable
         this.autoprint = autoprint;
     }
 
-    /**
-     * Settup and start the Remote Object Server of the Managment-CLient
-     * @return Service-Startus
-     * @Deprecated Use Call-Back instead
-     */
-    @Deprecated
-    public boolean startService() {
-        try {
-            ManagementClientInterface stub = (ManagementClientInterface) UnicastRemoteObject.exportObject(this, 0);
-            Registry registry = LocateRegistry.getRegistry();
-            // setting up Name of Remote
-            registry.rebind("ManagmentClient", stub);
-            cli.outln("Service bound");
-        } catch (RemoteException ex) {
-            cli.outln("Error: " + ex.getMessage());
-            return false;
-        }
-        return true;
-    }
+  
 }
