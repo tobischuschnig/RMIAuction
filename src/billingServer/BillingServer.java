@@ -112,7 +112,11 @@ public class BillingServer implements BillingServerInterface,Serializable {
 		//	    if (System.getSecurityManager() == null)
 		//	      System.setSecurityManager(new RMISecurityManager());
 		try {
-			r=LocateRegistry.createRegistry(1099);
+			try{
+				r=LocateRegistry.createRegistry(1099);
+			}catch (Exception e) {
+				r=LocateRegistry.getRegistry(1099);
+			}
 			//LocateRegistry.createRegistry(1099);
 			BillingServer acc = new BillingServer();
 			BillingServerSecure secure=new BillingServerSecure();
