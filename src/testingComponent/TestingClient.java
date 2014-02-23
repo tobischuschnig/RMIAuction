@@ -81,7 +81,7 @@ public class TestingClient{
 		//TODO dem seinen TaskExecuter hohlen und alles mit dem machen 
 		try {
 			Client c=new Client(host,tcpPort,udpPort);
-			taskExecuter = c.getT();
+			taskExecuter = c.getTaskExecuter();
 			username = UUID.randomUUID().toString();
 			
 			System.out.println("hallo"+tcpPort+udpPort+host);
