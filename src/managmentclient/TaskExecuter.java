@@ -9,10 +9,13 @@ import analyticserver.AnalyticServerInterface;
 import billingServer.BillingServerInterface;
 import billingServer.BillingServerSecureInterface;
 import java.rmi.Naming;
+import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Bill;
 
 /**
