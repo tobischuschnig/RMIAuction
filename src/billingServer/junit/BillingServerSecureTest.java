@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.rmi.RemoteException;
 import java.security.InvalidParameterException;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import model.Bill;
 import model.PriceSteps;
@@ -186,7 +187,7 @@ public class BillingServerSecureTest {
 	 */
 	@Test
 	public void testbillAuction(){
-		ConcurrentHashMap<String,Bill> bills = new ConcurrentHashMap<String,Bill>();
+		CopyOnWriteArrayList<Bill> bills = new CopyOnWriteArrayList<Bill>();
 		bss.setBills(bills);
 		bss.billAuction("test", 123, 100);
 		assertEquals( bss.getBills().size(),1);
@@ -199,7 +200,7 @@ public class BillingServerSecureTest {
 	 */
 	@Test
 	public void testbillAuction1() throws RemoteException, InvalidInputException{
-		ConcurrentHashMap<String,Bill> bills = new ConcurrentHashMap<String,Bill>();
+		CopyOnWriteArrayList<Bill> bills = new CopyOnWriteArrayList<Bill>();
 		bss.createPriceStep(0,100, 3, 5);
 		bss.createPriceStep(101,200, 5, 6);
 		bss.createPriceStep(201,400, 7, 8);
@@ -221,22 +222,10 @@ public class BillingServerSecureTest {
 	 */
 	@Test
 	public void testgetBill(){
-		ConcurrentHashMap<String,Bill> bills = new ConcurrentHashMap<String,Bill>();
+		CopyOnWriteArrayList<Bill> bills = new CopyOnWriteArrayList<Bill>();
 		
 		bss.setBills(bills);
 		bss.billAuction("test", 123, 100);
 		assertNotNull(bss.getBill("test"));
-	}
-	/**
-	 * Testing of getBill Method
-	 * It checks if the bills of the corresponding user are in the list, which should not
-	 */
-	@Test
-	public void testgetBillNotExisting(){
-		ConcurrentHashMap<String,Bill> bills = new ConcurrentHashMap<String,Bill>();
-		
-		bss.setBills(bills);
-		bss.billAuction("test", 123, 100);
-		assertNull(bss.getBill("test1"));
 	}
 }
