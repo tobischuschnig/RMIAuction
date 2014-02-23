@@ -24,7 +24,7 @@ public class TestServer {
 			// BillingServerSecure objekt wird erstellt. 
 			//Login hat zwei parameter (username, password) aber unverschluesselt.
 			secure=(BillingServerSecureInterface)acc.login("admin", "admin");
-			secure.createPriceStep(3335.0, 3314.0, 2.0, 5.0);
+			secure.createPriceStep(1000.0, 2000.0, 2.0, 5.0);
 			secure.createPriceStep(1.0, 10.0, 2.0, 5.0);
 			secure.createPriceStep(11.0, 20.0, 2.0, 5.0);
 			secure.createPriceStep(21.0, 30.0, 2.0, 5.0);

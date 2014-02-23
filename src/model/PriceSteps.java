@@ -133,9 +133,12 @@ public class PriceSteps implements Serializable {
 		if (startPrice < 0 || endPrice < 0 || fixedPrice < 0
 				|| variablePricePercent < 0)
 			throw new RemoteException();
-		
-		if(startPrice > endPrice)
+		System.out.println(startPrice + " < "+endPrice);
+		if(startPrice > endPrice){
 			overlaped = true;
+			System.out.println("startprice should be smaller than endprice");
+		}
+		
 
 		for (int x = 0; x < priceSteps.size(); x++) {
 			PriceStep temp = priceSteps.get(x);
