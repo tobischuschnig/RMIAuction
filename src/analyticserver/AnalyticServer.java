@@ -141,7 +141,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	public void unsuscribe(String uid) {
 		Set<String> wert = managementClients.keySet();
 		Iterator<String> it = wert.iterator();
-		while(it.hasNext()) {
+		while(it.hasNext()) { //TODO was passiert wenn der Client schliesst EXCEPTION HANDLING
 			try {
 				managementClients.get(it.next()).remove(uid);
 				System.out.println("removed:" +uid);

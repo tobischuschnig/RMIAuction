@@ -175,4 +175,13 @@ public class Client{
 	public void setActive(boolean active) {
 		this.active=active;
 	}
+
+
+	/**
+	 * @return the t
+	 */
+	public TaskExecuter getTaskExecuter() {
+		return t;
+	}
+	
 }

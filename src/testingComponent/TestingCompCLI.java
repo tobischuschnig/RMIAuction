@@ -9,7 +9,7 @@ import Client.UI;
  * @author Alexander Klune <aklune@student.tgm.ac.at>
  * @version 1.0
  */
-public class TestingCompCLI implements UI{
+public class TestingCompCLI implements UI{ //TODO isnt this class uselless?
 
 	private String output;
 	@Override

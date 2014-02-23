@@ -105,7 +105,7 @@ public class TCPConnector implements Runnable{
 			s.close();
 			
 		} catch (IOException e) {
-			System.out.println("Server unreachable. Check configs and restart");
+			System.out.println("Server unreachable. Check configs and restart hallo");
 			client.setActive(false);
 		}
 	}

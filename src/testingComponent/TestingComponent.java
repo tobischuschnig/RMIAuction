@@ -8,6 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.security.auth.Subject;
 
+import Client.Client;
+
 import managmentclient.ManagementClient;
 import managmentclient.TaskExecuter;
 
@@ -114,6 +116,13 @@ public class TestingComponent {
 	 * @param args
 	 */
 	public static void main(String [] args){
+		if(args.length!=3){
+			System.out.println("Wrong arguments\nServer-IP TCP-Port UDP-Port");
+			System.exit(0);		//If there are no 3 arguments, program exits immediately
+		}
+
+		
+		
 		
 		managementClient = new ManagementClient("BillingServer", "AnalyticServer"); //TODO Fehler ausgebessert: AnalyticsServer (!sic)
 		TaskExecuter t = managementClient.getT();
@@ -128,12 +137,31 @@ public class TestingComponent {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		for(int i = 0; i < clients; i++){
-			clientID = i;
-			System.out.println(clientID+"\n" +auctionsPerMin+"\n" + auctionDuration+"\n" + updateIntervalSec+"\n" + bidsPerMin);
-			c = new TestingClient(clientID, auctionsPerMin, auctionDuration, updateIntervalSec, bidsPerMin);
-			testingclients.put(clientID, c);	//TODO Fehler jetzt try catch unedig
-			
+		try{
+			String host=args[0];
+			int tcpPort=Integer.parseInt(args[1]);
+			int udpPort=Integer.parseInt(args[2]);	//Save arguments
+
+			for(int i = 0; i < clients; i++){
+				clientID = i;
+				//System.out.println(clientID+"\n" +auctionsPerMin+"\n" + auctionDuration+"\n" + updateIntervalSec+"\n" + bidsPerMin);
+				c = new TestingClient(clientID,host,tcpPort,udpPort, auctionsPerMin, auctionDuration, updateIntervalSec, bidsPerMin);
+				testingclients.put(clientID, c);	//TODO Fehler jetzt try catch unedig
+				if (i == 0 ) {
+					try {
+						Thread.sleep(1000);
+					} catch(InterruptedException e) {
+
+					}
+				}
+
+			}
+		}catch(NumberFormatException e){
+			System.out.println("Port(s) is/are not numeric");
+			System.exit(0);
+		}catch(Exception e){
+			System.out.println("Can not connect to Server");
+			System.exit(0);
 		}
 		
 			
