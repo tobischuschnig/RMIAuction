@@ -124,7 +124,7 @@ public class TestingComponent {
 		int clientID;
 		TestingClient c;
 		try {
-			loadFile(); //TODO laut ueberprueften Werten falsch ...92, 1, 20, 2, 0 should be 100, 1 , 2*60 , 20 , 2
+			loadFile(); //TODO Fehler laut ueberprueften Werten falsch ...92, 1, 20, 2, 0 should be 100, 1 , 2*60 , 20 , 2
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -132,11 +132,8 @@ public class TestingComponent {
 			clientID = i;
 			System.out.println(clientID+"\n" +auctionsPerMin+"\n" + auctionDuration+"\n" + updateIntervalSec+"\n" + bidsPerMin);
 			c = new TestingClient(clientID, auctionsPerMin, auctionDuration, updateIntervalSec, bidsPerMin);
-			try{
-				testingclients.put(clientID, c);	
-			}catch(NullPointerException e){
-				e.printStackTrace(); //TODO warum ist da jedesmal ein nullpointer??
-			}
+			testingclients.put(clientID, c);	//TODO Fehler jetzt try catch unedig
+			
 		}
 		
 			
