@@ -49,6 +49,9 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 		//System.out.println(((Math.round(System.currentTimeMillis()-startTime)/60000)));
 		double value = (double) (bids / ((double)(Math.round(System.currentTimeMillis()-startTime)/60000)));
 		//System.out.println(value);
+		
+		//TODO<MUST> hier stimmt was gewaltig nicht es startet mit 1.5
+		//TODO<MUST> liegt an der Sache mit dem Testing siehe run() methode Zeile 70 //dann sollte alles passen
 		StatisticsEvent wert1 = new StatisticsEvent(UUID.randomUUID().toString(), EventType.BID_COUNT_PER_MINUTE, System.currentTimeMillis(),
 				value);
 
