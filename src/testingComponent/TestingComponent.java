@@ -128,7 +128,7 @@ public class TestingComponent {
 		TaskExecuter t = managementClient.getT();
 		t.subscribe(".*");
 		
-		testingclients = new ConcurrentHashMap<>(); //TODO Fehler hat gefaellt deshalb NullPointer
+		testingclients = new ConcurrentHashMap<Integer, TestingClient>(); //TODO Fehler hat gefaellt deshalb NullPointer
 		
 		int clientID;
 		TestingClient c;

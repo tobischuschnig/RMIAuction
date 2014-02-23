@@ -4,6 +4,7 @@ import Exceptions.*;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -25,14 +26,14 @@ public class BillingServerSecure implements Serializable,
 		BillingServerSecureInterface {
 
 	private PriceSteps priceSteps;
-	private ConcurrentHashMap<String, Bill> bills;
+	private CopyOnWriteArrayList<Bill> bills;
 
 	/**
 	 * Konstructor wich sets the concurrenthashmap for the pricesteps
 	 */
 	public BillingServerSecure() {
 		this.priceSteps = new PriceSteps();
-		this.bills = new ConcurrentHashMap<String, Bill>();
+		this.bills = new CopyOnWriteArrayList<Bill>();
 	}
 
 	/**
@@ -109,7 +110,7 @@ public class BillingServerSecure implements Serializable,
 				feeFixed = temp.getFixedPrice();
 			}
 		}
-		bills.put(user, new Bill(user, auctionID, price, feeFixed, feeVariable,
+		bills.add(new Bill(user, auctionID, price, feeFixed, feeVariable,
 				feeFixed + feeVariable));
 		return true;
 	}
@@ -121,11 +122,14 @@ public class BillingServerSecure implements Serializable,
 	 *            username of the bill to be returned
 	 * @return Bill of the username
 	 */
-	public Bill getBill(String user) {
-		if (bills.containsKey(user))
-			return bills.get(user);
-		else
-			return null;
+	public ArrayList<Bill> getBill(String user) {
+		ArrayList bil=new ArrayList<Bill>();
+		for (int x = 0; x < bills.size(); x++) {
+			if (bills.get(x).getUser().equals(user)) {
+				bil.add(bills.get(x));
+			}
+		}
+		return bil;
 	}
 
 	/**
@@ -143,7 +147,7 @@ public class BillingServerSecure implements Serializable,
 	 * 
 	 * @return the bills
 	 */
-	public ConcurrentHashMap<String, Bill> getBills() {
+	public CopyOnWriteArrayList<Bill> getBills() {
 		return bills;
 	}
 
@@ -153,7 +157,7 @@ public class BillingServerSecure implements Serializable,
 	 * @param bills
 	 *            the bills to set
 	 */
-	public void setBills(ConcurrentHashMap<String, Bill> bills) {
+	public void setBills(CopyOnWriteArrayList<Bill> bills) {
 		this.bills = bills;
 	}
 }
