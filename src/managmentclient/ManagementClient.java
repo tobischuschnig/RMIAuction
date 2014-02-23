@@ -99,9 +99,7 @@ public class ManagementClient implements ManagementClientInterface, Serializable
                                     Double.parseDouble(werte[3]), Double.parseDouble(werte[4]));
                             if (b) {
                                 cli.outln("Pricestepp added successfully");
-                            } else {
-                                cli.outln("Cannot add Pricestep. Check Input.");
-                            }
+                            } 
                         } catch (NumberFormatException e) {
                             cli.outln("Values entered incorrect");
                             cli.outln("Please enter command like:\n!addstep <Min_Price> <Max_Price> <Fee_Fixed> <Fee_Variable>!removeStep <startPrice> <endPrice>");

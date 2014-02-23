@@ -2,6 +2,8 @@ package managmentclient;
 
 import Exceptions.InvalidFilterException;
 import Exceptions.InvalidInputException;
+import Exceptions.InvalidParameterException;
+import Exceptions.OverlappedPricestepException;
 import Exceptions.UserInputException;
 import analyticserver.AnalyticServerInterface;
 import billingServer.BillingServerInterface;
@@ -32,7 +34,7 @@ public class TaskExecuter {
         this.c = c;
         cli = new CLI();
         secure = null;
-        
+
         try {
             managementClientInterface = (ManagementClientInterface) UnicastRemoteObject.exportObject(c, 0);
             obja = (AnalyticServerInterface) Naming.lookup(analyticsServer);
@@ -42,7 +44,7 @@ public class TaskExecuter {
         }
         try {
             // TODO Remove //
-            // objb = (BillingServerInterface) Naming.lookup(billingServer);
+             objb = (BillingServerInterface) Naming.lookup(billingServer);
         } catch (Exception ex) {
             cli.outln("Client exit: Cannot connect to BillingServer.");
             System.exit(0);
@@ -100,9 +102,18 @@ public class TaskExecuter {
     public boolean addStep(double startPrice, double endPrice, double fixedPrice,
             double variablePricePercent) {
         boolean ret = false;
+
         try {
             ret = secure.createPriceStep(startPrice, endPrice, fixedPrice, fixedPrice);
-        } catch (RemoteException | InvalidInputException ex) {
+            
+        } catch (InvalidParameterException ex) {
+            cli.outln("Fehler: " + ex.getMessage());
+        } catch (InvalidInputException ex) {
+            cli.outln("Fehler: " + ex.getMessage());
+        } catch (OverlappedPricestepException ex) {
+            cli.outln("Fehler: " + ex.getMessage());
+        } catch (RemoteException ex) {
+            cli.outln("Fehler: " + ex.getMessage());
         }
         return ret;
     }
@@ -149,7 +160,6 @@ public class TaskExecuter {
             //TODO ausgabe aendern?
             cli.outln("Lookup completed ");
             cli.outln("Server said: " + obja.suscribe(filter, managementClientInterface));
-            //TODO denn rueckgabe wert sollt man eig speichern 
             cli.outln("Registered for Event callback.");
         } catch (InvalidFilterException ex) {
             cli.outln(ex.getMessage());
