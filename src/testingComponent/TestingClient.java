@@ -51,6 +51,8 @@ public class TestingClient{
 		this.bidsPerMin = bidsPerMin;
 		tcc = new TestingCompCLI();
 		this.tcp = new TCPConnector(1234,tcc,new Client("localhost",1234,4321));
+		//TODO neuer Client nicht auf run()
+		//TODO dem seinen TaskExecuter hohlen und alles mit dem machen 
 	}
 	
 	/**

@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.security.auth.Subject;
+
 import managmentclient.ManagementClient;
 import managmentclient.TaskExecuter;
 
@@ -33,6 +35,7 @@ public class TestingComponent {
 	private static int bidsPerMin;
 	
 	private static  ConcurrentHashMap <Integer, TestingClient> testingclients;
+	
 
 	
 	public void createMessage(){
@@ -47,7 +50,10 @@ public class TestingComponent {
 	public static void loadFile() throws IOException{
 		BufferedReader buff = null;
 		String cline;
-		String dataset = System.getProperty("user.dir") + "/loadtest.properties"; 
+		//String dataset = System.getProperty("user.dir") + "/loadtest.properties"; 
+		String dataset = ("/Users/tobi/Workspace/RMIAuction/src/testingComponent/loadtest.properties"); 
+
+		//TODO vill nicht hardcoden
 		//String dataset = System.getProperty("/home/poezze/Dokumente/WorkspaceJava/RMI/loadtest.properties"); 
 		buff = new BufferedReader(new FileReader(dataset));
 		
@@ -109,23 +115,27 @@ public class TestingComponent {
 	 */
 	public static void main(String [] args){
 		
-		managementClient = new ManagementClient("BillingServer", "AnalyticsServer");
+		managementClient = new ManagementClient("BillingServer", "AnalyticServer"); //TODO Fehler ausgebessert: AnalyticsServer (!sic)
 		TaskExecuter t = managementClient.getT();
 		t.subscribe(".*");
+		
+		testingclients = new ConcurrentHashMap<>(); //TODO Fehler hat gefaellt deshalb NullPointer
 		
 		int clientID;
 		TestingClient c;
 		try {
-			loadFile();
+			loadFile(); //TODO laut ueberprueften Werten falsch ...92, 1, 20, 2, 0 should be 100, 1 , 2*60 , 20 , 2
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		for(int i = 0; i < clients; i++){
 			clientID = i;
+			System.out.println(clientID+"\n" +auctionsPerMin+"\n" + auctionDuration+"\n" + updateIntervalSec+"\n" + bidsPerMin);
 			c = new TestingClient(clientID, auctionsPerMin, auctionDuration, updateIntervalSec, bidsPerMin);
 			try{
 				testingclients.put(clientID, c);	
 			}catch(NullPointerException e){
+				e.printStackTrace(); //TODO warum ist da jedesmal ein nullpointer??
 			}
 		}
 		

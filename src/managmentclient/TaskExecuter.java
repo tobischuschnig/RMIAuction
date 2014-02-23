@@ -148,6 +148,7 @@ public class TaskExecuter {
             //TODO ausgabe aendern?
             cli.outln("Lookup completed ");
             cli.outln("Server said: " + obja.suscribe(filter, managementClientInterface));
+            //TODO denn rueckgabe wert sollt man eig speichern 
             cli.outln("Registered for Event callback.");
         } catch (InvalidFilterException ex) {
             cli.outln(ex.getMessage());
