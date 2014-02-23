@@ -17,12 +17,14 @@ import model.EventType;
  */
 public class BidEventTest {
 	private BidEvent be1,be2,be3;
+	private BidEvent be4;
 	
 	@Before
 	public void setUp() {
 		be1 = new BidEvent("1", EventType.BID_PLACED,1000001 , "b1", 1,  10);
 		be2 = new BidEvent("1", EventType.BID_OVERBID,1000001 , "b1", 1,  10);
 		be3 = new BidEvent("1", EventType.BID_WON,1000001 , "b1", 1,  10);
+		be4 = new BidEvent(null, null, 0);
 	}
 	
 	/**

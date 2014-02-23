@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 import java.rmi.RemoteException;
+import java.security.InvalidParameterException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -12,6 +13,8 @@ import model.PriceStep;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import Exceptions.InvalidInputException;
 
 
 /**
@@ -79,9 +82,11 @@ public class PriceStepsTest {
 	/**
 	 * Testing of CreatePriceStep Method when no Exception should occur and
 	 * it is created properly
+	 * @throws InvalidInputException 
+	 * @throws InvalidParameterException 
 	 */
 	@Test
-	public void testCreatePriceStepNormal() throws RemoteException{
+	public void testCreatePriceStepNormal() throws RemoteException, InvalidParameterException, InvalidInputException{
 		pss.addPricestep(0, 100, 3, 5);
 		assertEquals(pss.getPriceSteps().size(),1);
 	}
@@ -89,9 +94,11 @@ public class PriceStepsTest {
 	/**
 	 * Testing of CreatePriceStep Method when no Exception should occur and 3
 	 * PriceSteps are created properly with one Infinite Endprice
+	 * @throws InvalidInputException 
+	 * @throws InvalidParameterException 
 	 */
 	@Test
-	public void testCreatePriceStepNormalWithThreeAndInfiniteElements() throws RemoteException{
+	public void testCreatePriceStepNormalWithThreeAndInfiniteElements() throws RemoteException, InvalidParameterException, InvalidInputException{
 		pss.addPricestep(0, 100, 3, 5);
 		pss.addPricestep(101, 200, 5, 6);
 		pss.addPricestep(200, 0, 5, 6);
@@ -101,9 +108,11 @@ public class PriceStepsTest {
 	/**
 	 * Testing of CreatePriceStep Method when no Exception should occur and 3
 	 * PriceSteps are created properly with one Infinite Endprice
+	 * @throws InvalidInputException 
+	 * @throws InvalidParameterException 
 	 */
 	@Test
-	public void testCreatePriceStepNormalWithThreeAndInfiniteElements1() throws RemoteException{
+	public void testCreatePriceStepNormalWithThreeAndInfiniteElements1() throws RemoteException, InvalidParameterException, InvalidInputException{
 		pss.addPricestep(0, 100, 3, 5);
 		pss.addPricestep(200, 0, 5, 6);
 		pss.addPricestep(101, 200, 5, 6);
@@ -113,9 +122,11 @@ public class PriceStepsTest {
 	/**
 	 * Testing of CreatePriceStep Method when an Exception should occur, but the
 	 * second PriceSteps overlapse and so only the first is created properly
+	 * @throws InvalidInputException 
+	 * @throws InvalidParameterException 
 	 */
 	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepOverlapse() throws RemoteException{
+	public void testCreatePriceStepOverlapse() throws RemoteException, InvalidParameterException, InvalidInputException{
 		pss.addPricestep(0, 100, 3, 5);
 		pss.addPricestep(50, 80, 3, 5);
 		assertEquals(pss.getPriceSteps().size(),1);
@@ -124,9 +135,11 @@ public class PriceStepsTest {
 	/**
 	 * Testing of CreatePriceStep Method when an Exception should occur, but the
 	 * second PriceSteps overlapse and so only the first is created properly
+	 * @throws InvalidInputException 
+	 * @throws InvalidParameterException 
 	 */
 	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepOverlapse1() throws RemoteException{
+	public void testCreatePriceStepOverlapse1() throws RemoteException, InvalidParameterException, InvalidInputException{
 		pss.addPricestep(0, 100, 3, 5);
 		pss.addPricestep(0, 100, 3, 5);
 		assertEquals(pss.getPriceSteps().size(),1);
@@ -135,9 +148,11 @@ public class PriceStepsTest {
 	/**
 	 * Testing of CreatePriceStep Method when an Exception should occur, because
 	 * startPrice > EndPrice
+	 * @throws InvalidInputException 
+	 * @throws InvalidParameterException 
 	 */
-	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepOverlapse2() throws RemoteException{
+	@Test(expected=InvalidInputException.class)
+	public void testCreatePriceStepOverlapse2() throws RemoteException, InvalidParameterException, InvalidInputException{
 		pss.addPricestep(200, 100, 3, 5);
 		assertEquals(pss.getPriceSteps().size(),1);
 	}
@@ -147,9 +162,11 @@ public class PriceStepsTest {
 	 * because of negative startPrice
 	 * It checks if a priceStep was created, which should not
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
+	 * @throws InvalidParameterException 
 	 */
-	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepStartNegative() throws RemoteException{
+	@Test(expected=InvalidParameterException.class)
+	public void testCreatePriceStepStartNegative() throws RemoteException, InvalidParameterException, InvalidInputException{
 		pss.addPricestep(-1, 100, 3, 5);
 		assertEquals(pss.getPriceSteps().size(),0);
 	}
@@ -158,9 +175,11 @@ public class PriceStepsTest {
 	 * because of negative EndPrice
 	 * It checks if a priceStep was created, which should not
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
+	 * @throws InvalidParameterException 
 	 */
-	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepEndNegative() throws RemoteException{
+	@Test(expected=InvalidParameterException.class)
+	public void testCreatePriceStepEndNegative() throws RemoteException, InvalidParameterException, InvalidInputException{
 		pss.addPricestep(0, -1, 3, 5);
 		assertEquals(pss.getPriceSteps().size(),0);
 	}
@@ -169,9 +188,11 @@ public class PriceStepsTest {
 	 * because of negative fixedValue
 	 * It checks if a priceStep was created, which should not
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
+	 * @throws InvalidParameterException 
 	 */
-	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepFixedNegative() throws RemoteException{
+	@Test(expected=InvalidParameterException.class)
+	public void testCreatePriceStepFixedNegative() throws RemoteException, InvalidParameterException, InvalidInputException{
 		pss.addPricestep(0, 100, -1, 5);
 		assertEquals(pss.getPriceSteps().size(),0);
 	}
@@ -180,9 +201,11 @@ public class PriceStepsTest {
 	 * because of negative VariableValue
 	 * It checks if a priceStep was created, which should not
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
+	 * @throws InvalidParameterException 
 	 */
-	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepVariableNegative() throws RemoteException{
+	@Test(expected=InvalidParameterException.class)
+	public void testCreatePriceStepVariableNegative() throws RemoteException, InvalidParameterException, InvalidInputException{
 		pss.addPricestep(0, 100, 3, -1);
 		assertEquals(pss.getPriceSteps().size(),0);
 	}
@@ -190,9 +213,11 @@ public class PriceStepsTest {
 	 * Testing of DeletePriceStep Method, when a priceStep is created and the same deleted after that
 	 * It checks if the priceStep was deleted
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
+	 * @throws InvalidParameterException 
 	 */
 	@Test
-	public void testdeletePriceStep() throws RemoteException{
+	public void testdeletePriceStep() throws RemoteException, InvalidParameterException, InvalidInputException{
 		pss.addPricestep(0, 100,3,5);
 		pss.removePricestep(0, 100);
 		assertEquals(pss.getPriceSteps().size(),0);
@@ -202,9 +227,11 @@ public class PriceStepsTest {
 	 * Testing of DeletePriceStep Method, when a priceStep is created and the same deleted after that
 	 * It checks if the priceStep wasnt deleted because of false startPrice
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
+	 * @throws InvalidParameterException 
 	 */
 	@Test
-	public void testdeletePriceStep1() throws RemoteException{
+	public void testdeletePriceStep1() throws RemoteException, InvalidParameterException, InvalidInputException{
 		pss.addPricestep(0, 100,3,5);
 		pss.removePricestep(1, 100);
 		assertEquals(pss.getPriceSteps().size(),1);
@@ -214,9 +241,11 @@ public class PriceStepsTest {
 	 * PriceStep should be deleted
 	 * It checks if the created PriceStep remains in the list
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
+	 * @throws InvalidParameterException 
 	 */
 	@Test
-	public void testdeletePriceStepNotExisting() throws RemoteException{
+	public void testdeletePriceStepNotExisting() throws RemoteException, InvalidParameterException, InvalidInputException{
 		pss.addPricestep(0, 100,3,5);
 		pss.removePricestep(0, 200);
 		assertEquals(pss.getPriceSteps().size(),1);

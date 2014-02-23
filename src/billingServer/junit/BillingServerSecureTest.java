@@ -3,6 +3,7 @@ package billingServer.junit;
 import static org.junit.Assert.*;
 
 import java.rmi.RemoteException;
+import java.security.InvalidParameterException;
 import java.util.concurrent.ConcurrentHashMap;
 
 import model.Bill;
@@ -10,6 +11,7 @@ import model.PriceSteps;
 
 import org.junit.*;
 
+import Exceptions.InvalidInputException;
 import billingServer.BillingServerSecure;
 
 /**
@@ -37,9 +39,10 @@ public class BillingServerSecureTest {
 	/**
 	 * Testing of CreatePriceStep Method when no Exception should occur and
 	 * it is created properly
+	 * @throws InvalidInputException 
 	 */
 	@Test
-	public void testCreatePriceStepNormal() throws RemoteException{
+	public void testCreatePriceStepNormal() throws RemoteException, InvalidInputException{
 		bss.createPriceStep(0, 100, 3, 5);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),1);
 	}
@@ -47,9 +50,10 @@ public class BillingServerSecureTest {
 	/**
 	 * Testing of CreatePriceStep Method when no Exception should occur and 2
 	 * PriceSteps are created properly
+	 * @throws InvalidInputException 
 	 */
 	@Test
-	public void testCreatePriceStepNormalWithTwoElements() throws RemoteException{
+	public void testCreatePriceStepNormalWithTwoElements() throws RemoteException, InvalidInputException{
 		bss.createPriceStep(0, 100, 3, 5);
 		bss.createPriceStep(101, 200, 5, 6);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),2);
@@ -58,9 +62,10 @@ public class BillingServerSecureTest {
 	/**
 	 * Testing of CreatePriceStep Method when an Exception should occur, but the
 	 * second PriceSteps overlapse and so only the first is created properly
+	 * @throws InvalidInputException 
 	 */
 	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepOverlapse() throws RemoteException{
+	public void testCreatePriceStepOverlapse() throws RemoteException, InvalidInputException{
 		bss.createPriceStep(0, 100, 3, 5);
 		bss.createPriceStep(50, 80, 3, 5);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),1);
@@ -69,9 +74,10 @@ public class BillingServerSecureTest {
 	/**
 	 * Testing of CreatePriceStep Method when an Exception should occur, but the
 	 * second PriceSteps overlapse and so only the first is created properly
+	 * @throws InvalidInputException 
 	 */
 	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepOverlapse1() throws RemoteException{
+	public void testCreatePriceStepOverlapse1() throws RemoteException, InvalidInputException{
 		bss.createPriceStep(0, 100, 3, 5);
 		bss.createPriceStep(0, 100, 3, 5);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),1);
@@ -80,9 +86,10 @@ public class BillingServerSecureTest {
 	/**
 	 * Testing of CreatePriceStep Method when an Exception should occur, because
 	 * startPrice > EndPrice
+	 * @throws InvalidInputException 
 	 */
-	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepOverlapse2() throws RemoteException{
+	@Test(expected=InvalidInputException.class)
+	public void testCreatePriceStepOverlapse2() throws RemoteException, InvalidInputException{
 		bss.createPriceStep(200, 100, 3, 5);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),1);
 	}
@@ -92,9 +99,10 @@ public class BillingServerSecureTest {
 	 * because of negative startPrice
 	 * It checks if a priceStep was created, which should not
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
 	 */
-	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepStartNegative() throws RemoteException{
+	@Test(expected=InvalidParameterException.class)
+	public void testCreatePriceStepStartNegative() throws RemoteException, InvalidInputException{
 		bss.createPriceStep(-1, 100, 3, 5);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),0);
 	}
@@ -103,9 +111,10 @@ public class BillingServerSecureTest {
 	 * because of negative EndPrice
 	 * It checks if a priceStep was created, which should not
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
 	 */
-	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepEndNegative() throws RemoteException{
+	@Test(expected=InvalidParameterException.class)
+	public void testCreatePriceStepEndNegative() throws RemoteException, InvalidInputException{
 		bss.createPriceStep(0, -1, 3, 5);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),0);
 	}
@@ -114,9 +123,10 @@ public class BillingServerSecureTest {
 	 * because of negative fixedValue
 	 * It checks if a priceStep was created, which should not
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
 	 */
-	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepFixedNegative() throws RemoteException{
+	@Test(expected=InvalidParameterException.class)
+	public void testCreatePriceStepFixedNegative() throws RemoteException, InvalidInputException{
 		bss.createPriceStep(0, 100, -1, 5);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),0);
 	}
@@ -125,9 +135,10 @@ public class BillingServerSecureTest {
 	 * because of negative VariableValue
 	 * It checks if a priceStep was created, which should not
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
 	 */
-	@Test(expected=RemoteException.class)
-	public void testCreatePriceStepVariableNegative() throws RemoteException{
+	@Test(expected=InvalidParameterException.class)
+	public void testCreatePriceStepVariableNegative() throws RemoteException, InvalidInputException{
 		bss.createPriceStep(0, 100, 3, -1);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),0);
 	}
@@ -135,9 +146,10 @@ public class BillingServerSecureTest {
 	 * Testing of DeletePriceStep Method, when a priceStep is created and the same deleted after that
 	 * It checks if the priceStep was deleted
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
 	 */
 	@Test
-	public void testdeletePriceStep() throws RemoteException{
+	public void testdeletePriceStep() throws RemoteException, InvalidInputException{
 		bss.createPriceStep(0, 100,3,5);
 		bss.deletePriceStep(0, 100);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),0);
@@ -147,9 +159,10 @@ public class BillingServerSecureTest {
 	 * Testing of DeletePriceStep Method, when a priceStep is created and the same deleted after that
 	 * It checks if the priceStep wasnt deleted because of false startPrice
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
 	 */
 	@Test
-	public void testdeletePriceStep1() throws RemoteException{
+	public void testdeletePriceStep1() throws RemoteException, InvalidInputException{
 		bss.createPriceStep(0, 100,3,5);
 		bss.deletePriceStep(1, 100);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),1);
@@ -159,9 +172,10 @@ public class BillingServerSecureTest {
 	 * PriceStep should be deleted
 	 * It checks if the created PriceStep remains in the list
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
 	 */
 	@Test
-	public void testdeletePriceStepNotExisting() throws RemoteException{
+	public void testdeletePriceStepNotExisting() throws RemoteException, InvalidInputException{
 		bss.createPriceStep(0, 100,3,5);
 		bss.deletePriceStep(0, 200);
 		assertEquals(bss.getPriceSteps().getPriceSteps().size(),1);
@@ -181,9 +195,10 @@ public class BillingServerSecureTest {
 	 * Testing of billAuction Method, when the bill was created
 	 * It checks if the created Bill is in the list
 	 * @throws RemoteException 
+	 * @throws InvalidInputException 
 	 */
 	@Test
-	public void testbillAuction1() throws RemoteException{
+	public void testbillAuction1() throws RemoteException, InvalidInputException{
 		ConcurrentHashMap<String,Bill> bills = new ConcurrentHashMap<String,Bill>();
 		bss.createPriceStep(0,100, 3, 5);
 		bss.createPriceStep(101,200, 5, 6);

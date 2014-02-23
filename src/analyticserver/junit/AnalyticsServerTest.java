@@ -67,12 +67,11 @@ public class AnalyticsServerTest {
 	 */
 	@Test
 	public void testSuscribe() throws PatternSyntaxException, InvalidFilterException{
-		//TODO finishing Testcase Method not written yet
 		// input is a correct input
 		ManagementClientInterface man = null;
 		String input = "(USER_.*)|(BID_.*)";
 		String n = as.suscribe(input, man);
-		//assertNotNull(n);
+		assertNotNull(n);
 	}
 	/**
 	 * Testing subscribe with incorrect Input
@@ -81,33 +80,40 @@ public class AnalyticsServerTest {
 	 */
 	@Test
 	public void testSuscribeWrong() throws PatternSyntaxException, InvalidFilterException{
-		//TODO finishing Testcase Method not written yet
 		// input is a incorrect input
-		String input = "ï¿½$%&/()=";
+		String input = "§$%&/()=";
 		String n = as.suscribe(input, null);
-		//assertNull(n);
+		assertNull(n);
 	}
 	/**
 	 * Testing unsubscribe with incorrect Input
+	 * @throws InvalidFilterException 
+	 * @throws PatternSyntaxException 
 	 */	
 	@Test
-	public void testUnsuscribeWrong(){
-		//TODO finishing Testcase Method not written yet
+	public void testUnsuscribeWrong() throws PatternSyntaxException, InvalidFilterException{
 		// input is a incorrect input
-		String input = "/()=";
+		ManagementClientInterface man = null;
+		String input = "(USER_.*)|(BID_.*)";
+		String n = as.suscribe(input, man);
+		input = "§$%&/()=";
 		as.unsuscribe(input);
-		//assertEquals(as.getList().size(),1);
+		assertEquals(as.getManagementClients().size(),1);
 	}
 	/**
 	 * Testing unsubscribe with correct Input
+	 * @throws InvalidFilterException 
+	 * @throws PatternSyntaxException 
 	 */	
 	@Test
-	public void testUnsuscribe(){
-		//TODO finishing Testcase Method not written yet
+	public void testUnsuscribe() throws PatternSyntaxException, InvalidFilterException{
 		// input is a correct input
-		String input = "1";
+		ManagementClientInterface man = null;
+		String input = "(USER_.*)|(BID_.*)";
+		String n = as.suscribe(input, man);
+		input = "1";
 		as.unsuscribe(input);
-		//assertEquals(as.getList().size(),0);
+		assertEquals(as.getManagementClients().size(),0);
 	}
 	/**
 	 * Testing Method process Event

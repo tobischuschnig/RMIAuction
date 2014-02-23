@@ -1,6 +1,7 @@
 package managmentclient;
 
 import Exceptions.InvalidFilterException;
+import Exceptions.InvalidInputException;
 import Exceptions.UserInputException;
 import analyticserver.AnalyticServerInterface;
 import billingServer.BillingServerInterface;
@@ -101,7 +102,7 @@ public class TaskExecuter {
         boolean ret = false;
         try {
             ret = secure.createPriceStep(startPrice, endPrice, fixedPrice, fixedPrice);
-        } catch (RemoteException ex) {
+        } catch (RemoteException | InvalidInputException ex) {
         }
         return ret;
     }

@@ -15,12 +15,14 @@ import org.junit.Test;
  */
 public class UserEventTest {
 	private UserEvent ue1, ue2, ue3;
+	private UserEvent ue4;
 
 	@Before
 	public void setUp() throws Exception {
 		ue1 = new UserEvent("1", EventType.USER_LOGIN, 1000000, "u1");
 		ue2 = new UserEvent("1", EventType.USER_LOGOUT, 1000010, "u1");
 		ue3 = new UserEvent("1", EventType.USER_DISCONNECTED, 1000010, "u1");
+		ue4 = new UserEvent(null, null, 0);
 	}
 
 	/**

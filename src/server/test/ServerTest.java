@@ -5,6 +5,8 @@ package server.test;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import model.Auction;
@@ -197,15 +199,21 @@ public class ServerTest {
 		ListMessage list = new ListMessage();
 		list.setName("name");
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date ad = new Date();
 		String wert2 = server.request(list);
-		assertEquals(wert2,"ID: 0    Description: laptop    Highestbid: 0.0    from: none\n");
+		String wert3 = server.request(list);
+		assertEquals(wert2,wert3);
+//		"ID: 0	Description: laptop	Highestbid: 0.0	from: none	startTime: "+sdf.format(ad)
 		
 		User user = new User();
 		user.setName("hallo");
 		server.getAuction().get(0).setLastUser(user);
 		
 		wert2 = server.request(list);
-		assertEquals(wert2,"ID: 0    Description: laptop    Highestbid: 0.0    from: hallo\n");
+		wert3 = server.request(list);
+		assertEquals(wert2,wert3);
+//		"ID: 0	Description: laptop	Highestbid: 0.0	from: hallo	startTime: "+sdf.format(ad)
 	}
 	
 	/**

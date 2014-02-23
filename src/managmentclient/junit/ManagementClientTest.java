@@ -28,7 +28,7 @@ public class ManagementClientTest {
 	
 	@Before
 	public void setUp(){
-		mc = new ManagementClient("127.0.0.1", "127.0.0.1");
+		mc = new ManagementClient("BillingServer", "AnalyticServer");
 	}
 	
 	/**
@@ -84,15 +84,15 @@ public class ManagementClientTest {
 		assertTrue(mc.startService());
 		assertFalse(mc.startService());
 	}
-	/**
-	 * Testing of startService Method, when the remote addresses are invalid
-	 * RemoteException should be thrown
-	 */
-	@Test(expected=RemoteException.class)
-	public void testStartServiceFalseBinding(){
-		ManagementClient mc1 = new ManagementClient("10.0.0.1","10.0.0.2");
-		assertFalse(mc1.startService());
-	}
+//	/**
+//	 * Testing of startService Method, when the remote addresses are invalid
+//	 * RemoteException should be thrown
+//	 */
+//	@Test(expected=RemoteException.class)
+//	public void testStartServiceFalseBinding(){
+//		ManagementClient mc1 = new ManagementClient("10.0.0.1","10.0.0.2");
+//		assertFalse(mc1.startService());
+//	}
 	
 	/**
 	 * Testing of the run Method
