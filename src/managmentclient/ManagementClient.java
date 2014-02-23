@@ -44,163 +44,166 @@ public class ManagementClient implements ManagementClientInterface, Serializable
     @Override
     // TODO Testing and optimize this
     public void run() {
-        cli.outln("Client startet");
-        String eingabe = "";
-        Scanner in;
-        in = new Scanner(System.in);
-        while (active) {
-            cli.out("\n" + username + "> ");
-            eingabe = in.nextLine();	//The current command saved as String
+        if (active) {
+            cli.outln("Client startet");
+            String eingabe = "";
+            Scanner in;
+            in = new Scanner(System.in);
+            while (active) {
+                cli.out("\n" + username + "> ");
+                eingabe = in.nextLine();	//The current command saved as String
 
-            if (eingabe.startsWith(" ")) {
-                eingabe = eingabe.substring(1);
+                input(eingabe);
             }
-            //If first char of command string is empty, it will be deleted
+        }
+    }
 
-            String original = eingabe;	//Copy of Command, with original Format, lower/upper Case
-            eingabe = eingabe.toLowerCase(); 	//To make any lower/upper case writing possible
+    public void input(String eingabe) {
+        if (eingabe.startsWith(" ")) {
+            eingabe = eingabe.substring(1);
+        }
+        //If first char of command string is empty, it will be deleted
+
+        String original = eingabe;	//Copy of Command, with original Format, lower/upper Case
+        eingabe = eingabe.toLowerCase(); 	//To make any lower/upper case writing possible
 
 
-            // befehle billing server
-            // -- LOGIN --
-            if (eingabe.startsWith("!login")) {
-                String[] werte = original.split(" ");		//Original is used
-                if (loggedIn == false) {
-                    if (werte.length == 3) {
-                        boolean b = t.login(werte[1], werte[2]);
-                        if (b) {
-                            cli.outln("Successfully logged in as " + werte[1]);
-                            loggedIn = true;
-                            username = werte[1];
-                        } else {
-                            cli.outln("Access denied for " + werte[1] + " " + werte[2]);
-                        }
+        // befehle billing server
+        // -- LOGIN --
+        if (eingabe.startsWith("!login")) {
+            String[] werte = original.split(" ");		//Original is used
+            if (loggedIn == false) {
+                if (werte.length == 3) {
+                    boolean b = t.login(werte[1], werte[2]);
+                    if (b) {
+                        cli.outln("Successfully logged in as " + werte[1]);
+                        loggedIn = true;
+                        username = werte[1];
                     } else {
-                        cli.outln("Please enter User like:\n!login <Username> <Passwort>");
+                        cli.outln("Access denied for " + werte[1] + " " + werte[2]);
                     }
                 } else {
-                    cli.outln("Already logged in, logout first!");
+                    cli.outln("Please enter User like:\n!login <Username> <Passwort>");
                 }
-                // -- STEPS --
-            } else if (eingabe.startsWith("!steps")) {
-                if (loggedIn == true) {
-                    t.steps();
-                } else {
-                    cli.outln("Currently not logged in\nPlease login first");
-                }
-                // -- ADDSTEP --
-            } else if (eingabe.startsWith("!addstep")) {
-                if (loggedIn == true) {
-                    String[] werte = eingabe.split(" ");
-                    if (werte.length == 5) {
-                        boolean b = false;
-                        try {
-                            b = t.addStep(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]),
-                                    Double.parseDouble(werte[3]), Double.parseDouble(werte[4]));
-                            if (b) {
-                                cli.outln("Pricestepp added successfully");
-                            } 
-                        } catch (NumberFormatException e) {
-                            cli.outln("Values entered incorrect");
-                            cli.outln("Please enter command like:\n!addstep <Min_Price> <Max_Price> <Fee_Fixed> <Fee_Variable>!removeStep <startPrice> <endPrice>");
-                        }
-
-                    } else {
-                        cli.outln("Please enter command like:\n!addstep <Min_Price> <Max_Price>	<Fee_Fixed> <Fee_Variable>!removeStep <startPrice> <endPrice>");
-                    }
-                } else {
-                    cli.outln("Currently not logged in\nPlease login first");
-                }
-                // -- REMOVE STEPS --
-            } else if (eingabe.startsWith("!removestep")) {
+            } else {
+                cli.outln("Already logged in, logout first!");
+            }
+            // -- STEPS --
+        } else if (eingabe.startsWith("!steps")) {
+            if (loggedIn == true) {
+                t.steps();
+            } else {
+                cli.outln("Currently not logged in\nPlease login first");
+            }
+            // -- ADDSTEP --
+        } else if (eingabe.startsWith("!addstep")) {
+            if (loggedIn == true) {
                 String[] werte = eingabe.split(" ");
-                if (loggedIn == true) {
-                    if (werte.length == 3) {
-                        try {
-                            boolean b = false;
-                            b = t.remove(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]));
-                            if (b) {
-                                cli.outln("Pricestepp removed successfully");
-                            } else {
-                                cli.outln("Cannot remove Pricestep. Check Input.");
-                            }
-                        } catch (NumberFormatException e) {
-                            cli.out("Values entered incorrect");
-                            cli.outln("Please enter !removeStep like:\n!removeStep <startPrice> <endPrice>");
+                if (werte.length == 5) {
+                    boolean b = false;
+                    try {
+                        b = t.addStep(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]),
+                                Double.parseDouble(werte[3]), Double.parseDouble(werte[4]));
+                        if (b) {
+                            cli.outln("Pricestepp added successfully");
                         }
-                    } else {
+                    } catch (NumberFormatException e) {
+                        cli.outln("Values entered incorrect\nPlease enter command "
+                                + "like:\n!addstep <Min_Price> <Max_Price> <Fee_Fixed> "
+                                + "<Fee_Variable>!removeStep <startPrice> <endPrice>");
+                    }
+
+                } else {
+                    cli.outln("Please enter command like:\n!addstep <Min_Price> <Max_Price>	<Fee_Fixed> <Fee_Variable>!removeStep <startPrice> <endPrice>");
+                }
+            } else {
+                cli.outln("Currently not logged in\nPlease login first");
+            }
+            // -- REMOVE STEPS --
+        } else if (eingabe.startsWith("!removestep")) {
+            String[] werte = eingabe.split(" ");
+            if (loggedIn == true) {
+                if (werte.length == 3) {
+                    try {
+                        boolean b = false;
+                        b = t.remove(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]));
+                        if (b) {
+                            cli.outln("Pricestepp removed successfully");
+                        } else {
+                            cli.outln("Cannot remove Pricestep. Check Input.");
+                        }
+                    } catch (NumberFormatException e) {
+                        cli.out("Values entered incorrect");
                         cli.outln("Please enter !removeStep like:\n!removeStep <startPrice> <endPrice>");
                     }
                 } else {
-                    cli.outln("Currently not logged in\nPlease login first");
+                    cli.outln("Please enter !removeStep like:\n!removeStep <startPrice> <endPrice>");
                 }
-                // -- BILL --
-            } else if (eingabe.startsWith("!bill")) {
-                String[] werte = eingabe.split(" ");
-                if (loggedIn == true) {
-                    if (werte.length == 2) {
-                        try {
-                            boolean b = false;
-                            t.bill(werte[1]);
-                            if (!b) {
-                                cli.outln("No Bill found");
-                            }
-                        } catch (NumberFormatException e) {
-                            cli.outln("Values entered incorrect");
-                            cli.outln("Please enter !bill like:\n!bill <userName>");
-                        }
-                    } else {
-                        cli.outln("Please enter !bill like:\n!bill <userName>");
-                    }
-                } else {
-                    cli.outln("Currently not logged in\nPlease login first");
-                }
-                // -- LOGOUT --
-            } else if (eingabe.startsWith("!logout")) {
-                if (loggedIn == true) {
-                    t.logout(username);
-                    username = "";
-                    loggedIn = false;
-                } else {
-                    cli.outln("Logout not possible, not logged in!");
-                }
-            } // befehle analytics server
-            // -- SUBSCRIBE --
-            else if (eingabe.startsWith("!subscribe")) {
-                String[] werte = eingabe.split(" ");
-
-                if (werte.length == 2) {
-                    t.subscribe(werte[1]);
-                } else {
-                    cli.outln("Please enter !subscribe like:\n!subscribe "
-                            + "<filterRegex>\nExample: !subscribe '(USER_.*)|(BID_.*)'");
-                }
-
-                // -- UNSUBSCRIBE --
-            } else if (eingabe.startsWith("!unsubscribe")) {
-                String[] werte = eingabe.split(" ");
+            } else {
+                cli.outln("Currently not logged in\nPlease login first");
+            }
+            // -- BILL --
+        } else if (eingabe.startsWith("!bill")) {
+            String[] werte = eingabe.split(" ");
+            if (loggedIn == true) {
                 if (werte.length == 2) {
                     try {
-                        t.unsubscribe(werte[1]);
+                        boolean b = false;
+                        t.bill(werte[1]);
+                        if (!b) {
+                            cli.outln("No Bill found");
+                        }
                     } catch (NumberFormatException e) {
-                        cli.outln("Values entered incorrect");
+                        cli.outln("Values entered incorrect\nPlease enter !bill like:\n!bill <userName>");
                     }
                 } else {
-                    cli.outln("Please enter !unsubscribe like:\n!unsubscribe <subscriptionID>");
+                    cli.outln("Please enter !bill like:\n!bill <userName>");
                 }
-            } // befehle ausgabe modus
-            else if (eingabe.startsWith("!auto")) {
-                auto();
-            } else if (eingabe.startsWith("!hide")) {
-                hide();
-            } else if (eingabe.startsWith("!print")) {
-                print();
-            } // intern
-            else if (eingabe.startsWith("!end")) {
-                active = false;
             } else {
-                cli.outln("Could not recognize input\nPlease try again");
+                cli.outln("Currently not logged in\nPlease login first");
             }
+            // -- LOGOUT --
+        } else if (eingabe.startsWith("!logout")) {
+            if (loggedIn == true) {
+                t.logout(username);
+                username = "";
+                loggedIn = false;
+            } else {
+                cli.outln("Logout not possible, not logged in!");
+            }
+        } // befehle analytics server
+        // -- SUBSCRIBE --
+        else if (eingabe.startsWith("!subscribe")) {
+            String[] werte = eingabe.split(" ");
+
+            if (werte.length == 2) {
+                t.subscribe(werte[1]);
+            } else {
+                cli.outln("Please enter !subscribe like:\n!subscribe "
+                        + "<filterRegex>\nExample: !subscribe '(USER_.*)|(BID_.*)'");
+            }
+
+            // -- UNSUBSCRIBE --
+        } else if (eingabe.startsWith("!unsubscribe")) {
+            String[] werte = eingabe.split(" ");
+            if (werte.length == 2) {
+                t.unsubscribe(werte[1]);
+            } else {
+                cli.outln("Please enter !unsubscribe like:\n!unsubscribe <subscriptionID>");
+            }
+        } // befehle ausgabe modus
+        else if (eingabe.startsWith("!auto")) {
+            auto();
+        } else if (eingabe.startsWith("!hide")) {
+            hide();
+        } else if (eingabe.startsWith("!print")) {
+            print();
+        } // intern
+        else if (eingabe.startsWith("!end")) {
+            active = false;
+            t.end();
+        } else {
+            cli.outln("Could not recognize input\nPlease try again");
         }
     }
 

@@ -9,9 +9,12 @@ import analyticserver.AnalyticServerInterface;
 import billingServer.BillingServerInterface;
 import billingServer.BillingServerSecureInterface;
 import java.rmi.Naming;
+import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Bill;
 
 /**
@@ -39,17 +42,25 @@ public class TaskExecuter {
             managementClientInterface = (ManagementClientInterface) UnicastRemoteObject.exportObject(c, 0);
             obja = (AnalyticServerInterface) Naming.lookup(analyticsServer);
         } catch (Exception ex) {
-            cli.outln("Client exit: Cannot connect to AnalyticsServer.");
-            System.exit(0);
+            cli.outln("Client exit: Cannot connect to AnalyticsServer: "+analyticsServer);
+            end();
         }
         try {
             // TODO Remove //
-             objb = (BillingServerInterface) Naming.lookup(billingServer);
+            objb = (BillingServerInterface) Naming.lookup(billingServer);
         } catch (Exception ex) {
-            cli.outln("Client exit: Cannot connect to BillingServer.");
+            cli.outln("Client exit: Cannot connect to BillingServer: "+billingServer);
+            end();
+        }
+    }
+
+    public void end() {
+        try {
+            UnicastRemoteObject.unexportObject(c, false);
+            c.setActive(false);
+        } catch (NoSuchObjectException ex) {
             System.exit(0);
         }
-
     }
 
     /**
@@ -105,7 +116,7 @@ public class TaskExecuter {
 
         try {
             ret = secure.createPriceStep(startPrice, endPrice, fixedPrice, fixedPrice);
-            
+
         } catch (InvalidParameterException ex) {
             cli.outln("Fehler: " + ex.getMessage());
         } catch (InvalidInputException ex) {
