@@ -14,17 +14,11 @@ import Client.TaskExecuter;
  */
 public class CreateThread implements Runnable {
 	
-private TestingClient testingClient;
+	private TestingClient testingClient;
 
-/**
- * change Request
- * Diese beiden attribute sind nicht in KLassendiagramm
- */
-private int incrementer=0;
-/**
- * 
- * @param testingClient
- */
+	private int incrementer=0;
+
+ 
 	public CreateThread(TestingClient testingClient){
 		this.testingClient = testingClient;
 	}
@@ -36,14 +30,17 @@ private int incrementer=0;
 	public void run() {
 		
 		CreateMessage cm = new CreateMessage("admin", "Beschreibung"+String.valueOf(incrementer), testingClient.getAuctionDuration());
-		TCPConnector tcp = testingClient.getTCPConnector();
+		//TCPConnector tcp = testingClient.getTCPConnector();
+		
 //		te.create(testingClient.getAuctionDuration(), "TestAuction_No"+incrementer);
-		tcp.sendMessage(cm);
+		//tcp.sendMessage(cm);
+		testingClient.getTaskExecuter().create(testingClient.getAuctionDuration(), "Beschreibung"+String.valueOf(incrementer));
+		
 		incrementer++;
 		try {
 			Thread.sleep((testingClient.getAuctionsPerMin()/60)*1000);
 		} catch (InterruptedException e) {
-			System.err.println("Fehler beim schlafen legen des CreateThread");
+			System.err.println("Error by pausing the Thread."); 
 		}
 		
 	}
