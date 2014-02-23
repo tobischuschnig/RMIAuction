@@ -81,7 +81,7 @@ public class AnalyticsServerTest {
 	@Test
 	public void testSuscribeWrong() throws PatternSyntaxException, InvalidFilterException{
 		// input is a incorrect input
-		String input = "§$%&/()=";
+		String input = "/()=";
 		String n = as.suscribe(input, null);
 		assertNull(n);
 	}
@@ -96,7 +96,7 @@ public class AnalyticsServerTest {
 		ManagementClientInterface man = null;
 		String input = "(USER_.*)|(BID_.*)";
 		String n = as.suscribe(input, man);
-		input = "§$%&/()=";
+		input = "/()=";
 		as.unsuscribe(input);
 		assertEquals(as.getManagementClients().size(),1);
 	}
