@@ -13,7 +13,7 @@
     <property name="server.port" value="12345"/><!-- Server's TCP port -->
 
     <property name="billingserver.name" value="billingServer.BillingServer"/>
-    <property name="analyticsserver.name" value="analyticsserver.AnalyticServerMain"/>
+    <property name="analyticsserver.name" value="analyticserver.AnalyticServerMain"/>
 
     <property name="client1.port" value="20001"/><!-- 1st Client's UDP port -->
     <property name="client2.port" value="20002"/><!-- 2nd Client's UDP port -->
