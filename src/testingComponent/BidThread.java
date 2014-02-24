@@ -10,7 +10,8 @@ import model.BidMessage;
 import Client.TCPConnector;
 
 /**
- * 
+ * This class represents a thread, which bids to a random auction x - times
+ * per minute. The thread stops working after a specific time.
  * @author Klune Alexander
  * @version 1.0
  * @email aklune@student.tgm.ac.at
@@ -21,9 +22,11 @@ public class BidThread implements Runnable {
 	private double amount;
 
 	private long end;
+	
 	/**
-	 * 
-	 * @param testingClient
+	 * This Konstructor sets the testingclient and calculates the time
+	 * when the threads has to be stopped.
+	 * @param testingClient	TestingClient
 	 */
 	public BidThread(TestingClient testingClient) {
 		this.testingClient = testingClient;
@@ -31,9 +34,10 @@ public class BidThread implements Runnable {
 		amount = 1000;
 	}
 	
-/**
- * 
- */
+	/**
+	 * This run method operates as lang as end has reached. 
+	 * it bids to a random Auction ID x times per minute.
+	 */
 	@Override
 	public void run() {
 		while(System.currentTimeMillis() <= end) {//TODO Fehler nicht einmal eine Schleife im Thread

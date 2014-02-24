@@ -8,7 +8,8 @@ import Client.*;
 import model.Auction;
 import model.User;
 /**
- * 
+ * This Class got the necessary values fot testing the programm. it starts all three threads:
+ * bid, create, list. 
  * @author Klune Alexander
  *@version 1.0
  *@email aklune@student.tgm.ac.at
@@ -39,12 +40,12 @@ public class TestingClient{
 	private Client c;
 
 	/**
-	 * 
-	 * @param clientID
-	 * @param auctionsPerMin
-	 * @param auctionDuration
-	 * @param updateIntervalSec
-	 * @param bidsPerMin
+	 * This Konstructor sets the minimum of parameters to start the testthreads.
+	 * @param clientID	ID of the Client
+	 * @param auctionsPerMin	# auction to be created in one minute
+	 * @param auctionDuration	time the created auction are active
+	 * @param updateIntervalSec		every x secunds the Auction list will be updated
+	 * @param bidsPerMin	# of the random bids per min
 	 */
 	public TestingClient(int clientID, int auctionsPerMin, long auctionDuration, int updateIntervalSec, int bidsPerMin) {
 		this.clientID = clientID;
@@ -61,12 +62,15 @@ public class TestingClient{
 	}
 
 	/**
-	 * 
-	 * @param clientID
-	 * @param auctionsPerMin
-	 * @param auctionDuration
-	 * @param updateIntervalSec
-	 * @param bidsPerMin
+	 * This Contructor sets the maximum of parameters to start the testthreads
+	 * @param clientID ID of the Client
+	 * @param host	IP of the host
+	 * @param tcpPort	tcp Port
+	 * @param udpPort	udp Port
+	 * @param auctionsPerMin	# auction to be created in one minute
+	 * @param auctionDuration	time the created auction are active
+	 * @param updateIntervalSec		every x secunds the Auction list will be updated
+	 * @param bidsPerMin	# of the random bids per min
 	 */
 	public TestingClient(int clientID,String host, int tcpPort,int udpPort, int auctionsPerMin, long auctionDuration, int updateIntervalSec, int bidsPerMin) {
 		this.clientID = clientID;
@@ -105,18 +109,15 @@ public class TestingClient{
 		}
 		//TODO jetzt einlogen machen vill mit einer UUID
 	}
+	
 	/**
-	 * 
+	 * This method creates a new auction.
 	 */
 	public void createAuctionTest(){
 		Auction auc = new Auction(new User(),"Test Auction Description",1000l);
 
 	}
 
-	/**
-	 * 
-	 * @param ids
-	 */
 	public void setAuctionsIDs(ArrayList <Integer> auctions){
 		this.auctions = auctions;
 	}

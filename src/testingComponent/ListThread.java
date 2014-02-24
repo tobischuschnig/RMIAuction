@@ -9,24 +9,32 @@ import model.ListMessage;
 import Client.Client;
 import Client.TCPConnector;
 /**
+ * This Class represents a thread which updates the list of current auction
+ * every x secronds
  * 
  * @author Klune Alexander
- *@version 1.0
- *@email aklune@student.tgm.ac.at
+ * @version 1.0
+ * @email aklune@student.tgm.ac.at
  */
 public class ListThread implements Runnable{
 	
 	private TestingClient testingClient;
 	private long end;
 	
+	/**
+	 * This Constructor sets the testingClient for the thread and calculates the
+	 * end time to stop the thread.
+	 */
 	public ListThread(TestingClient testingClient){
 		this.testingClient = testingClient;
 		end = System.currentTimeMillis()*1000*60*2;//TODO Endet mit Math.random zwischen 7 und 10
 	}
 	
-/**
- * 
- */
+	/**
+	 * This run method works as long as the end time has reached. Is invokes the
+	 * list command and splits the returning String into atomic Auctions and saves them 
+	 * into an arrayList.
+	 */
 	@Override
 	public void run() {
 		while(System.currentTimeMillis() <= end) {//TODO Fehler nicht einmal eine Schleife im Thread
