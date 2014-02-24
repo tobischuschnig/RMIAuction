@@ -40,9 +40,9 @@ public class TestingComponent {
 	
 
 	
-	public void createMessage(){
+	//public void createMessage(){
 			
-	}
+	//}
 	
 	/**
 	 * This method loads the loadtest.properties-File and save the relevant data 
