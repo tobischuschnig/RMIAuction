@@ -29,7 +29,6 @@ public class BillingServerTest {
 	
 	@Before
 	public void setUp(){
-		acc = mock(BillingServerInterface.class);
 		bs=new BillingServer();
 		try {      
 			acc = (BillingServerInterface)Naming.lookup("BillingServer");
@@ -45,7 +44,7 @@ public class BillingServerTest {
 	 * @throws UserInputException 
 	 * @throws RemoteException 
 	 */
-	@Test(expected=NullPointerException.class)
+	@Test
 	public void testLogin() throws UserInputException, RemoteException{
 		assertNotNull(bs.login("admin", "admin"));
 	}
