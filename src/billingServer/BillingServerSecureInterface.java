@@ -9,7 +9,13 @@ import Exceptions.InvalidParameterException;
 import Exceptions.OverlappedPricestepException;
 import model.Bill;
 import model.PriceSteps;
-
+/**
+ * This Interface provides the necessary method heads for the class BillingServerSecure.
+ * The Remote interface serves to identify interfaces whose methods may be invoked from a non-local virtual machine
+ * @author Tobias Lins
+ * @email tlins@tgm.ac.at
+ * @version 1.0
+ */
 public interface BillingServerSecureInterface extends Remote{
 	public PriceSteps getPriceSteps() throws RemoteException;
 	public boolean createPriceStep(double startPrice, double endPrice, double fixedPrice, double variablePricePercent) throws RemoteException,InvalidParameterException,InvalidInputException,OverlappedPricestepException;
