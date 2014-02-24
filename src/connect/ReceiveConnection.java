@@ -1,14 +1,12 @@
 package connect;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
+import java.util.concurrent.TimeUnit;
 import server.Server;
 import server.UserHandler;
-
 /**
  * WWaits for incoming TCP Connections.
  * If a Connection is established, the server forwards to Socket to
@@ -22,7 +20,7 @@ import server.UserHandler;
 public class ReceiveConnection implements Runnable{
 	private Server server;
 	private int tcpPort;
-	private  ExecutorService service;
+	private ExecutorService service;
 	
 	/**
 	 * Constructor
@@ -31,8 +29,8 @@ public class ReceiveConnection implements Runnable{
 	 */
 	public ReceiveConnection(int tcp, Server serv){
 		tcpPort = tcp;
-		server = serv; //TODO hier threadpool initialisieren 
-		service = Executors.newFixedThreadPool(10);
+		server = serv;
+		service = Executors.newCachedThreadPool();
 	}
 	
 	/**
@@ -45,21 +43,22 @@ public class ReceiveConnection implements Runnable{
 			ss = new ServerSocket(tcpPort);
 			ss.setSoTimeout(5000);
 		} catch (IOException e) {
-			System.out.println("Could not listen on specififc port\nExit with enter.");
+//			System.out.println("Could not listen on specififc port\nExit with enter.");
 			server.setActive(false);
 			return;
 		}
-		System.out.println("Server is listening");
+//		System.out.println("Server is listening");
 		while(server.isActive()){
 			Socket client = null;
 			try {
 				client = ss.accept();
-								
+				
+//				service.submit(new UserHandler(client, server));
+				new UserHandler(client, server)	;	
 			} catch (IOException e) {			}
-//			Thread thread = new Thread(new UserHandler(client, server));
-//			service.submit(new UserHandler(client, server)); //TODO Hier Threadpool
-			new UserHandler(client, server);
+			
 		}
+//		shutdownAndAwaitTermination(service);
 		try {
 			if(ss!=null)
 				ss.close();

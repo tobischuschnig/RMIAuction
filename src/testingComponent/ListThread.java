@@ -42,7 +42,7 @@ public class ListThread implements Runnable{
 			//System.out.println(testingClient.getTaskExecuter().list());
 			testingClient.getTaskExecuter().list();
 			String wert = "";
-			while(!wert.contains("ID")) {
+			while(!wert.startsWith("ID:")) {
 				try {
 					wert = testingClient.getC().getTestingoutput();
 				}catch (NullPointerException e) {}
@@ -67,6 +67,7 @@ public class ListThread implements Runnable{
 				System.err.println("Fehler beim schlafen legen des ListThreads");
 			}
 		}
+		System.out.println("---------------------------------------------------------------------------------------------------------------------");
 	}
 
 }

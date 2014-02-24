@@ -72,7 +72,7 @@ public class TestingClient{
 	 * @param updateIntervalSec		every x secunds the Auction list will be updated
 	 * @param bidsPerMin	# of the random bids per min
 	 */
-	public TestingClient(int clientID,String host, int tcpPort,int udpPort, int auctionsPerMin, long auctionDuration, int updateIntervalSec, int bidsPerMin) {
+	public TestingClient(int clientID,String host, int tcpPort, int auctionsPerMin, long auctionDuration, int updateIntervalSec, int bidsPerMin) {
 		this.clientID = clientID;
 		this.auctionsPerMin = auctionsPerMin;
 		this.auctionDuration = auctionDuration;
@@ -83,14 +83,14 @@ public class TestingClient{
 		//this.tcp = new TCPConnector(1234,tcc,new Client("localhost",1234,4321));
 		//TODO dem seinen TaskExecuter hohlen und alles mit dem machen 
 		try {
-			c=new Client(host,tcpPort,udpPort);
+			c=new Client(host,tcpPort);
 			taskExecuter = c.getTaskExecuter();
 			username = UUID.randomUUID().toString();
 			
 			//System.out.println("hallo"+tcpPort+udpPort+host);
 			
 			
-			taskExecuter.login(username, tcpPort, udpPort); //TODO brauche den rueckgabewert
+			taskExecuter.login(username, tcpPort); //TODO brauche den rueckgabewert
 			try {
 				Thread.sleep(100);
 			} catch(InterruptedException e) {}
