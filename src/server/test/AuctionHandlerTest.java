@@ -40,7 +40,7 @@ public class AuctionHandlerTest {
 		login.setName("name");
 		login.setAdresse("127.0.0.1");
 		login.setTcpPort(123);
-		login.setUdpPort(123);
+//		login.setUdpPort(123);
 		
 		String wert = server.request(login); //Before testing auctionhandler i need a user
 		assertEquals(wert,"Successfully suscribed and loged in as: name");

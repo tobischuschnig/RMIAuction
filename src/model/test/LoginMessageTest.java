@@ -18,7 +18,7 @@ public class LoginMessageTest {
 	@Before
 	public void setUp() throws Exception {
 		linm = new LoginMessage();
-		linm1 = new LoginMessage(null, null, 0, 0);
+		linm1 = new LoginMessage(null, null, 0);
 	}
 
 	/**
@@ -48,12 +48,12 @@ public class LoginMessageTest {
 		assertEquals(linm.getTcpPort(),1000);
 	}
 	
-	/**
-	 * Testing of getUdpPort Method in LoginMessage
-	 */
-	@Test
-	public void testGetUdpPort() {
-		linm.setUdpPort(100);
-		assertEquals(linm.getUdpPort(), 100);
-	}
+//	/**
+//	 * Testing of getUdpPort Method in LoginMessage
+//	 */
+//	@Test
+//	public void testGetUdpPort() {
+//		linm.setUdpPort(100);
+//		assertEquals(linm.getUdpPort(), 100);
+//	}
 }
