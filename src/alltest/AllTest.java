@@ -19,5 +19,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	model.test.UserTest.class,model.test.AllModel.class,managmentclient.junit.ManagementCLientInputTest.class,
 	managmentclient.junit.TaskExecuterTest.class,managmentclient.junit.ManagementClientTest.class})
 public class AllTest {
-
-} //ManagementCLientInputTest
+	@BeforeClass 
+	public static void setUpOnce() {
+		   ServerStart.startServer();
+		}
+} 
