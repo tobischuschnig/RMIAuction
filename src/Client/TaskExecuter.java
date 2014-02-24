@@ -67,9 +67,9 @@ public class TaskExecuter {
 	/**
 	 * Lists all the current Auctions
 	 */
-	public String list(){
+	public void list(){
 		ListMessage lim;
 		lim=new ListMessage("");
-		return tcp.sendMessage(lim);
+		tcp.sendMessage(lim);
 	}
 }

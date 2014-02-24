@@ -59,12 +59,12 @@ public class TCPConnector implements Runnable{
 	 * Gives the Connector a message to send to the server
 	 * Notifies the Thread that it has to work
 	 */
-	public String sendMessage(Message m){
+	public void sendMessage(Message m){
 		lock.lock();
 		message = m;
 		con.signal();
 		lock.unlock();
-		return output;
+		//return output;
 	}
 
 	@Override
@@ -96,6 +96,7 @@ public class TCPConnector implements Runnable{
 						}
 						output = s;
 						ui.out(s);
+						client.setTestingoutput(s);
 					} catch (ClassNotFoundException e) {
 						
 					}
@@ -113,4 +114,6 @@ public class TCPConnector implements Runnable{
 		}
 	}
 
+
+	
 }

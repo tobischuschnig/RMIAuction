@@ -3,11 +3,7 @@ package testingComponent;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import Client.CLI;
-import Client.Client;
-import Client.TCPConnector;
-import Client.TaskExecuter;
-import Client.UI;
+import Client.*;
 
 import model.Auction;
 import model.User;
@@ -39,6 +35,8 @@ public class TestingClient{
 	private TestingCompCLI tcc;
 	
 	private String username;
+	
+	private Client c;
 
 	/**
 	 * 
@@ -76,11 +74,12 @@ public class TestingClient{
 		this.auctionDuration = auctionDuration;
 		this.updateIntervalSec = updateIntervalSec;
 		this.bidsPerMin = bidsPerMin;
+		auctions = new ArrayList();
 		//tcc = new TestingCompCLI();
 		//this.tcp = new TCPConnector(1234,tcc,new Client("localhost",1234,4321));
 		//TODO dem seinen TaskExecuter hohlen und alles mit dem machen 
 		try {
-			Client c=new Client(host,tcpPort,udpPort);
+			c=new Client(host,tcpPort,udpPort);
 			taskExecuter = c.getTaskExecuter();
 			username = UUID.randomUUID().toString();
 			
@@ -96,7 +95,6 @@ public class TestingClient{
 			CreateThread creater = new CreateThread(this);
 			Thread createThread = new Thread(creater);
 			createThread.start();
-			System.out.println("hallo");
 			ListThread lister = new ListThread(this);
 			Thread listThread = new Thread(lister);
 			listThread.start();
@@ -219,6 +217,20 @@ public class TestingClient{
 	 */
 	public void setTaskExecuter(TaskExecuter taskExecuter) {
 		this.taskExecuter = taskExecuter;
+	}
+
+	/**
+	 * @return the c
+	 */
+	public Client getC() {
+		return c;
+	}
+
+	/**
+	 * @param c the c to set
+	 */
+	public void setC(Client c) {
+		this.c = c;
 	}
 	
 	

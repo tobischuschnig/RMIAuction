@@ -21,6 +21,8 @@ public class Client{
 	private CLI cli;
 	//private NotificationReceiver nr;
 	private boolean active;
+	
+	private String testingoutput;
 	/**
 	 * Constructor sets Server-IP,TCP-Port and UDP-Port
 	 * @param host
@@ -39,6 +41,7 @@ public class Client{
 		t=new TaskExecuter(this);
 		new NotificationReceiver(this);
 		
+		testingoutput = "";
 	}
 
 	
@@ -183,5 +186,22 @@ public class Client{
 	public TaskExecuter getTaskExecuter() {
 		return t;
 	}
+
+
+	/**
+	 * @return the testingoutput
+	 */
+	public String getTestingoutput() {
+		return testingoutput;
+	}
+
+
+	/**
+	 * @param testingoutput the testingoutput to set
+	 */
+	public void setTestingoutput(String testingoutput) {
+		this.testingoutput = testingoutput;
+	}
+	
 	
 }

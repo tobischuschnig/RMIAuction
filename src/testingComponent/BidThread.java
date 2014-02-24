@@ -18,6 +18,7 @@ import Client.TCPConnector;
 public class BidThread implements Runnable {
 
 	private TestingClient testingClient;
+	private double amount;
 
 	private long end;
 	/**
@@ -27,6 +28,7 @@ public class BidThread implements Runnable {
 	public BidThread(TestingClient testingClient) {
 		this.testingClient = testingClient;
 		end = System.currentTimeMillis()*1000*60*2;//TODO Endet mit Math.random zwischen 7 und 10
+		amount = 1000;
 	}
 	
 /**
@@ -36,9 +38,14 @@ public class BidThread implements Runnable {
 	public void run() {
 		while(System.currentTimeMillis() <= end) {//TODO Fehler nicht einmal eine Schleife im Thread
 			int max = testingClient.getAuctionsIDs().size();
-			int bidid = ((int) (Math.random()*max));
-			double amount = System.currentTimeMillis();
-			testingClient.getTaskExecuter().bid(bidid, amount);
+			System.out.println(max+"asdfasdf");
+			if(max != 0) {
+				int bidid = ((int) (Math.random()*max));
+				System.out.println(bidid+"sdfasdfd");
+				bidid = testingClient.getAuctionsIDs().get(bidid);
+				amount+=  (Math.random()*max);
+				testingClient.getTaskExecuter().bid(bidid, amount);
+			}
 			try {
 				Thread.sleep(((60/testingClient.getAuctionsPerMin())*1000));//TODO Fehler falsche Formel 60/x richtig!!
 			} catch (InterruptedException e) {
