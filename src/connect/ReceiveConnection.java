@@ -3,6 +3,8 @@ package connect;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import server.Server;
 import server.UserHandler;
@@ -20,6 +22,7 @@ import server.UserHandler;
 public class ReceiveConnection implements Runnable{
 	private Server server;
 	private int tcpPort;
+	private  ExecutorService service;
 	
 	/**
 	 * Constructor
@@ -28,7 +31,8 @@ public class ReceiveConnection implements Runnable{
 	 */
 	public ReceiveConnection(int tcp, Server serv){
 		tcpPort = tcp;
-		server = serv;
+		server = serv; //TODO hier threadpool initialisieren 
+		service = Executors.newFixedThreadPool(10);
 	}
 	
 	/**
@@ -52,6 +56,8 @@ public class ReceiveConnection implements Runnable{
 				client = ss.accept();
 								
 			} catch (IOException e) {			}
+//			Thread thread = new Thread(new UserHandler(client, server));
+//			service.submit(new UserHandler(client, server)); //TODO Hier Threadpool
 			new UserHandler(client, server);
 		}
 		try {

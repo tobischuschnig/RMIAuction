@@ -1,6 +1,9 @@
 package server;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import connect.Notifier;
 import connect.NotifierFactory;
@@ -16,11 +19,11 @@ import model.*;
 public class Server {
 
 	private int tcpPort;
-	private ArrayList<User> user;
-	private ArrayList<Auction> auction;
+	private ConcurrentHashMap<String, User> user;
+	private ConcurrentHashMap<Integer, Auction> auction;
 	private AuctionHandler ahandler;
 	private RequestHandler rhandler; 
-	private Notifier udp;
+	//private Notifier udp;
 	private boolean active;
 	
 	/**
@@ -28,12 +31,12 @@ public class Server {
 	 * initialised.
 	 */
 	public Server() {
-		user=new ArrayList<User>();
+		user=new ConcurrentHashMap<String,User>();
 		active = true;
-		auction=new ArrayList<Auction>();
+		auction=new ConcurrentHashMap<Integer,Auction>();
 		ahandler = new AuctionHandler(this);
 		rhandler = new RequestHandler();
-		udp = NotifierFactory.getUDPNotifer();
+		//udp = NotifierFactory.getUDPNotifer();
 		Thread athread = new Thread();
 		athread.setPriority(Thread.MIN_PRIORITY);
 		new Thread(ahandler).start();
@@ -51,11 +54,17 @@ public class Server {
 	/**
 	 * In this method the notify method of the class UDPNotifiers is called. There the 
 	 * message is forwarded via UDP to the correct clients.
-	 * @param al contains the users which should receive the message
+	 * @param concurrentHashMap contains the users which should receive the message
 	 * @param message the message which is sended to the client.
 	 */
-	public void notify(ArrayList<User> al, String message) {
-		udp.notify(al,message);
+	public void notify(ConcurrentHashMap<String, User> al, String message) {
+		Set<String> wert = al.keySet();
+		Iterator<String> it = wert.iterator();
+		ArrayList<User> users = new ArrayList<User>();
+		while(it.hasNext()) { 
+			users.add(al.get(it.next()));
+		}
+//		udp.notify(users,message);
 		System.out.println(message); //TODO only for testing after that delete
 	}
 	
@@ -76,38 +85,75 @@ public class Server {
 		this.tcpPort = tcpPort;
 	}
 
-
 	/**
 	 * @return the user
 	 */
-	public ArrayList<User> getUser() {
+	public ConcurrentHashMap<String, User> getUser() {
 		return user;
 	}
-
 
 	/**
 	 * @param user the user to set
 	 */
-	public void setUser(ArrayList<User> user) {
+	public void setUser(ConcurrentHashMap<String, User> user) {
 		this.user = user;
 	}
-
 
 	/**
 	 * @return the auction
 	 */
-	public ArrayList<Auction> getAuction() {
+	public ConcurrentHashMap<Integer, Auction> getAuction() {
 		return auction;
 	}
-
 
 	/**
 	 * @param auction the auction to set
 	 */
-	public void setAuction(ArrayList<Auction> auction) {
+	public void setAuction(ConcurrentHashMap<Integer, Auction> auction) {
 		this.auction = auction;
 	}
 
+	/**
+	 * @return the ahandler
+	 */
+	public AuctionHandler getAhandler() {
+		return ahandler;
+	}
+
+	/**
+	 * @param ahandler the ahandler to set
+	 */
+	public void setAhandler(AuctionHandler ahandler) {
+		this.ahandler = ahandler;
+	}
+
+	/**
+	 * @return the rhandler
+	 */
+	public RequestHandler getRhandler() {
+		return rhandler;
+	}
+
+	/**
+	 * @param rhandler the rhandler to set
+	 */
+	public void setRhandler(RequestHandler rhandler) {
+		this.rhandler = rhandler;
+	}
+//
+//	/**
+//	 * @return the udp
+//	 */
+//	public Notifier getUdp() {
+//		return udp;
+//	}
+//
+//	/**
+//	 * @param udp the udp to set
+//	 */
+//	public void setUdp(Notifier udp) {
+//		this.udp = udp;
+//	}
 
 	public boolean isActive() {
 

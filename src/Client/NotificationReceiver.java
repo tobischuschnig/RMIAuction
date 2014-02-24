@@ -30,7 +30,7 @@ public class NotificationReceiver implements Runnable{
 	public void run() {
 		DatagramSocket ds = null;
 		try {
-			ds = new DatagramSocket(client.getUdpPort());
+//			ds = new DatagramSocket(client.getUdpPort());
 			ds.setSoTimeout(5000);
 			//System.out.println(client.getUdpPort());
 		} catch (SocketException e) {

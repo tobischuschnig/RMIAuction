@@ -42,7 +42,7 @@ public class Client{
 		new NotificationReceiver(this);
 		
 		testingoutput = "";
-	}
+	} 
 
 	
 	/**

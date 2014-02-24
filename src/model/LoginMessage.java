@@ -7,16 +7,16 @@ package model;
 public class LoginMessage implements Message{
 	private String name;
 	private String adresse;
-	private int tcpPort, udpPort;
+	private int tcpPort;
 	
 	public LoginMessage() {
 	}
 	
-	public LoginMessage(String name,String adresse,int tcpPort,int udpPort){
+	public LoginMessage(String name,String adresse,int tcpPort){
 		this.name=name;
 		this.adresse=adresse;
 		this.tcpPort=tcpPort;
-		this.udpPort=udpPort;
+		//this.udpPort=udpPort;
 	}
 	@Override
 	public String getName() {
@@ -52,16 +52,16 @@ public class LoginMessage implements Message{
 	public void setTcpPort(int tcpPort) {
 		this.tcpPort = tcpPort;
 	}
-	/**
-	 * @return the udpPort
-	 */
-	public int getUdpPort() {
-		return udpPort;
-	}
-	/**
-	 * @param udpPort the udpPort to set
-	 */
-	public void setUdpPort(int udpPort) {
-		this.udpPort = udpPort;
-	}
+//	/**
+//	 * @return the udpPort
+//	 */
+//	public int getUdpPort() {
+//		return udpPort;
+//	}
+//	/**
+//	 * @param udpPort the udpPort to set
+//	 */
+//	public void setUdpPort(int udpPort) {
+//		this.udpPort = udpPort;
+//	}
 }

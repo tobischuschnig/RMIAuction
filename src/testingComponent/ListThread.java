@@ -36,7 +36,7 @@ public class ListThread implements Runnable{
 			String wert = "";
 			while(!wert.contains("ID")) {
 				try {
-				wert = testingClient.getC().getTestingoutput();
+					wert = testingClient.getC().getTestingoutput();
 				}catch (NullPointerException e) {}
 			}
 			String[] wert1 = wert.split(" ");
