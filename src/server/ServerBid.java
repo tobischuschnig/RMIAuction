@@ -1,10 +1,14 @@
 package server;
 
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import model.Auction;
+import model.AuctionEvent;
+import model.BidEvent;
 import model.BidMessage;
+import model.EventType;
 import model.Message;
 import model.User;
 
@@ -48,13 +52,23 @@ public class ServerBid implements ServerAction {
 					lastUser = server.getAuction().get(((BidMessage) message).getId()).getLastUser();
 					hilf.setLastUser(bidder);
 					server.getAuction().replace(((BidMessage) message).getId(), hilf);
-
+					//////////////////////////////////////////////////////////////////////////////
+					//Event verschicken
+					BidEvent userEvent = new BidEvent(UUID.randomUUID().toString(), EventType.BID_PLACED, System.currentTimeMillis(), bidder.getName(), ((BidMessage) message).getId() , ((BidMessage) message).getAmount());
+					server.notifyAnalytic(userEvent);
+					//////////////////////////////////////////////////////////////////////////////
+					
 					if (lastUser != null) { //If there is a previous bidder he gets notified
 						ConcurrentHashMap<String,User> al = new ConcurrentHashMap();
 						al.put(lastUser.getName(),lastUser);
 						server.notify(al,"You have been overbid on '" +
 								server.getAuction().get(((BidMessage) message).getId()).getDescription()+"' with the ID: "+
 								server.getAuction().get(((BidMessage) message).getId()).getId()+".");
+						//////////////////////////////////////////////////////////////////////////////
+						//Event verschicken
+						BidEvent userEventverbid = new BidEvent(UUID.randomUUID().toString(), EventType.BID_OVERBID, System.currentTimeMillis(), lastUser.getName(), ((BidMessage) message).getId(),((BidMessage) message).getAmount());
+						server.notifyAnalytic(userEventverbid);
+						//////////////////////////////////////////////////////////////////////////////
 					}
 
 					//Informs if the bid was succesfully
@@ -76,4 +90,5 @@ public class ServerBid implements ServerAction {
 
 		return "There is no Auction with this ID!"; //Errormessage if the auction doesn't exists
 	}
+
 }

@@ -16,4 +16,12 @@ public interface ServerAction {
 	 * @return result of the operation which is handed over to the client via TCP to the client.
 	 */
 	public String doOperation(Message message,Server server);
+	
+	/**
+	 * In this Method the Event is created an processed to the Notify Method of the Server
+	 * @param message contains every parameters for the work step
+	 * @param server which should be used
+	 * @return if the operation was succesfully 
+	 */
+//	public boolean createEvent(Message message, Server server);
 }

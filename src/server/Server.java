@@ -37,6 +37,9 @@ public class Server {
 		ahandler = new AuctionHandler(this);
 		rhandler = new RequestHandler();
 		//udp = NotifierFactory.getUDPNotifer();
+		
+		
+		
 		Thread athread = new Thread();
 		athread.setPriority(Thread.MIN_PRIORITY);
 		new Thread(ahandler).start();
@@ -68,6 +71,9 @@ public class Server {
 		System.out.println(message); //TODO only for testing after that delete
 	}
 	
+	public void notifyAnalytic(Event event) {
+		
+	}
 
 	
 	/**

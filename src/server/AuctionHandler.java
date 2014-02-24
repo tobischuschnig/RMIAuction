@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import model.*;
@@ -43,6 +44,14 @@ public class AuctionHandler implements Runnable {
 					if(server.getAuction().get(i).getDeadline().compareTo(now) <= 0 && 
 							server.getAuction().get(i).isFinished() == false) { //TODO Error Line 37 NullPointer Exception
 						server.getAuction().get(i).setFinished(true);
+						
+						//////////////////////////////////////////////////////////////////////////////
+						//Event verschicken
+						AuctionEvent auctionEvent = new AuctionEvent(UUID.randomUUID().toString(), EventType.AUCTION_ENDED, System.currentTimeMillis(), server.getAuction().get(i).getId());
+						server.notifyAnalytic(auctionEvent);
+						BidEvent userEvent = new BidEvent(UUID.randomUUID().toString(), EventType.BID_WON, System.currentTimeMillis(), server.getAuction().get(i).getLastUser().getName(), server.getAuction().get(i).getId(), server.getAuction().get(i).getHighestBid());
+						server.notifyAnalytic(userEvent);
+						//////////////////////////////////////////////////////////////////////////////
 						//System.out.println(server.getAuction().get(i).getDescription()+ " is over.");
 
 						//Checks if somebody bidded on this auction to notfiy the right persons

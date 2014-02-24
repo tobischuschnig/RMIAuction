@@ -1,10 +1,15 @@
 package server;
 
 
+import java.util.UUID;
+
 import model.Auction;
+import model.AuctionEvent;
 import model.CreateMessage;
+import model.EventType;
 import model.Message;
 import model.User;
+import model.UserEvent;
 
 /**
  * This class is responsible for a functionality off the server.
@@ -36,7 +41,13 @@ public class ServerCreate implements ServerAction{
 		server.notify(server.getUser(),"An auction '"+hilf.getDescription()+"' with the ID: "
 				+hilf.getId()+" has been created and will end on "
 				+hilf.getDeadline()+".");
+		//////////////////////////////////////////////////////////////////////////////
+		//Event verschicken
+		AuctionEvent userEvent = new AuctionEvent(UUID.randomUUID().toString(), EventType.AUCTION_STARTED, System.currentTimeMillis(), hilf.getId());
+		server.notifyAnalytic(userEvent);
+		//////////////////////////////////////////////////////////////////////////////
 		return "You have succesfully created a new auction!";	
 	}
 
+	
 }
