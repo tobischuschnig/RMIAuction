@@ -80,7 +80,7 @@ public class UserHandler implements Runnable{
 					if(ret.startsWith("Successfully")){
 						User tmp = new User();
 						tmp.setName(m.getName());
-						user = server.getUser().get(server.getUser().indexOf(tmp));
+						user = server.getUser().get(tmp.getName()); 
 					}
 				}
 				else{

@@ -29,14 +29,14 @@ public class TaskExecuter {
 	 * @param tcpPort
 	 * @param udpPort
 	 */
-	public void login(String username,int tcpPort,int udpPort){
+	public void login(String username,int tcpPort){
 		String ip="";
 		try {
 			ip=InetAddress.getLocalHost().getHostAddress(); //Get Client IP
 		} catch (UnknownHostException e) {
 			System.out.println("Could not resolve ip address!");
 		}
-		LoginMessage lm=new LoginMessage(username,ip,tcpPort,udpPort);
+		LoginMessage lm=new LoginMessage(username,ip,tcpPort);
 		tcp.sendMessage(lm);
 	}
 	/**

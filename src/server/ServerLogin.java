@@ -25,26 +25,24 @@ public class ServerLogin implements ServerAction {
 		LoginMessage bid = (LoginMessage) message;
 		String ret="";
 		User loger = null;
-		for(int i=0;i < server.getUser().size();i++) { //searches if the user exists
-			if(bid.getName().equals(server.getUser().get(i).getName())) {
-				loger = server.getUser().get(i);
-			}
-		}
-		if(loger == null) { //if the user doesn't exists it is created
+		
+		if(server.getUser().get(message.getName()) == null) { //if the user doesn't exists it is created
 			loger = new User();
 			loger.setName(bid.getName());
 			loger.setAdresse(bid.getAdresse()); 
 			loger.setTcpPort(bid.getTcpPort()); 
-			loger.setUdpPort(bid.getUdpPort()); 
+//			loger.setUdpPort(bid.getUdpPort()); 
 			loger.setActive(true);
 			loger.setMessages(new ArrayList<String>());
-			server.getUser().add(loger);
+			server.getUser().put(loger.getName(),loger);
 			return "Successfully suscribed and loged in as: "+loger.getName();
 		}
-		else if (loger != null && loger.isActive()==false){ //if the user exists active is set true
+		loger= server.getUser().get(message.getName());
+		
+		if (loger != null && loger.isActive()==false){ //if the user exists active is set true
 			loger.setAdresse(bid.getAdresse()); 
 			loger.setTcpPort(bid.getTcpPort()); 
-			loger.setUdpPort(bid.getUdpPort()); 
+//			loger.setUdpPort(bid.getUdpPort()); 
 			loger.setActive(true);
 			if(loger.getMessages().size() != 0){
 				for(String s : loger.getMessages())

@@ -24,17 +24,15 @@ public class ServerCreate implements ServerAction{
 	public String doOperation(Message message, Server server) {
 		CreateMessage create = (CreateMessage) message;
 		User creater = null;
-		for(int i=0;i < server.getUser().size();i++) { //searches for the user who has created the auction
-			if(create.getName().equals(server.getUser().get(i).getName())) {
-				creater = server.getUser().get(i);
-			}
-		}
-		if (creater == null) { //if the user doesn't exists the operation is canceled with an error message
+		
+		if (server.getUser().get(message.getName()) == null) { //if the user doesn't exists the operation is canceled with an error message
 			return "This User doesn't exists please log in first!";
 		}
+		creater = server.getUser().get(message.getName());
 		//adds the auction to the list
 		Auction hilf = new Auction(creater, create.getDesc(),  create.getDuration() , server.getAuction().size() );
-		server.getAuction().add(hilf);
+		server.getAuction().put(hilf.getId(),hilf);
+
 		server.notify(server.getUser(),"An auction '"+hilf.getDescription()+"' with the ID: "
 				+hilf.getId()+" has been created and will end on "
 				+hilf.getDeadline()+".");

@@ -15,7 +15,7 @@ public class Client{
 	private boolean loggedIn;
 	private String host;
 	private int tcpPort;
-	private int udpPort;
+	//private int udpPort;
 	private TaskExecuter t;
 	private TCPConnector tcp;
 	private CLI cli;
@@ -29,17 +29,19 @@ public class Client{
 	 * @param tcpPort
 	 * @param udpPort
 	 */
-	public Client(String host,int tcpPort,int udpPort){
+//	public Client(String host,int tcpPort,int udpPort){
+	public Client(String host,int tcpPort){
+
 		active=true;
 		loggedIn=false;
 		username="";
 		this.host=host;
 		this.tcpPort=tcpPort;
-		this.udpPort=udpPort;
+//		this.udpPort=udpPort;
 		cli=new CLI();
 		tcp=new TCPConnector(tcpPort, cli, this);
 		t=new TaskExecuter(this);
-		new NotificationReceiver(this);
+//		new NotificationReceiver(this);
 		
 		testingoutput = "";
 	} 
@@ -94,7 +96,7 @@ public class Client{
 				String[] werte=original.split(" ");		//Original is used
 				if(loggedIn==false){
 					if(werte.length==2){
-						t.login(werte[1],tcpPort,udpPort);
+						t.login(werte[1],tcpPort);
 						//Wait for Server response and then: set Username und loggedIn=true
 //						username=werte[1];
 //						loggedIn=true;
@@ -107,13 +109,17 @@ public class Client{
 				//If command is create
 			}else if(eingabe.startsWith("!create")){
 				if(loggedIn==true){
-				String[] werte=original.split(" ");		//Original is used
-				String desc="";
-				for(int i=2;i<=werte.length-1;i++){
-					desc=desc+" "+werte[i];
-				}
-				if(desc.startsWith(" ")) desc=desc.substring(1);
-				t.create(Long.parseLong(werte[1]),desc);
+					String[] werte=original.split(" ");		//Original is used
+					String desc="";
+					for(int i=2;i<=werte.length-1;i++){
+						desc=desc+" "+werte[i];
+					}
+					if(desc.startsWith(" ")) desc=desc.substring(1);
+					try {
+						t.create(Long.parseLong(werte[1]),desc);
+					} catch (NumberFormatException e) {
+						cli.out("Please enter create like: \n!create <Numeric Duration> <Description>");
+					}				
 				}else{
 					cli.out("Currently not logged in\nPlease login first");
 				}
@@ -160,9 +166,9 @@ public class Client{
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
 	}
-	public int getUdpPort() {
-		return udpPort;
-	}
+//	public int getUdpPort() {
+//		return udpPort;
+//	}
 	public CLI getCli() {
 		return cli;
 	}

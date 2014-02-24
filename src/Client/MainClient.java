@@ -8,18 +8,18 @@ package Client;
 public class MainClient {
 
 	public static void main(String[] args) {
-		if(args.length!=3){
-			System.out.println("Wrong arguments\nServer-IP TCP-Port UDP-Port");
+		if(args.length!=2){
+			System.out.println("Wrong arguments\nServer-IP TCP-Port");
 			System.exit(0);		//If there are no 3 arguments, program exits immediately
 		}
 		try{
 			String host=args[0];
 			int tcpPort=Integer.parseInt(args[1]);
-			int udpPort=Integer.parseInt(args[2]);	//Save arguments
-			Client c=new Client(host,tcpPort,udpPort);
+//			int udpPort=Integer.parseInt(args[2]);	//Save arguments
+			Client c=new Client(host,tcpPort);
 			c.run();		//Start Client
 		}catch(NumberFormatException e){
-			System.out.println("Port(s) is/are not numeric");
+			System.out.println("Port is not numeric");
 		}catch(Exception e){
 			System.out.println("Can not connect to Server");
 		}
