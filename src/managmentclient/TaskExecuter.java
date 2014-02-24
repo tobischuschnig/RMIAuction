@@ -13,6 +13,7 @@ import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Bill;
@@ -152,11 +153,16 @@ public class TaskExecuter {
      */
     public void bill(String username) {
         try {
-            Bill b = secure.getBill(username);
-            if (b == null) {
+        	ArrayList<Bill> al = secure.getBill(username);
+           // Bill b = secure.getBill(username);
+            if (al == null) {
                 cli.outln("No Bills for User " + username);
             } else {
-                cli.outln(b.toString());
+               // cli.outln(b.toString());
+                for(Bill b : al){
+                	b.toString();
+                }
+                
             }
         } catch (RemoteException ex) {
         }
