@@ -1,13 +1,19 @@
 package server;
 
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import analyticserver.AnalyticServerInterface;
+
 import connect.Notifier;
 import connect.NotifierFactory;
 
+import managmentclient.ManagementClientInterface;
 import model.*;
 
 /**
@@ -26,6 +32,10 @@ public class Server {
 	//private Notifier udp;
 	private boolean active;
 	
+	
+    private AnalyticServerInterface obja;
+
+	
 	/**
 	 * The standard konstructor where are all attributes are set up and the attributes are
 	 * initialised.
@@ -38,7 +48,13 @@ public class Server {
 		rhandler = new RequestHandler();
 		//udp = NotifierFactory.getUDPNotifer();
 		
-		
+		try {
+            obja = (AnalyticServerInterface) Naming.lookup("AnalyticServer");
+        } catch (Exception ex) {
+            System.err.println("Client exit: Cannot connect to AnalyticsServer: AnalyticServer");
+            System.exit(0);
+        }
+
 		
 		Thread athread = new Thread();
 		athread.setPriority(Thread.MIN_PRIORITY);
@@ -71,8 +87,17 @@ public class Server {
 		System.out.println(message); //TODO only for testing after that delete
 	}
 	
-	public void notifyAnalytic(Event event) {
-		
+	public void notifyAnalytic(Event event)  {
+		try {
+			obja.processEvent(event);
+		} catch (RemoteException e) {
+			try {
+				obja.processEvent(event);
+			} catch (RemoteException e1) {
+				System.err.println("Lost the Connection to the Analytic Server please restart.");
+				System.exit(0);
+			}
+		}
 	}
 
 	
