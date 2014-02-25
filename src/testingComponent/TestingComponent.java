@@ -13,6 +13,7 @@ import client.Client;
 
 import managmentclient.ManagementClient;
 import managmentclient.TaskExecuter;
+import model.Properties;
 
 /**
  * Class TestingComponent to read the loadtest.properties-File and create the Clients with the Data from the File
@@ -51,65 +52,65 @@ public class TestingComponent {
 	 */
 	@SuppressWarnings("resource")
 	public static void loadFile() throws IOException{
-		BufferedReader buff = null;
-		String cline;
-		//String dataset = System.getProperty("user.dir") + "/loadtest.properties"; 
-		String dataset = ("/Users/tobi/Workspace/RMIAuction/src/testingComponent/loadtest.properties"); 
-
-		//TODO don't Hardcode this!!!!!
-		//String dataset = System.getProperty("/home/poezze/Dokumente/WorkspaceJava/RMI/loadtest.properties"); 
-		buff = new BufferedReader(new FileReader(dataset));
+//		String dataset = System.getProperty("loadtest.properties") + "/loadtest.properties"; 
+		Properties p=new Properties("loadtest.properties");
+		String[] values = new String[5];
+		values[0] = p.getProperty("clients").toString();
+		values[1] = p.getProperty("auctionsPerMin").toString();
+		values[2]= p.getProperty("auctionDuration").toString();
+		values[3] = p.getProperty("updateIntervalSec").toString();
+		values[4] = p.getProperty("bidsPerMin").toString();
+		Integer[] valuess = new Integer[5];
+		for(int i = 0 ; i < 5 ; i++) {
+			System.out.println(values[i]);
+		}
 		
-		int i = 0;
-		int [] at = new int[5];
-		String[] aline;
-		String[] n;
 		
-		while ((cline = buff.readLine())!=null){
-			try{
-				String ch = cline.substring(0,1);
-				if(!ch.equals("#")){
-					aline = cline.split("(=)|(\\:)");
-					
-					if(aline[1].contains("*")){
-						n = aline[1].split("\\*");
-						int ch1=Integer.parseInt(n[0].replaceAll("\\s+",""));
-						int ch2=Integer.parseInt(n[1].replaceAll("\\s+",""));
-						at[i]= ch1 * ch2;
-					}else if(aline[1].contains("+")){
-						n = aline[1].split("\\+");
-						int ch1=Integer.parseInt(n[0].replaceAll("\\s+",""));
-						int ch2=Integer.parseInt(n[1].replaceAll("\\s+",""));
-						at[i]= ch1 + ch2;
-					}else if(aline[1].contains("-")){
-						n = aline[1].split("\\-");
-						int ch1=Integer.parseInt(n[0].replaceAll("\\s+",""));
-						int ch2=Integer.parseInt(n[1].replaceAll("\\s+",""));
-						at[i]= ch1 - ch2;
-					}else if(aline[1].contains("/")){
-						n = aline[1].split("\\/");
-						int ch1=Integer.parseInt(n[0].replaceAll("\\s+",""));
-						int ch2=Integer.parseInt(n[1].replaceAll("\\s+",""));
-						at[i]= ch1 / ch2;
-					}else{
-						at[i]=Integer.parseInt(aline[1].replaceAll("\\s+",""));
-						i++;
-					}
-				}
-			}catch (StringIndexOutOfBoundsException e){
+		try {
+		for(int i = 0 ; i < 5 ; i++) {
+			if (values[i].contains("*")) {
+				int hilf = values[i].indexOf('*');
+				String wert1 = values[i].substring(0,hilf);
+				String wert2 = values[i].substring(hilf+1,values[i].length());
+				valuess[i] = Integer.parseInt(wert1) * Integer.parseInt(wert2);
+			}
+			else if (values[i].contains("+")) {
+				int hilf = values[i].indexOf('+');
+				String wert1 = values[i].substring(0,hilf);
+				String wert2 = values[i].substring(hilf+1,values[i].length());
+				valuess[i] = Integer.parseInt(wert1) + Integer.parseInt(wert2);
+			}
+			else if (values[i].contains("-")) {
+				int hilf = values[i].indexOf('-');
+				String wert1 = values[i].substring(0,hilf);
+				String wert2 = values[i].substring(hilf+1,values[i].length());
+				valuess[i] = Integer.parseInt(wert1) - Integer.parseInt(wert2);
+			}
+			else if (values[i].contains("/")) {
+				int hilf = values[i].indexOf('/');
+				String wert1 = values[i].substring(0,hilf);
+				String wert2 = values[i].substring(hilf+1,values[i].length());
+				valuess[i] = Integer.parseInt(wert1) / Integer.parseInt(wert2);
+			}
+			else {
+				//System.out.println(values[i]);
+				valuess[i] = Integer.parseInt(values[i]);
 			}
 		}
-		
-		try{
-			clients = at[0];
-			auctionsPerMin = at[1];
-			auctionDuration = at[2];
-			updateIntervalSec = at[3];
-			bidsPerMin = at[4];
-			//Use the following line for the proove of the functionality
-			//System.out.println(clients + "\n" + auctionsPerMin + "\n" + auctionDuration + "\n" + updateIntervalSec + "\n" + bidsPerMin);
-		}catch (ArrayIndexOutOfBoundsException e){
+		clients = valuess[0];
+		auctionsPerMin = valuess[1];
+		auctionDuration = valuess[2];
+		updateIntervalSec = valuess[3];
+		bidsPerMin = valuess[4];
+		} catch(Exception e) {
+			System.err.println("Please check the loadtest.properties file.\n Every value is only allowed to contain one operater.");
+			e.printStackTrace();
+			return;
 		}
+
+		//Use the following line for the proove of the functionality
+		System.out.println(clients + "\n" + auctionsPerMin + "\n" + auctionDuration + "\n" + updateIntervalSec + "\n" + bidsPerMin);
+
 	}
 	
 	/**

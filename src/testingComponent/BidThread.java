@@ -56,7 +56,7 @@ public class BidThread implements Runnable {
 				System.err.println("Error by pausing the Thread.");
 			}
 		}
-		System.exit(0);
+		return;
 	}
 		
 

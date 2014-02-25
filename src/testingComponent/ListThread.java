@@ -68,7 +68,7 @@ public class ListThread implements Runnable{
 				System.err.println("Error by pausing the Thread.");
 			}
 		}
-		System.exit(0);
+		return;
 //		System.out.println("---------------------------------------------------------------------------------------------------------------------");
 	}
 
