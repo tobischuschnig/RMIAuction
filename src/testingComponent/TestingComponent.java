@@ -145,7 +145,7 @@ public class TestingComponent {
 			for(int i = 0; i < clients; i++){
 				clientID = i;
 				//System.out.println(clientID+"\n" +auctionsPerMin+"\n" + auctionDuration+"\n" + updateIntervalSec+"\n" + bidsPerMin);
-				c = new TestingClient(clientID,host,tcpPort,udpPort, auctionsPerMin, auctionDuration, updateIntervalSec, bidsPerMin);
+				c = new TestingClient(clientID,host,tcpPort, auctionsPerMin, auctionDuration, updateIntervalSec, bidsPerMin);
 				testingclients.put(clientID, c);	//TODO Fehler jetzt try catch unedig
 				if (i == 0 ) {
 					try {
