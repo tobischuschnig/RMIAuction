@@ -25,7 +25,7 @@ public class ReceiveConnection implements Runnable{
 	/**
 	 * Constructor
 	 * @param tcp		TCP Port 
-	 * @param serv		Server
+	 * @param serv		Server 
 	 */
 	public ReceiveConnection(int tcp, Server serv){
 		tcpPort = tcp;
@@ -58,10 +58,27 @@ public class ReceiveConnection implements Runnable{
 			} catch (IOException e) {			}
 			
 		}
-//		shutdownAndAwaitTermination(service);
+		shutdownAndAwaitTermination(service);
 		try {
 			if(ss!=null)
 				ss.close();
 		} catch (IOException e) {		}
+	}
+	
+	public void shutdownAndAwaitTermination(ExecutorService pool) {
+		pool.shutdown();//once the above task has been executed by threads,shut down executor ?
+		 try {
+		     // Wait 5 seconds  for existing tasks to terminate
+		     if (!pool.awaitTermination(5, TimeUnit.SECONDS)) {     
+		     pool.shutdownNow(); // Cancel currently executing tasks
+		       
+		       if (!pool.awaitTermination(5, TimeUnit.SECONDS))
+		           System.err.println("Pool did not terminate");
+		     }
+		   } catch (InterruptedException ie) {
+		     // (Re-)Cancel if current thread also interrupted
+		     pool.shutdownNow();
+		     Thread.currentThread().interrupt();
+		   }
 	}
 }
