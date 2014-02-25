@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import billingServer.BillingServerInterface;
+
 import analyticserver.AnalyticServerInterface;
 
 import connect.Notifier;
@@ -47,9 +49,11 @@ public class Server {
 		ahandler = new AuctionHandler(this);
 		rhandler = new RequestHandler();
 		//udp = NotifierFactory.getUDPNotifer();
-		
+		Properties p=new Properties("registry.properties");
+		String host=p.getProperty("registry.host");
+		int port=Integer.parseInt(p.getProperty("registry.port"));		
 		try {
-            obja = (AnalyticServerInterface) Naming.lookup("AnalyticServer");
+            obja = (AnalyticServerInterface) Naming.lookup("rmi://"+host+":"+port+"/AnalyticServer");
         } catch (Exception ex) {
             System.err.println("Client exit: Cannot connect to AnalyticsServer: AnalyticServer");
             System.exit(0);
