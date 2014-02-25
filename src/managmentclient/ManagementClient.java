@@ -243,8 +243,6 @@ public class ManagementClient implements ManagementClientInterface, Serializable
      */
     @Override
     public void processEvent(String event) {
-        event = event.replace("[", "");
-        event = event.replace("]", "");
         // direct output      
         if (autoprint == true) {
             // TODO optimize output format
