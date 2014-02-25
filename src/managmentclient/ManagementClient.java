@@ -55,7 +55,7 @@ public class ManagementClient implements ManagementClientInterface, Serializable
     }
 
     public boolean input(String eingabe) {
-        boolean success=false;
+        boolean success = false;
         if (eingabe.startsWith(" ")) {
             eingabe = eingabe.substring(1);
         }
@@ -76,7 +76,7 @@ public class ManagementClient implements ManagementClientInterface, Serializable
                         cli.outln("Successfully logged in as " + werte[1]);
                         loggedIn = true;
                         username = werte[1];
-                        success=true;
+                        success = true;
                     } else {
                         cli.outln("Access denied for " + werte[1] + " " + werte[2]);
                     }
@@ -90,7 +90,7 @@ public class ManagementClient implements ManagementClientInterface, Serializable
         } else if (eingabe.startsWith("!steps")) {
             if (loggedIn == true) {
                 t.steps();
-                success=true;
+                success = true;
             } else {
                 cli.outln("Currently not logged in\nPlease login first");
             }
@@ -105,7 +105,7 @@ public class ManagementClient implements ManagementClientInterface, Serializable
                                 Double.parseDouble(werte[3]), Double.parseDouble(werte[4]));
                         if (b) {
                             cli.outln("Pricestepp added successfully");
-                            success=true;
+                            success = true;
                         }
                     } catch (NumberFormatException e) {
                         cli.outln("Values entered incorrect\nPlease enter command "
@@ -129,7 +129,7 @@ public class ManagementClient implements ManagementClientInterface, Serializable
                         b = t.remove(Double.parseDouble(werte[1]), Double.parseDouble(werte[2]));
                         if (b) {
                             cli.outln("Pricestepp removed successfully");
-                            success=true;
+                            success = true;
                         } else {
                             cli.outln("Cannot remove Pricestep. Check Input.");
                         }
@@ -148,9 +148,9 @@ public class ManagementClient implements ManagementClientInterface, Serializable
             String[] werte = eingabe.split(" ");
             if (loggedIn == true) {
                 if (werte.length == 2) {
-                        boolean b = false;
-                        t.bill(werte[1]);
-                        success=true;
+                    boolean b = false;
+                    t.bill(werte[1]);
+                    success = true;
                 } else {
                     cli.outln("Please enter !bill like:\n!bill <userName>");
                 }
@@ -163,7 +163,7 @@ public class ManagementClient implements ManagementClientInterface, Serializable
                 t.logout(username);
                 username = "";
                 loggedIn = false;
-                success=true;
+                success = true;
             } else {
                 cli.outln("Logout not possible, not logged in!");
             }
@@ -173,7 +173,7 @@ public class ManagementClient implements ManagementClientInterface, Serializable
             String[] werte = eingabe.split(" ");
 
             if (werte.length == 2) {
-            	success=true;
+                success = true;
                 t.subscribe(werte[1]);
             } else {
                 cli.outln("Please enter !subscribe like:\n!subscribe "
@@ -185,23 +185,23 @@ public class ManagementClient implements ManagementClientInterface, Serializable
             String[] werte = eingabe.split(" ");
             if (werte.length == 2) {
                 t.unsubscribe(werte[1]);
-                success=true;
+                success = true;
             } else {
                 cli.outln("Please enter !unsubscribe like:\n!unsubscribe <subscriptionID>");
             }
         } // befehle ausgabe modus
         else if (eingabe.startsWith("!auto")) {
             auto();
-            success=true;
+            success = true;
         } else if (eingabe.startsWith("!hide")) {
             hide();
-            success=true;
+            success = true;
         } else if (eingabe.startsWith("!print")) {
             print();
-            success=true;
+            success = true;
         } // intern
         else if (eingabe.startsWith("!end")) {
-            success=true;
+            success = true;
             active = false;
             t.end();
         } else {
@@ -243,7 +243,8 @@ public class ManagementClient implements ManagementClientInterface, Serializable
      */
     @Override
     public void processEvent(String event) {
-
+        event = event.replace("[", "");
+        event = event.replace("]", "");
         // direct output      
         if (autoprint == true) {
             // TODO optimize output format
@@ -352,6 +353,4 @@ public class ManagementClient implements ManagementClientInterface, Serializable
     public void setAutoprint(boolean autoprint) {
         this.autoprint = autoprint;
     }
-
-  
 }

@@ -182,6 +182,7 @@ public class TaskExecuter {
      */
     public void subscribe(String filter) {
         try {
+            filter = filter.replace("'", "");
             //TODO ausgabe aendern?
             cli.outln("Lookup completed ");
             cli.outln("Event ID: " + obja.suscribe(filter, managementClientInterface));
