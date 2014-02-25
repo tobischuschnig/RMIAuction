@@ -96,7 +96,6 @@ public class BillingServerSecure implements Serializable,
 	 * @return if bill was sucessfully created
 	 */
 	public boolean billAuction(String user, long auctionID, double price) {
-		System.out.println("bill will be added");
 		Double feeVariable = 0.0;
 		Double feeFixed = 0.0;
 		Double total=0.0;
@@ -111,7 +110,6 @@ public class BillingServerSecure implements Serializable,
 			}
 		}
 		total=feeVariable+feeFixed;
-		System.out.println("Total fee:"+total);
 		bills.add(new Bill(user, auctionID, price, feeFixed, feeVariable,
 				total));
 		return true;
