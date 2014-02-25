@@ -7,7 +7,7 @@ import java.util.Queue;
 import java.util.Scanner;
 
 /**
- * 
+ * Managemend of Userinput and TaskExecuter calls
  * @author alexander auradnik <alexander.auradnik@student.tgm.ac.at>
  * @author Alexander Rieppel <alexander.rieppel@student.tgm.ac.at>
  * @version 2014-02-14
