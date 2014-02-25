@@ -51,9 +51,12 @@ public class AuctionHandler implements Runnable {
 						server.notifyAnalytic(auctionEvent);
 						BidEvent userEvent = new BidEvent(UUID.randomUUID().toString(), EventType.BID_WON, System.currentTimeMillis(), server.getAuction().get(i).getLastUser().getName(), server.getAuction().get(i).getId(), server.getAuction().get(i).getHighestBid());
 						server.notifyAnalytic(userEvent);
+						
 						//////////////////////////////////////////////////////////////////////////////
 						//System.out.println(server.getAuction().get(i).getDescription()+ " is over.");
-
+						
+						server.getSecure().billAuction(server.getAuction().get(i).getOwner().getName(), server.getAuction().get(i).getId(), server.getAuction().get(i).getHighestBid());
+						
 						//Checks if somebody bidded on this auction to notfiy the right persons
 						if(server.getAuction().get(i).getLastUser() != null) {
 

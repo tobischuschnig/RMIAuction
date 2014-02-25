@@ -8,6 +8,9 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import billingServer.BillingServerInterface;
+import billingServer.BillingServerSecureInterface;
+
 import analyticserver.AnalyticServerInterface;
 
 import connect.Notifier;
@@ -34,7 +37,8 @@ public class Server {
 	
 	
     private AnalyticServerInterface obja;
-
+    private BillingServerInterface billint;
+    private BillingServerSecureInterface secure;
 	
 	/**
 	 * The standard konstructor where are all attributes are set up and the attributes are
@@ -47,14 +51,28 @@ public class Server {
 		ahandler = new AuctionHandler(this);
 		rhandler = new RequestHandler();
 		//udp = NotifierFactory.getUDPNotifer();
-		
+		Properties p=new Properties("registry.properties");
+		String host=p.getProperty("registry.host");
+		int port=Integer.parseInt(p.getProperty("registry.port"));		
 		try {
-            obja = (AnalyticServerInterface) Naming.lookup("AnalyticServer");
+            obja = (AnalyticServerInterface) Naming.lookup("rmi://"+host+":"+port+"/AnalyticServer");
         } catch (Exception ex) {
             System.err.println("Client exit: Cannot connect to AnalyticsServer: AnalyticServer");
             System.exit(0);
         }
-
+		billint = null;
+		try {     
+			billint = (BillingServerInterface)Naming.lookup("rmi://"+host+":"+port+"/BillingServer");
+		} 
+		catch (Exception e) {
+			//e.printStackTrace();
+		}
+		secure=null;
+		try {
+			secure=((BillingServerSecureInterface)billint.login("admin", "admin"));
+		}catch (Exception e) {
+			System.out.println("Cant login to billingserver");
+		}
 		
 		Thread athread = new Thread();
 		athread.setPriority(Thread.MIN_PRIORITY);
@@ -195,4 +213,9 @@ public class Server {
 	public void setActive(boolean active){
 		this.active=active;
 	}
+
+	public BillingServerSecureInterface getSecure() {
+		return secure;
+	}
+
 }
