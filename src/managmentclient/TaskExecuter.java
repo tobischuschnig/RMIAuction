@@ -1,10 +1,5 @@
 package managmentclient;
 
-import Exceptions.InvalidFilterException;
-import Exceptions.InvalidInputException;
-import Exceptions.InvalidParameterException;
-import Exceptions.OverlappedPricestepException;
-import Exceptions.UserInputException;
 import analyticserver.AnalyticServerInterface;
 import billingServer.BillingServerInterface;
 import billingServer.BillingServerSecureInterface;
@@ -13,6 +8,12 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import java.util.ArrayList;
+
+import exceptions.InvalidFilterException;
+import exceptions.InvalidInputException;
+import exceptions.InvalidParameterException;
+import exceptions.OverlappedPricestepException;
+import exceptions.UserInputException;
 import model.Bill;
 
 import model.Properties;

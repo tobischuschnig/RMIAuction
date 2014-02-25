@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 /**
  * class UserInputException extends Exception 

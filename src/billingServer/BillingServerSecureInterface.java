@@ -4,9 +4,10 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import Exceptions.InvalidInputException;
-import Exceptions.InvalidParameterException;
-import Exceptions.OverlappedPricestepException;
+import exceptions.InvalidInputException;
+import exceptions.InvalidParameterException;
+import exceptions.OverlappedPricestepException;
+
 import model.Bill;
 import model.PriceSteps;
 /**

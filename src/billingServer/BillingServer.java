@@ -15,9 +15,10 @@ import java.rmi.server.UnicastRemoteObject;
 import java.security.MessageDigest;
 import java.util.Scanner;
 
+import exceptions.UserInputException;
+
 import model.Properties;
 
-import Exceptions.UserInputException;
 /**
  * This is the class for the user login.
  * If the login is successfully, you will get

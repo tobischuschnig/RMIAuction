@@ -1,11 +1,12 @@
-package Client.junit;
+package client.junit;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import Client.Client;
+import client.Client;
+
 
 /**
  * Testclass for Client

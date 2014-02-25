@@ -4,7 +4,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.regex.PatternSyntaxException;
 
-import Exceptions.InvalidFilterException;
+import exceptions.InvalidFilterException;
+
 
 import managmentclient.ManagementClient;
 import managmentclient.ManagementClientInterface;

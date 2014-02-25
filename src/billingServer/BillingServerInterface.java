@@ -3,7 +3,8 @@ package billingServer;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import Exceptions.UserInputException;
+import exceptions.UserInputException;
+
 /**
  * This Interface provides the necessary method heads fpr BillingServer.
  * The Remote interface serves to identify interfaces whose methods may be invoked from a non-local virtual machine

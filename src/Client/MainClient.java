@@ -1,4 +1,4 @@
-package Client;
+package client;
 /**
  * This class starts the client
  * Ends it when enter is pressed

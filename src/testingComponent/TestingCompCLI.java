@@ -1,6 +1,6 @@
 package testingComponent;
 
-import Client.UI;
+import client.UI;
 
 /**
  * This class is basically the same as CLI in the package Client. It saves the commung output into a 

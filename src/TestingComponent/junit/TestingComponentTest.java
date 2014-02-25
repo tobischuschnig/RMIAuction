@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import Client.Client;
-import Client.TCPConnector;
+import client.Client;
+import client.TCPConnector;
+
 import testingComponent.BidThread;
 import testingComponent.CreateThread;
 import testingComponent.ListThread;

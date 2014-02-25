@@ -3,10 +3,11 @@ package billingServer;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 
-import Exceptions.InvalidInputException;
-import Exceptions.InvalidParameterException;
-import Exceptions.OverlappedPricestepException;
-import Exceptions.UserInputException;
+import exceptions.InvalidInputException;
+import exceptions.InvalidParameterException;
+import exceptions.OverlappedPricestepException;
+import exceptions.UserInputException;
+
 
 import model.Bill;
 import model.PriceStep;

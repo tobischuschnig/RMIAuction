@@ -1,11 +1,11 @@
 package testingComponent;
 
 
+import client.Client;
+import client.TCPConnector;
+import client.TaskExecuter;
 import model.CreateMessage;
 
-import Client.Client;
-import Client.TCPConnector;
-import Client.TaskExecuter;
 /**
  * This Class represents a thread which creates x times per
  * minute a new Auction with incrementing their IDs.
@@ -51,6 +51,7 @@ public class CreateThread implements Runnable {
 				System.err.println("Error by pausing the Thread."); 
 			}
 		}
+		System.exit(0);
 	}
 
 }

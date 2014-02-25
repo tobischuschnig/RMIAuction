@@ -1,4 +1,4 @@
-package Client;
+package client;
 /**
  * The implementations of this class define the output
  * 

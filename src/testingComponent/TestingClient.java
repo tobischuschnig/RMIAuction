@@ -3,7 +3,8 @@ package testingComponent;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import Client.*;
+import client.*;
+
 
 import model.Auction;
 import model.User;

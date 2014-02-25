@@ -5,9 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import client.TCPConnector;
+
 import model.BidMessage;
 
-import Client.TCPConnector;
 
 /**
  * This class represents a thread, which bids to a random auction x - times
@@ -55,6 +56,7 @@ public class BidThread implements Runnable {
 				System.err.println("Error by pausing the Thread.");
 			}
 		}
+		System.exit(0);
 	}
 		
 

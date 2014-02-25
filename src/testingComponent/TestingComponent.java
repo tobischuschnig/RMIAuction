@@ -8,7 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.security.auth.Subject;
 
-import Client.Client;
+import client.Client;
+
 
 import managmentclient.ManagementClient;
 import managmentclient.TaskExecuter;

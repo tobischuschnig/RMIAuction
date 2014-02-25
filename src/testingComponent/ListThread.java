@@ -5,9 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import client.Client;
+import client.TCPConnector;
+
 import model.ListMessage;
-import Client.Client;
-import Client.TCPConnector;
 /**
  * This Class represents a thread which updates the list of current auction
  * every x secronds
@@ -67,6 +68,7 @@ public class ListThread implements Runnable{
 				System.err.println("Error by pausing the Thread.");
 			}
 		}
+		System.exit(0);
 //		System.out.println("---------------------------------------------------------------------------------------------------------------------");
 	}
 

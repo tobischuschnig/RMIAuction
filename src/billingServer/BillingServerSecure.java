@@ -1,6 +1,5 @@
 package billingServer;
 
-import Exceptions.*;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -9,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import exceptions.*;
 
 import model.DataManager;
 import model.PriceStep;

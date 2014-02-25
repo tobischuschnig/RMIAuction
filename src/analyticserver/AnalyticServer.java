@@ -12,10 +12,11 @@ import java.util.regex.PatternSyntaxException;
 
 import javax.swing.undo.StateEdit;
 
+import exceptions.InvalidFilterException;
+
 import managmentclient.ManagementClient;
 import managmentclient.ManagementClientInterface;
 import model.*;
-import Exceptions.InvalidFilterException;
 
 /**
  * Receives events from the system and computes simple statistics/analytics.
@@ -127,7 +128,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 		if(managementClient == null) System.out.println("Fuck you!");
 		
 		filter = filter.toUpperCase();
-		System.out.println(filter);
+//		System.out.println(filter);
 		String uid = ""+this.guid;
 		int wert =0;
 		for (int i = 0; i < pattern.size();i++) {

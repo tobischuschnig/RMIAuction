@@ -12,7 +12,8 @@ import model.Properties;
 import org.junit.Before;
 import org.junit.Test;
 
-import Exceptions.UserInputException;
+import exceptions.UserInputException;
+
 import billingServer.BillingServer;
 import billingServer.BillingServerInterface;
 

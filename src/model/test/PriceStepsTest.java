@@ -12,7 +12,8 @@ import model.PriceSteps;
 import org.junit.Before;
 import org.junit.Test;
 
-import Exceptions.InvalidInputException;
+import exceptions.InvalidInputException;
+
 
 
 /**
