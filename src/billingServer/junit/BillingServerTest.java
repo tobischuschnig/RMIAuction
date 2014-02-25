@@ -9,10 +9,12 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import model.Properties;
+
 import org.junit.Before;
 import org.junit.Test;
-import static org.mockito.Mockito.*;
 
+import static org.mockito.Mockito.*;
 import Exceptions.UserInputException;
 import billingServer.BillingServer;
 import billingServer.BillingServerInterface;
@@ -30,16 +32,20 @@ public class BillingServerTest {
 	@Before
 	public void setUp(){
 		bs=new BillingServer();
-		try {      
-			acc = (BillingServerInterface)Naming.lookup("BillingServer");
+		Properties p=new Properties("registry.properties");
+		String host=p.getProperty("registry.host");
+		int port=Integer.parseInt(p.getProperty("registry.port"));
+		//BillingServer Objekt wird erstellt, und durch Naming Lookup abgerufen
+		BillingServerInterface acc = null;
+		try {     
+			acc = (BillingServerInterface)Naming.lookup("rmi://"+host+":"+port+"/BillingServer");
 		} 
 		catch (Exception e) {
-			System.out.println("");
+			e.printStackTrace();
 		}
 	}
 	/**
-	 * Testing of login Method with right user credentials, but will throw NullPointerException
-	 * because of calling the Method not with the reference.
+	 * Testing of login Method with right user credentials
 	 * 
 	 * @throws UserInputException 
 	 * @throws RemoteException 
@@ -58,16 +64,16 @@ public class BillingServerTest {
 		assertNull(bs.login("test", "123454"));
 	}
 	
-	/**
-	 * For testing purposes, here is a version of the testcase, which is called correctly with the Reference
-	 * @throws UserInputException
-	 * @throws RemoteException
-	 * 
-	 */
-	@Test
-	public void testLoginCorrectCall() throws UserInputException, RemoteException{
-		assertNotNull(acc.login("admin", "admin"));
-	}
+//	/**
+//	 * For testing purposes, here is a version of the testcase, which is called correctly with the Reference
+//	 * @throws UserInputException
+//	 * @throws RemoteException
+//	 * 
+//	 */
+//	@Test
+//	public void testLoginCorrectCall() throws UserInputException, RemoteException{
+//		assertNotNull(acc.login("admin", "admin"));
+//	}
 	
 	/**
 	 * Testing of Create MD5 Method, where the MD5 should match

@@ -28,7 +28,7 @@ public class ManagementClientTest {
 	
 	@Before
 	public void setUp(){
-		mc = new ManagementClient("BillingServer", "AnalyticServer");
+		mc = new ManagementClient( "AnalyticServer","BillingServer");
 	}
 	
 	/**

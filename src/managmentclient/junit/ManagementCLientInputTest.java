@@ -18,7 +18,7 @@ private ManagementClient mc;
 	
 	@Before
 	public void setUp(){
-		mc = new ManagementClient("BillingServer", "AnalyticServer");
+		mc = new ManagementClient("AnalyticServer", "BillingServer");
 	}
 	/**
 	 * Testing of no input to Console should equals false

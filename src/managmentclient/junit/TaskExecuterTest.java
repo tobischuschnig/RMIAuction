@@ -14,7 +14,7 @@ public class TaskExecuterTest {
 	
 	@Before
 	public void setUp() {
-		te = new TaskExecuter(new ManagementClient("BillingServer", "AnalyticServer"), "BillingServer", "AnalyticServer");
+		te = new TaskExecuter(new ManagementClient("AnalyticServer", "BillingServer"),  "BillingServer","AnalyticServer");
 	}
 
 	/**
