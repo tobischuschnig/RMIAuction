@@ -30,36 +30,34 @@ public class TaskExecuter {
     private BillingServerSecureInterface secure;
     private ManagementClientInterface managementClientInterface;
     private CLI cli;
-    // not in use yet
+    // ---
     private ManagementClient c;
+    private String analyticsServer;
+    private String billingServer;
+    private Properties p;
+    private String host;
+    private int port;
+    // ---
+    private boolean analyticsCall = false;
 
-    public TaskExecuter(ManagementClient c, String analyticsServer,String billingServer) {
+    public TaskExecuter(ManagementClient c, String analyticsServer, String billingServer) {
+        this.analyticsServer = analyticsServer;
+        this.billingServer = billingServer;
+
         this.c = c;
         cli = new CLI();
         secure = null;
-        String host = null;
-        int port = 0;
 
         try {
-            Properties p = new Properties("registry.properties");
+            p = new Properties("registry.properties");
             host = p.getProperty("registry.host");
             port = Integer.parseInt(p.getProperty("registry.port"));
         } catch (Exception ex) {
             cli.outln("Properties file not found!");
-        }
-        try {
-            managementClientInterface = (ManagementClientInterface) UnicastRemoteObject.exportObject(c, 0);
-            obja = (AnalyticServerInterface) Naming.lookup("rmi://" + host + ":" + port + "/" + analyticsServer);
-        } catch (Exception ex) {
-            cli.outln("Client exit: Cannot connect to AnalyticsServer: " + analyticsServer);
             end();
         }
-        try {
-            objb = (BillingServerInterface) Naming.lookup("rmi://" + host + ":" + port + "/" + billingServer);
-        } catch (Exception ex) {
-            cli.outln("Client exit: Cannot connect to BillingServer: " + billingServer);
-            end();
-        }
+
+
     }
 
     public void end() {
@@ -86,6 +84,12 @@ public class TaskExecuter {
      * @param password 
      */
     public boolean login(String username, String password) {
+        try {
+            objb = (BillingServerInterface) Naming.lookup("rmi://" + host + ":" + port + "/" + billingServer);
+        } catch (Exception ex) {
+            cli.outln("Client exit: Cannot connect to BillingServer: " + billingServer);
+            end();
+        }
         boolean ret = false;
         try {
             secure = (BillingServerSecureInterface) objb.login(username, password);
@@ -167,12 +171,12 @@ public class TaskExecuter {
             } else {
                 // cli.outln(b.toString());
                 for (Bill b : al) {
-                	cli.outln(b.toString());
+                    cli.outln(b.toString());
                 }
 
             }
         } catch (RemoteException ex) {
-        	ex.printStackTrace();
+            ex.printStackTrace();
         }
     }
 
@@ -181,9 +185,20 @@ public class TaskExecuter {
      * @param filter 
      */
     public void subscribe(String filter) {
+
+        if (!analyticsCall) {
+            try {
+                managementClientInterface = (ManagementClientInterface) UnicastRemoteObject.exportObject(c, 0);
+                obja = (AnalyticServerInterface) Naming.lookup("rmi://" + host + ":" + port + "/" + analyticsServer);
+            } catch (Exception ex) {
+                cli.outln("Client exit: Cannot connect to AnalyticsServer: " + analyticsServer);
+                end();
+            }
+            analyticsCall=true;
+        }
+
         try {
             filter = filter.replace("'", "");
-            //TODO ausgabe aendern?
             cli.outln("Lookup completed ");
             cli.outln("Event ID: " + obja.suscribe(filter, managementClientInterface));
             cli.outln("Registered for Event callback.");
