@@ -57,7 +57,7 @@ public class Server {
 		try {
             obja = (AnalyticServerInterface) Naming.lookup("rmi://"+host+":"+port+"/AnalyticServer");
         } catch (Exception ex) {
-            System.err.println("Client exit: Cannot connect to AnalyticsServer: AnalyticServer");
+            System.err.println("Server exit: Cannot connect to AnalyticsServer: AnalyticServer");
             System.exit(0);
         }
 		billint = null;
