@@ -17,6 +17,12 @@ import managmentclient.ManagementClientInterface;
 import model.*;
 import Exceptions.InvalidFilterException;
 
+/**
+ * Receives events from the system and computes simple statistics/analytics.
+ * The calculation are made in Subclasses
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
+ * @version 2013-02-25
+ */ 
 public class AnalyticServer implements AnalyticServerInterface{
 	
 	private ConcurrentHashMap<Integer,AuctionEvent> auctionEventsStarted;
@@ -41,6 +47,10 @@ public class AnalyticServer implements AnalyticServerInterface{
 	
 	private EventHandler eventHandler;
 	
+	
+	/**
+	 * Konstruktor initialisises all necessary Objects
+	 */
 	public AnalyticServer() {
 		pattern= new ArrayList();
 		pattern.add(EventType.USER_SESSIONTIME_MIN.toString());
@@ -86,23 +96,28 @@ public class AnalyticServer implements AnalyticServerInterface{
 		StatisticsEvent wert6 = new StatisticsEvent(UUID.randomUUID().toString(), EventType.AUCTION_TIME_AVG, System.currentTimeMillis(), 0);
 		StatisticsEvent wert7 = new StatisticsEvent(UUID.randomUUID().toString(), EventType.ACUTION_SUCCESS_RATIO, System.currentTimeMillis(), 0);
 
-		statisticsEvents.put(EventType.USER_SESSIONTIME_MIN,wert1); //fertig		 //funkt
-		statisticsEvents.put(EventType.USER_SESSIONTIME_MAX,wert2); //fertig	     //funkt
-		statisticsEvents.put(EventType.USER_SESSIONTIME_AVG,wert3); //fertig	     //funkt
-		statisticsEvents.put(EventType.BID_PRICE_MAX,wert4); // fertig               //funkt
-		statisticsEvents.put(EventType.BID_COUNT_PER_MINUTE,wert5); //fertig         //funkt
-		statisticsEvents.put(EventType.AUCTION_TIME_AVG,wert6); // fertig            //funkt
-		statisticsEvents.put(EventType.ACUTION_SUCCESS_RATIO,wert7); // fertig		 //funkt
+		statisticsEvents.put(EventType.USER_SESSIONTIME_MIN,wert1); //finished		 //works
+		statisticsEvents.put(EventType.USER_SESSIONTIME_MAX,wert2); //finished	     //works
+		statisticsEvents.put(EventType.USER_SESSIONTIME_AVG,wert3); //finished	     //works
+		statisticsEvents.put(EventType.BID_PRICE_MAX,wert4); // finished             //works
+		statisticsEvents.put(EventType.BID_COUNT_PER_MINUTE,wert5); //finished       //works
+		statisticsEvents.put(EventType.AUCTION_TIME_AVG,wert6); // finished          //works
+		statisticsEvents.put(EventType.ACUTION_SUCCESS_RATIO,wert7); // finished	 //works
 
 	}
 	
 	//The method returns a unique subscription identifier string. (ANGABE)
-	
-	//TODO Braucht Objekt reference (TESTEN
-	
-	//Regex pruefung hier mit exception
-	
-	//eigene Exception wird geworfen wenn Pattern nicht stimmt
+	//TODO Needs a callback interface(TEST)
+	//checks the regex here
+	/**
+	 * Sucribes with a regular expression for events
+	 * @param filter The regular Expression
+	 * @param managementClientInterface The Interface for the callback
+	 * @return rturns the String of the suscribtion
+	 * @throws RemoteException throws a Remote exception
+	 * @throws PatternSyntaxException When the Pattern is invalid this is thrown
+	 * @throws InvalidFilterException When the Pattern is invalid this is thrown 
+	 */
 	@Override
 	public String suscribe(String filter, ManagementClientInterface managementClient) throws PatternSyntaxException, InvalidFilterException {
 		if(managementClient == null) System.out.println("Fuck you!");
@@ -113,7 +128,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 		int wert =0;
 		for (int i = 0; i < pattern.size();i++) {
 			if(Pattern.matches(filter,pattern.get(i))) wert++;
-			System.out.println(Pattern.matches(filter,pattern.get(i)));
+//			System.out.println(Pattern.matches(filter,pattern.get(i)));
 		}
 		if (wert==0) {
 			throw new InvalidFilterException();
@@ -128,20 +143,29 @@ public class AnalyticServer implements AnalyticServerInterface{
 		}
 		return uuid.toString();
 	}
-
+	/**
+	 *  Receives events from the system and computes simple statistics/analytics.
+	 *  processes the events to Taskexecuter
+	 * @param event the processed event
+	 * @throws RemoteException throws a Remote exception
+	 */
 	@Override
 	public void processEvent(Event event) {
 		notify(null,event);
 		notify(eventHandler.execute(event),null);
 	} 
 
-	
-	//bekomme nur meine uuid und schaue diese in der Map nach und loesche diese dann
+	/**
+	 *  Receives events from the system and computes simple statistics/analytics.
+	 *  processes the events to Taskexecuter
+	 * @param event the processed event
+	 * @throws RemoteException throws a Remote exception
+	 */
 	@Override
 	public void unsuscribe(String uid) {
 		Set<String> wert = managementClients.keySet();
 		Iterator<String> it = wert.iterator();
-		while(it.hasNext()) { //TODO was passiert wenn der Client schliesst EXCEPTION HANDLING
+		while(it.hasNext()) { //TODO Exception handling when the client quits without unsuscribe
 			try {
 				managementClients.get(it.next()).remove(uid);
 				System.out.println("removed:" +uid);
@@ -150,9 +174,13 @@ public class AnalyticServer implements AnalyticServerInterface{
 		
 	}
 	
-	//TODO An Management Client Schicken testen
+	/**
+	 * Unsuscribe from events
+	 * @param uid the id of the cliet who has suscribed
+	 * @throws RemoteException throws a Remote exception
+	 */
 	public void notify(ArrayList<StatisticsEvent> statisticEvent,Event event) {
-		if(statisticEvent != null) {
+		if(statisticEvent != null) { //TODO delete after testing
 			for(int i = 0; i < statisticEvent.size();i++) {
 				//System.out.println(statisticEvent.get(i).getType()+"             "+statisticEvent.get(i).getValue());
 				System.out.println(statisticEvent.get(i).toString());
@@ -161,8 +189,10 @@ public class AnalyticServer implements AnalyticServerInterface{
 //			System.out.println("null");
 		}
 		if(event != null)
-		System.out.println(event.toString());
-		if(event != null) {
+		System.out.println(event.toString()); //TODO delete after testing
+		
+		
+		if(event != null) { //notify of normal massages 
 			Set<String> wert = managementClients.keySet();
 			Iterator<String> it = wert.iterator();
 			while(it.hasNext()) {
@@ -177,19 +207,19 @@ public class AnalyticServer implements AnalyticServerInterface{
 						} catch (RemoteException e) {
 							System.err.println("Couldn't callback Client!");
 //							e.printStackTrace(); 
-							this.unsuscribe(hilf1.toString());
+							this.unsuscribe(hilf1.toString()); //TODO Exception Handling isnt working the Client is not unsuscribed
 						}
 					}
 				}
 			}
 		}
-		if(statisticEvent != null) {
+		if(statisticEvent != null) { //notify of statistic events
 			Set<String> wert = managementClients.keySet();
 			Iterator<String> it = wert.iterator();
 			while(it.hasNext()) {
 				String hilf = it.next();
 				for (int i = 0; i < statisticEvent.size();i++) {
-					if(Pattern.matches(hilf, statisticEvent.get(i).getType().toString())) { //Weil arrayList
+					if(Pattern.matches(hilf, statisticEvent.get(i).getType().toString())) { 
 						Set<UUID> wert1 = managementClients.get(hilf).keySet();
 						Iterator<UUID> it1 = wert1.iterator();
 						while(it1.hasNext()) {
@@ -199,7 +229,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 							} catch (RemoteException e) {
 								System.err.println("Couldn't callback Client!");
 //								e.printStackTrace();
-								this.unsuscribe(hilf1.toString());
+								this.unsuscribe(hilf1.toString()); //TODO Exception Handling isnt working the Client is not unsuscribed
 							}
 						}
 					}

@@ -5,7 +5,16 @@ import model.BidEvent;
 import model.EventType;
 import model.UserEvent;
 
+
+/**
+ * Receives events from the system and computes simple statistics/analytics.
+ * The calculation are made in Subclasses
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
+ * @version 2013-02-25
+ */
 public class AnalyticServerTest {
+	
+	
 	public static void wert(AnalyticServer a) {
 		
 		AuctionEvent a1 = new AuctionEvent("1", EventType.AUCTION_STARTED, 1000000,1);

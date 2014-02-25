@@ -7,19 +7,35 @@ import java.util.UUID;
 
 import model.*;
 
+/**
+ * Receives events from the system and computes simple statistics/analytics.
+ * In this class all User Events are calculated
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
+ * @version 2013-02-25
+ */
 public class CalculateUserEvents implements InterfaceCalculate {
 	private AnalyticServer a; // a...AnalyticServer (Variable is often used so its better when its a shortcut
-	
+	/**
+	 * Konstruktor
+	 * @param a The calling AnalyticServer
+	 */
 	public CalculateUserEvents (AnalyticServer a) {
 		this.a = a;
 	}
 	
+	/**
+	 * The Method calculate in this Method all calculation about statistics are done
+	 * All User Events are calculated here.
+	 * First their will be the Min and Max sessiontime calculated and after that the Average sessiontimme
+	 * @param event the Event which is new to do new calculations
+	 * @return an ArrayList of statistics events which have been created
+	 */
 	@Override
 	public ArrayList<StatisticsEvent> calculate(Event event) {
 		ArrayList<StatisticsEvent> ret = new ArrayList();
 		
 		/////////////////////////////////////////////////////////////////////////////////
-		// Min und Max
+		// Min and Max
 		long time = event.getTimestamp() - 
 				a.getUserEventsLogin()
 				.get(((UserEvent) event).getUserName()) 

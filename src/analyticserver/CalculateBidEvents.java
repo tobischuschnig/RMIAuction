@@ -7,18 +7,33 @@ import java.util.UUID;
 
 import model.*;
 
-
+/**
+ * Receives events from the system and computes simple statistics/analytics.
+ * In this class all Bid Events are calculated
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
+ * @version 2013-02-25
+ */
 public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 	private AnalyticServer a; // a...AnalyticServer (Variable is often used so its better when its a shortcut
 	private long startTime;
 	//private int cout;
 	
+	/**
+	 * Konstruktor
+	 * @param a The calling AnalyticServer
+	 */
 	public CalculateBidEvents (AnalyticServer a) {
 		this.a = a;
 		startTime = System.currentTimeMillis();
 		//cout = 0;
 	}
 	
+	/**
+	 * The Method calculate in this Method all calculation about statistics are done
+	 * In this class all Bid Events are calculated except the Bids per Minute these Statistic Events are calculated in calculateBidEventAverageTime
+	 * @param event the Event which is new to do new calculations
+	 * @return an ArrayList of statistics events which have been created
+	 */
 	@Override
 	public ArrayList<StatisticsEvent> calculate(Event event) {
 		if(((BidEvent) event).getPrice()  >= a.getStatisticsEvents().get(EventType.BID_PRICE_MAX).getValue()) {
@@ -33,12 +48,12 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 		return null;
 	}
 	
+	/**
+	 * A second Method for the calculation Part of Bids per minute
+	 * @return An ArrayList of statistic Events
+	 */
 	private ArrayList<StatisticsEvent> calculateBidEventAverageTime() {
-		// einfach nur schauen groesse jeder arraylist zu einer Variable hinzufuegen
-		// Differenz! in Minuten am besten
-		// Bids / Minuten = Bid Count per Minute 
-		//Ausnahme wenn minute null 
-		//Bid Time Average berechnen
+		
 		Set<Integer> wert = a.getBidEvents().keySet();
 		Iterator<Integer> it = wert.iterator();
 		int bids = 0;
@@ -50,8 +65,7 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 		double value = (double) (bids / ((double)(Math.round(System.currentTimeMillis()-startTime)/60000)));
 		//System.out.println(value);
 		
-		//TODO<MUST> hier stimmt was gewaltig nicht es startet mit 1.5
-		//TODO<MUST> liegt an der Sache mit dem Testing siehe run() methode Zeile 70 //dann sollte alles passen
+	
 		StatisticsEvent wert1 = new StatisticsEvent(UUID.randomUUID().toString(), EventType.BID_COUNT_PER_MINUTE, System.currentTimeMillis(),
 				value);
 
@@ -60,7 +74,10 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 		ret.add(wert1);
 		return ret;		
 	}
-
+	
+	/**
+	 * The run Method to calculate the Bids per Minute every minute
+	 */
 	@Override
 	public void run() {
 		try {
