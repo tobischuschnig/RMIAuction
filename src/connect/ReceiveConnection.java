@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import server.Server;
 import server.UserHandler;
 /**
- * WWaits for incoming TCP Connections.
+ * Waits for incoming TCP Connections.
  * If a Connection is established, the server forwards to Socket to
  * a Dispatcher Thread (UserHandler)
  * 
@@ -50,7 +50,7 @@ public class ReceiveConnection implements Runnable{
 //		System.out.println("Server is listening");
 		while(server.isActive()){
 			Socket client = null;
-			try {
+			try { 
 				client = ss.accept();
 				
 //				service.submit(new UserHandler(client, server));

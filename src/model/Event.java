@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Event implements Serializable{
+public abstract class Event implements Serializable{
 
 	private String ID;
 

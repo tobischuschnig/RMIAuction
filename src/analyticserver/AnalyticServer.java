@@ -171,11 +171,13 @@ public class AnalyticServer implements AnalyticServerInterface{
 					Set<UUID> wert1 = managementClients.get(hilf).keySet();
 					Iterator<UUID> it1 = wert1.iterator();
 					while(it1.hasNext()) {
+						UUID hilf1 = it1.next();
 						try {
-							managementClients.get(hilf).get(it1.next()).processEvent(event.toString());
+							managementClients.get(hilf).get(hilf1).processEvent(event.toString());
 						} catch (RemoteException e) {
 							System.err.println("Couldn't callback Client!");
-							e.printStackTrace(); 
+//							e.printStackTrace(); 
+							this.unsuscribe(hilf1.toString());
 						}
 					}
 				}
@@ -191,11 +193,13 @@ public class AnalyticServer implements AnalyticServerInterface{
 						Set<UUID> wert1 = managementClients.get(hilf).keySet();
 						Iterator<UUID> it1 = wert1.iterator();
 						while(it1.hasNext()) {
+							UUID hilf1 = it1.next();
 							try {
-								managementClients.get(hilf).get(it1.next()).processEvent(statisticEvent.toString());
+								managementClients.get(hilf).get(hilf1).processEvent(statisticEvent.toString());
 							} catch (RemoteException e) {
 								System.err.println("Couldn't callback Client!");
-								e.printStackTrace();
+//								e.printStackTrace();
+								this.unsuscribe(hilf1.toString());
 							}
 						}
 					}
