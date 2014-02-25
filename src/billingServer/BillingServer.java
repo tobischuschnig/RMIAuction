@@ -2,9 +2,6 @@ package billingServer;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
@@ -15,9 +12,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.security.MessageDigest;
 import java.util.Scanner;
 
-import exceptions.UserInputException;
-
 import model.Properties;
+import exceptions.UserInputException;
 
 /**
  * This is the class for the user login.
@@ -137,8 +133,8 @@ public class BillingServer implements BillingServerInterface,Serializable {
             		break;
             	}
             }
-            r.unbind(args[0]+"Secure");
-            r.unbind(args[0]);
+            r.unbind("BillingServerSecure");
+            r.unbind("BillingServer");
             secure.save();
             System.exit(1);
 		} 
