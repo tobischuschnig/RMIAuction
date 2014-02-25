@@ -1,12 +1,10 @@
 package billingServer.junit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
-import java.rmi.ConnectException;
 import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import model.Properties;
@@ -14,11 +12,9 @@ import model.Properties;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.*;
 import Exceptions.UserInputException;
 import billingServer.BillingServer;
 import billingServer.BillingServerInterface;
-import billingServer.BillingServerSecureInterface;
 
 /**
  * Testclass for BillingServer
