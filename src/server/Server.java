@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import billingServer.BillingServerInterface;
+import billingServer.BillingServerSecureInterface;
 
 import analyticserver.AnalyticServerInterface;
 
@@ -36,7 +37,8 @@ public class Server {
 	
 	
     private AnalyticServerInterface obja;
-
+    private BillingServerInterface billint;
+    private BillingServerSecureInterface secure;
 	
 	/**
 	 * The standard konstructor where are all attributes are set up and the attributes are
@@ -58,7 +60,19 @@ public class Server {
             System.err.println("Client exit: Cannot connect to AnalyticsServer: AnalyticServer");
             System.exit(0);
         }
-
+		billint = null;
+		try {     
+			billint = (BillingServerInterface)Naming.lookup("rmi://"+host+":"+port+"/BillingServer");
+		} 
+		catch (Exception e) {
+			//e.printStackTrace();
+		}
+		secure=null;
+		try {
+			secure=((BillingServerSecureInterface)billint.login("admin", "admin"));
+		}catch (Exception e) {
+			System.out.println("Cant login to billingserver");
+		}
 		
 		Thread athread = new Thread();
 		athread.setPriority(Thread.MIN_PRIORITY);
@@ -199,4 +213,9 @@ public class Server {
 	public void setActive(boolean active){
 		this.active=active;
 	}
+
+	public BillingServerSecureInterface getSecure() {
+		return secure;
+	}
+
 }
