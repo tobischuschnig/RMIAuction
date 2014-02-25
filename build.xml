@@ -9,13 +9,13 @@
     <!-- You need to update these properties!-->
     <property name="server.name" value="server.ServerStart"/><!-- Server's full class name (including the package) -->
     <property name="server.host" value="127.0.0.1"/><!-- Server's host -->
-    <property name="client.name" value="Client.MainClient"/><!-- Client's full class name (including the package) -->
+    <property name="client.name" value="client.MainClient"/><!-- Client's full class name (including the package) -->
     <property name="server.port" value="12345"/><!-- Server's TCP port -->
 
     <property name="billingserver.name" value="billingServer.BillingServer"/>
     <property name="analyticsserver.name" value="analyticserver.AnalyticServerMain"/>
 
-    <property name="analytics.bindingName" value="AnalyticsServer"/><!-- RMI Binding Name of the Analytics Server -->
+    <property name="analytics.bindingName" value="AnalyticServer"/><!-- RMI Binding Name of the Analytics Server -->
     <property name="billing.bindingName" value="BillingServer"/><!-- RMI Binding Name of the Billing Server -->
 
     <property name="client1.port" value="20001"/><!-- 1st Client's UDP port -->
