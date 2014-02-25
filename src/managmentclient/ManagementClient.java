@@ -248,7 +248,6 @@ public class ManagementClient implements ManagementClientInterface, Serializable
         // direct output      
         if (autoprint == true) {
             // TODO optimize output format
-            cli.outln("");
             cli.outln("Event: " + event);
             // message-save mode
         } else {
