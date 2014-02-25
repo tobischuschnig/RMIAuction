@@ -47,13 +47,13 @@
 
     <target name="run-analytics-server" depends="compile" description="Run analytics-server.">
         <java classname="${analyticsserver.name}" fork="true" classpathref="project.classpath">
-            
+            <arg value="${analytics.bindingName}"/>
         </java>
     </target>
 
     <target name="run-billing-server" depends="compile" description="Run billing-server.">
         <java classname="${billingserver.name}" fork="true" classpathref="project.classpath">
-            
+            <arg value="${billing.bindingName}"/>
         </java>
     </target>
 
