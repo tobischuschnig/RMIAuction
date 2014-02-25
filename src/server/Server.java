@@ -104,7 +104,10 @@ public class Server {
 //		udp.notify(users,message);
 		System.out.println(message); //TODO only for testing after that delete
 	}
-	
+	/**
+	 * Notifies the AnalyticServer about new Events
+	 * @param event the processed Event
+	 */
 	public void notifyAnalytic(Event event)  {
 		try {
 			obja.processEvent(event);

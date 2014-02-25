@@ -1,16 +1,17 @@
 package billingServer.junit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.rmi.RemoteException;
 import java.security.InvalidParameterException;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import model.Bill;
 import model.PriceSteps;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import Exceptions.InvalidInputException;
 import billingServer.BillingServerSecure;

@@ -4,13 +4,24 @@ import java.util.ArrayList;
 
 import model.*;
 
+/**
+ * In this class all received Events are Handeld. 
+ * This Class checks them and stores them in the correct way.
+ * After that their can be calculations done.
+ * The calculation are also called by this class.
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
+ * @version 2013-02-25
+ */
 public class EventHandler {
 	private AnalyticServer a; // a...AnalyticServer (Variable is often used so its better when its a shortcut
 	private CalculateAuctionEvents calculateAuctionEvents; 
 	private CalculateUserEvents calculateUserEvents;
 	private CalculateBidEvents calculateBidEvents;
 	
-	
+	/**
+	 * Konstruktor
+	 * @param a The calling AnalyticServer
+	 */
 	public EventHandler(AnalyticServer a) {
 		this.a = a;
 		calculateAuctionEvents = new CalculateAuctionEvents(a);
@@ -20,6 +31,12 @@ public class EventHandler {
 		calculateUserEvents = new CalculateUserEvents(a);
 	}
 	
+	/**
+	 * The execute Method checks which type the event is and then stores the event correctly
+	 * After that step it calls the necessary calculation method.
+	 * @param event
+	 * @return
+	 */
 	public ArrayList<StatisticsEvent> execute(Event event) {
 		if(event instanceof AuctionEvent) { //Auction started or ended
 			if (event.getType().equals(EventType.AUCTION_STARTED)) {
