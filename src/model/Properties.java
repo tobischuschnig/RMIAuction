@@ -1,6 +1,7 @@
 package model;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class Properties {
 	String file;
@@ -13,6 +14,7 @@ public class Properties {
 	 */
 	public String getProperty(String name) {
 		java.io.InputStream is = ClassLoader.getSystemResourceAsStream(this.file);
+	
 		if (is != null) {
 			java.util.Properties props = new java.util.Properties();
 			try {

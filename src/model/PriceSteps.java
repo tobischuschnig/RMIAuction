@@ -83,7 +83,7 @@ public class PriceSteps implements Serializable {
 		String endp="";
 		for (int x = 0; x < priceSteps.size(); x++) {
 			temp = priceSteps.get(x);
-			if(temp.getEndPrice()==99999999){
+			if(temp.getEndPrice()==Double.MAX_VALUE){
 				endp="infinity";
 			}else{
 				endp=temp.getEndPrice()+"";
@@ -167,14 +167,7 @@ public class PriceSteps implements Serializable {
 		}
 
 		if (!overlaped) {
-			if(endPrice==0){
-				priceSteps.add(new PriceStep(startPrice, endPrice, fixedPrice, variablePricePercent));
-
-			}else{
-				priceSteps.add(new PriceStep(startPrice, endPrice, fixedPrice, variablePricePercent));
-			}
-			// Collections.sort((List)priceSteps);
-			 
+			priceSteps.add(new PriceStep(startPrice, endPrice, fixedPrice, variablePricePercent));	 
 			return true;
 		} else {
 			System.out

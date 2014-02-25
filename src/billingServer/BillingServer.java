@@ -51,7 +51,7 @@ public class BillingServer implements BillingServerInterface,Serializable {
 		FileInputStream fis = null;
 		BufferedReader br = null;
 		boolean login = false;
-		Properties p=new Properties("user.properties");
+		Properties p=new Properties("./user.properties");
 		
 		String pw=p.getProperty(username);
 		if(pw.equals("")){
