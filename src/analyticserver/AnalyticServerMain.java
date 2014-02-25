@@ -19,6 +19,10 @@ public class AnalyticServerMain {
 	 * @param args isnt used
 	 */
 	public static void main(String args[]){
+		if (args.length != 1) {
+			System.err.println("Wrong Arguments!\nCorrect: AnalyticServer Name");
+			System.exit(0);
+		}
 		// Ein SecurityManager ist nur erforderlich, wenn der RMI-Class-Loader Code laden muss
 		//	    if (System.getSecurityManager() == null)
 		//	      System.setSecurityManager(new RMISecurityManager());
@@ -34,10 +38,11 @@ public class AnalyticServerMain {
 			//LocateRegistry.createRegistry(1099);
 			AnalyticServer analyticServer = new AnalyticServer();
 			AnalyticServerInterface analyticServerInterface = (AnalyticServerInterface)UnicastRemoteObject.exportObject(analyticServer, 0);
-			r.rebind("AnalyticServer", analyticServerInterface);
+			r.rebind(args[0], analyticServerInterface);
 			System.out.println("AnalyticServer bound");
 		} 
 		catch (Exception e) {
+			System.err.println("Wrong Arguments!\nCorrect: AnalyticServer Name");
 			//e.printStackTrace();
 		}
 	}

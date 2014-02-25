@@ -172,9 +172,13 @@ public class AnalyticServer implements AnalyticServerInterface{
 		Iterator<String> it = wert.iterator();
 		while(it.hasNext()) { //TODO Exception handling when the client quits without unsuscribe
 			try {
-				managementClients.get(it.next()).remove(uid);
+				String hilf = it.next();
+				managementClients.get(hilf).remove(uid);
 				System.out.println("removed:" +uid);
-			} catch(NullPointerException ex) {}
+				System.out.println(managementClients.get(hilf).size());
+			} catch(NullPointerException ex) {//System.out.println("Fehler bei unsubscribe!");}
+				
+			}
 		}
 		
 	}
