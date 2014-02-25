@@ -110,7 +110,7 @@ public class BillingServerSecure implements Serializable,
 				feeFixed = temp.getFixedPrice();
 			}
 		}
-		System.out.println(feeFixed);
+		System.out.println(user);
 		bills.add(new Bill(user, auctionID, price, feeFixed, feeVariable,
 				feeFixed + feeVariable));
 		return true;
