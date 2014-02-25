@@ -1,7 +1,11 @@
 package model;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.Writer;
 
 /**
@@ -21,6 +25,7 @@ public class Properties {
 		this.file=file;
 	}
 	public void addProperty(String name, String value){
+		//InputStream is=new InputStreamReader(getClass().getResource(this.file));
 		java.io.InputStream is = ClassLoader.getSystemResourceAsStream(this.file);
 		//OutputStream out=ClassLoader.getSystemResourceAsStream(this.file);
 		if (is != null) {
@@ -49,24 +54,18 @@ public class Properties {
 	 * @param name	value of the key
 	 */
 	public String getProperty(String name) {
-		java.io.InputStream is = ClassLoader.getSystemResourceAsStream(this.file);
-	
-		if (is != null) {
+		try {
+			Reader reader = new FileReader( this.file );
 			java.util.Properties props = new java.util.Properties();
 			try {
-				props.load(is);
+				props.load(reader);
 				return props.getProperty(name);
 			} catch (IOException e) {
 				System.out.println("cant read file "+file);
 				
-			} finally {
-				try {
-					is.close();
-				} catch (IOException e) {	
-				}
 			}
-		} else {
-			System.err.println("Properties file not found!");
+		} catch (FileNotFoundException e1) {
+			System.out.println("File not Found");
 		}
 		return "";
 	}

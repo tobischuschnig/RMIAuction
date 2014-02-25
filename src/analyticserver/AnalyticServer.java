@@ -122,7 +122,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	 */
 	@Override
 	public String suscribe(String filter, ManagementClientInterface managementClient) throws PatternSyntaxException, InvalidFilterException {
-		if(managementClient == null) System.out.println("Fuck you!");
+		if(managementClient == null) 
 		
 		filter = filter.toUpperCase();
 //		System.out.println(filter);
