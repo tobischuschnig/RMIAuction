@@ -4,6 +4,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+import model.Properties;
+
 
 
 public class AnalyticServerMain {
@@ -13,11 +15,13 @@ public class AnalyticServerMain {
 		// Ein SecurityManager ist nur erforderlich, wenn der RMI-Class-Loader Code laden muss
 		//	    if (System.getSecurityManager() == null)
 		//	      System.setSecurityManager(new RMISecurityManager());
+		Properties p=new Properties("registry.properties");
+		int port=Integer.parseInt(p.getProperty("registry.port"));
 		try {
 			try{
-				r=LocateRegistry.createRegistry(1099);
+				r=LocateRegistry.createRegistry(port);
 			}catch (Exception e) {
-				r=LocateRegistry.getRegistry(1099);
+				r=LocateRegistry.getRegistry(port);
 			}
 			
 			//LocateRegistry.createRegistry(1099);
