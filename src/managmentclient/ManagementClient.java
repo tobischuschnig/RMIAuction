@@ -151,9 +151,6 @@ public class ManagementClient implements ManagementClientInterface, Serializable
                         boolean b = false;
                         t.bill(werte[1]);
                         success=true;
-                        if (!b) {
-                            cli.outln("No Bill found");
-                        }
                 } else {
                     cli.outln("Please enter !bill like:\n!bill <userName>");
                 }
