@@ -9,9 +9,8 @@ import Client.TaskExecuter;
 /**
  * This Class represents a thread which creates x times per
  * minute a new Auction with incrementing their IDs.
- * @author Klune Alexander
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
  *@version 1.0
- *@email aklune@student.tgm.ac.at
  */
 public class CreateThread implements Runnable {
 	
@@ -27,7 +26,7 @@ public class CreateThread implements Runnable {
 	 */
 	public CreateThread(TestingClient testingClient){
 		this.testingClient = testingClient;
-		end = System.currentTimeMillis()*1000*60*2;//TODO Endet mit Math.random zwischen 7 und 10
+		end = System.currentTimeMillis()*1000*60*2;//TODO end with Math.random between 7 and 10
 	}
 	
 	/**
@@ -36,7 +35,7 @@ public class CreateThread implements Runnable {
 	 */
 	@Override
 	public void run() {
-		while(System.currentTimeMillis() <= end) {//TODO Fehler nicht einmal eine Schleife im Thread
+		while(System.currentTimeMillis() <= end) {//TODO Error not even a Loop in the Thread
 			//CreateMessage cm = new CreateMessage("admin", "Beschreibung"+String.valueOf(incrementer), testingClient.getAuctionDuration());
 			//TCPConnector tcp = testingClient.getTCPConnector();
 
@@ -47,7 +46,7 @@ public class CreateThread implements Runnable {
 			incrementer++;
 			try {
 				System.out.println(testingClient.getAuctionsPerMin()+""+((testingClient.getAuctionsPerMin()/60)*1000));
-				Thread.sleep(((60/testingClient.getAuctionsPerMin())*1000));//TODO Fehler falsche Formel 60/x richtig!!
+				Thread.sleep(((60/testingClient.getAuctionsPerMin())*1000));//TODO Error wrong formel  60/x correct!!
 			} catch (InterruptedException e) {
 				System.err.println("Error by pausing the Thread."); 
 			}

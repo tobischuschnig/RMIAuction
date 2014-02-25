@@ -12,9 +12,8 @@ import Client.TCPConnector;
 /**
  * This class represents a thread, which bids to a random auction x - times
  * per minute. The thread stops working after a specific time.
- * @author Klune Alexander
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
  * @version 1.0
- * @email aklune@student.tgm.ac.at
  */
 public class BidThread implements Runnable {
 
@@ -30,7 +29,7 @@ public class BidThread implements Runnable {
 	 */
 	public BidThread(TestingClient testingClient) {
 		this.testingClient = testingClient;
-		end = System.currentTimeMillis()*1000*60*2;//TODO Endet mit Math.random zwischen 7 und 10
+		end = System.currentTimeMillis()*1000*60*2;//TODO end with Math.random between 7 and 10
 		amount = 1000;
 	}
 	
@@ -40,7 +39,7 @@ public class BidThread implements Runnable {
 	 */
 	@Override
 	public void run() {
-		while(System.currentTimeMillis() <= end) {//TODO Fehler nicht einmal eine Schleife im Thread
+		while(System.currentTimeMillis() <= end) {//TODO Error not even a Loop in the Thread
 			int max = testingClient.getAuctionsIDs().size();
 			System.out.println(max+"asdfasdf");
 			if(max != 0) {
@@ -51,7 +50,7 @@ public class BidThread implements Runnable {
 				testingClient.getTaskExecuter().bid(bidid, amount);
 			}
 			try {
-				Thread.sleep(((60/testingClient.getAuctionsPerMin())*1000));//TODO Fehler falsche Formel 60/x richtig!!
+				Thread.sleep(((60/testingClient.getAuctionsPerMin())*1000));//TODO Error wrong formel  60/x correct!!
 			} catch (InterruptedException e) {
 				System.err.println("Fehler beim schlafen legen des ListThreads");
 			}

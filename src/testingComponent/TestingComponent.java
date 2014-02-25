@@ -15,7 +15,7 @@ import managmentclient.TaskExecuter;
 
 /**
  * Class TestingComponent to read the loadtest.properties-File and create the Clients with the Data from the File
- * @author Patrick Poelzlbauer
+ * @author Patrick Poelzlbauer <ppoelzlbauer@student.tgm.ac.at> ,Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
  * @version 10.02.2014 
  */
 public class TestingComponent {
@@ -55,7 +55,7 @@ public class TestingComponent {
 		//String dataset = System.getProperty("user.dir") + "/loadtest.properties"; 
 		String dataset = ("/Users/tobi/Workspace/RMIAuction/src/testingComponent/loadtest.properties"); 
 
-		//TODO vill nicht hardcoden
+		//TODO don't Hardcode this!!!!!
 		//String dataset = System.getProperty("/home/poezze/Dokumente/WorkspaceJava/RMI/loadtest.properties"); 
 		buff = new BufferedReader(new FileReader(dataset));
 		
@@ -105,7 +105,7 @@ public class TestingComponent {
 			auctionDuration = at[2];
 			updateIntervalSec = at[3];
 			bidsPerMin = at[4];
-			//Fuer einen Funktionsbeweis einfach auskommentieren
+			//Use the following line for the proove of the functionality
 			//System.out.println(clients + "\n" + auctionsPerMin + "\n" + auctionDuration + "\n" + updateIntervalSec + "\n" + bidsPerMin);
 		}catch (ArrayIndexOutOfBoundsException e){
 		}
@@ -124,29 +124,29 @@ public class TestingComponent {
 		
 		
 		
-		managementClient = new ManagementClient("BillingServer", "AnalyticServer"); //TODO Fehler ausgebessert: AnalyticsServer (!sic)
+		managementClient = new ManagementClient("BillingServer", "AnalyticServer"); //TODO Error changed, AnalyticsServer (!sic)
 		TaskExecuter t = managementClient.getT();
 		t.subscribe(".*");
 		
-		testingclients = new ConcurrentHashMap<Integer, TestingClient>(); //TODO Fehler hat gefaellt deshalb NullPointer
+		testingclients = new ConcurrentHashMap<Integer, TestingClient>(); //TODO Error the reason of the Nullpointer 
 		
 		int clientID;
 		TestingClient c;
 		try {
-			loadFile(); //TODO Fehler laut ueberprueften Werten falsch ...92, 1, 20, 2, 0 should be 100, 1 , 2*60 , 20 , 2
+			loadFile(); //TODO Error with the arguments  ...92, 1, 20, 2, 0 should be 100, 1 , 2*60 , 20 , 2
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		try{
 			String host=args[0];
 			int tcpPort=Integer.parseInt(args[1]);
-			int udpPort=Integer.parseInt(args[2]);	//Save arguments
+//			int udpPort=Integer.parseInt(args[2]);	//Save arguments
 
 			for(int i = 0; i < clients; i++){
 				clientID = i;
 				//System.out.println(clientID+"\n" +auctionsPerMin+"\n" + auctionDuration+"\n" + updateIntervalSec+"\n" + bidsPerMin);
 				c = new TestingClient(clientID,host,tcpPort, auctionsPerMin, auctionDuration, updateIntervalSec, bidsPerMin);
-				testingclients.put(clientID, c);	//TODO Fehler jetzt try catch unedig
+				testingclients.put(clientID, c);	//TODO Error now i dont need the try / catch anymore
 				if (i == 0 ) {
 					try {
 						Thread.sleep(1000);
