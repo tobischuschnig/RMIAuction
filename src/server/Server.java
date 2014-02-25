@@ -56,16 +56,33 @@ public class Server {
 		//udp = NotifierFactory.getUDPNotifer();
 		Properties p=new Properties("registry.properties");
 		String host=p.getProperty("registry.host");
-		int port=Integer.parseInt(p.getProperty("registry.port"));		
+		int port=Integer.parseInt(p.getProperty("registry.port"));	
+		String ana="";
+		try{
+			ana=p.getProperty("analytics.bindingName");
+			
+		}catch(Exception e){
+			ana="AnalyticServer";
+		}
+		System.out.println(ana);
+		String bil="";
+		try{
+			bil=p.getProperty("billing.bindingName");
+			System.out.println(bil);
+		}catch(Exception e){
+			bil="BillingServer";
+		}
+		
+		//System.out.println(p.getProperty("analytics.bindingName"));
 		try {
-            obja = (AnalyticServerInterface) Naming.lookup("rmi://"+host+":"+port+"/AnalyticServer");
+            obja = (AnalyticServerInterface) Naming.lookup("rmi://"+host+":"+port+"/"+ana);
         } catch (Exception ex) {
             System.err.println("Server exit: Cannot connect to AnalyticsServer");
             System.exit(0);
         }
 		billint = null;
 		try {     
-			billint = (BillingServerInterface)Naming.lookup("rmi://"+host+":"+port+"/BillingServer");
+			billint = (BillingServerInterface)Naming.lookup("rmi://"+host+":"+port+"/"+bil);
 		} 
 		catch (Exception e) {
 			System.err.println("Server exit: Cannot connect to BillingServer");

@@ -53,6 +53,7 @@ public class BillingServer implements BillingServerInterface,Serializable {
 		Properties p=new Properties("user.properties");
 		
 		String pw=p.getProperty(username);
+		
 		if(pw.equals("")){
 			System.err.println("Username not found in user.properties");
 		}else{
@@ -119,6 +120,7 @@ public class BillingServer implements BillingServerInterface,Serializable {
 			}catch (Exception e) {
 				r=LocateRegistry.getRegistry(port);
 			}
+			p.addProperty("billing.bindingName", args[0]);
 			//LocateRegistry.createRegistry(1099);
 			acc = new BillingServer();
 			secure=new BillingServerSecure();
