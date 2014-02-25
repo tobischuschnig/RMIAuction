@@ -28,7 +28,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	model.test.AllModel.class,
 	managmentclient.junit.ManagementCLientInputTest.class,
 	managmentclient.junit.TaskExecuterTest.class,
-	managmentclient.junit.ManagementClientTest.class})
+	managmentclient.junit.ManagementClientTest.class,
+	testingComponent.junit.TestingComponentTest.class})
 
 public class AllTest {
 	@BeforeClass 

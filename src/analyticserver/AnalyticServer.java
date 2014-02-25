@@ -225,7 +225,9 @@ public class AnalyticServer implements AnalyticServerInterface{
 						while(it1.hasNext()) {
 							UUID hilf1 = it1.next();
 							try {
-								managementClients.get(hilf).get(hilf1).processEvent(statisticEvent.toString());
+								for(int iii = 0; iii < statisticEvent.size();iii++) {
+									managementClients.get(hilf).get(hilf1).processEvent(statisticEvent.get(iii).toString());
+								}
 							} catch (RemoteException e) {
 								System.err.println("Couldn't callback Client!");
 //								e.printStackTrace();
