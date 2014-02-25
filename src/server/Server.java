@@ -90,11 +90,13 @@ public class Server {
 	public void notifyAnalytic(Event event)  {
 		try {
 			obja.processEvent(event);
+			System.out.println("Hallo from notifyanalytic");
 		} catch (RemoteException e) {
 			try {
 				obja.processEvent(event);
 			} catch (RemoteException e1) {
 				System.err.println("Lost the Connection to the Analytic Server please restart.");
+				e1.printStackTrace();
 				System.exit(0);
 			}
 		}
