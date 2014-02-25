@@ -9,7 +9,7 @@
     <!-- You need to update these properties!-->
     <property name="server.name" value="server.ServerStart"/><!-- Server's full class name (including the package) -->
     <property name="server.host" value="127.0.0.1"/><!-- Server's host -->
-    <property name="client.name" value="Client.MainClient"/><!-- Client's full class name (including the package) -->
+    <property name="client.name" value="client.MainClient"/><!-- Client's full class name (including the package) -->
     <property name="server.port" value="12345"/><!-- Server's TCP port -->
 
     <property name="billingserver.name" value="billingServer.BillingServer"/>
