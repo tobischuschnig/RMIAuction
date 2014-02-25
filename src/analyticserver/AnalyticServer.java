@@ -158,7 +158,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 				System.out.println(statisticEvent.get(i).toString());
 			}
 		} else {
-			System.out.println("null");
+//			System.out.println("null");
 		}
 		if(event != null)
 		System.out.println(event.toString());

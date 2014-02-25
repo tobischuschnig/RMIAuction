@@ -5,6 +5,9 @@ package server.test;
 
 import static org.junit.Assert.*;
 
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -18,6 +21,9 @@ import model.User;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import analyticserver.AnalyticServer;
+import analyticserver.AnalyticServerInterface;
 
 import server.Server;
 
@@ -33,6 +39,24 @@ public class ServerTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		Registry r;
+		try {
+			try{
+				r=LocateRegistry.createRegistry(1099);
+			}catch (Exception e) {
+				r=LocateRegistry.getRegistry(1099);
+			}
+			
+			//LocateRegistry.createRegistry(1099);
+			AnalyticServer analyticServer = new AnalyticServer();
+			AnalyticServerInterface analyticServerInterface = (AnalyticServerInterface)UnicastRemoteObject.exportObject(analyticServer, 0);
+			r.rebind("AnalyticServer", analyticServerInterface);
+			System.out.println("AnalyticServer bound");
+		} 
+		catch (Exception e) {
+			//e.printStackTrace();
+		}
+	
 		server = new Server();
 	}
 

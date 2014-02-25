@@ -1,6 +1,8 @@
 package model;
 
-public class Event {
+import java.io.Serializable;
+
+public class Event implements Serializable{
 
 	private String ID;
 
