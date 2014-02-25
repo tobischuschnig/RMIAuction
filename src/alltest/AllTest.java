@@ -17,11 +17,10 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ 
 	
-	server.test.AuctionHandlerTest.class,
-	server.test.ServerTest.class,
+//	server.test.AuctionHandlerTest.class,
+//	server.test.ServerTest.class,
 	analyticserver.junit.AnalyticsServerTest.class,
 	analyticserver.junit.EventHandlerTest.class,
-	analyticserver.junit.AllAnalyticsServer.class,
 	billingServer.junit.BillingServerTest.class,
 	billingServer.junit.BillingServerSecureTest.class,
 	model.test.AuctionTest.class,
