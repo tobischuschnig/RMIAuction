@@ -107,7 +107,7 @@ public class Server {
 			users.add(al.get(it.next()));
 		}
 //		udp.notify(users,message);
-		System.out.println(message); //TODO only for testing after that delete
+//		System.out.println(message); //TODO only for testing after that delete
 	}
 	/**
 	 * Notifies the AnalyticServer about new Events
@@ -116,7 +116,7 @@ public class Server {
 	public void notifyAnalytic(Event event)  {
 		try {
 			obja.processEvent(event);
-			System.out.println("Hallo from notifyanalytic");
+//			System.out.println("Hallo from notifyanalytic");
 		} catch (RemoteException e) {
 			try {
 				obja.processEvent(event);

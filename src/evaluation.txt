@@ -1,0 +1,18 @@
+Operating System: Mac OsX Version 10.8.5
+CPU: 2.3 GHz Intel QuadCore i7 
+RAM: 8 GB 1600 MHz DDR3
+PID	 Prozesname	Benutzer	%CPU	Threads	Physika. Speicher  Speicher
+3626	 java		tobi		101,9	126	4890,1 MB	   Intel (64-Bit)
+
+CPU%:
+	Benutzer 92,16
+	System 	 7,84
+
+clients = 1000
+auctionsPerMin = 10
+auctionDuration = 2000
+updateIntervalSec: 20
+bidsPerMin = 2000
+
+After about  7 minutes the system crashes.
+		

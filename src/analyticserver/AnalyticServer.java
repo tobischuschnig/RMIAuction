@@ -175,8 +175,8 @@ public class AnalyticServer implements AnalyticServerInterface{
 			try {
 				String hilf = it.next();
 				managementClients.get(hilf).remove(uid);
-				System.out.println("removed:" +uid);
-				System.out.println(managementClients.get(hilf).size());
+//				System.out.println("removed:" +uid);
+//				System.out.println(managementClients.get(hilf).size());
 			} catch(NullPointerException ex) {//System.out.println("Fehler bei unsubscribe!");}
 				
 			}
@@ -193,13 +193,13 @@ public class AnalyticServer implements AnalyticServerInterface{
 		if(statisticEvent != null) { //TODO delete after testing
 			for(int i = 0; i < statisticEvent.size();i++) {
 				//System.out.println(statisticEvent.get(i).getType()+"             "+statisticEvent.get(i).getValue());
-				System.out.println(statisticEvent.get(i).toString());
+//				System.out.println(statisticEvent.get(i).toString());
 			}
 		} else {
 //			System.out.println("null");
 		}
 		if(event != null)
-		System.out.println(event.toString()); //TODO delete after testing
+//		System.out.println(event.toString()); //TODO delete after testing
 		
 		
 		if(event != null) { //notify of normal massages 
