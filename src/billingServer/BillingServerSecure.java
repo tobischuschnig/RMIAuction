@@ -5,16 +5,15 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import exceptions.*;
-
+import model.Bill;
 import model.DataManager;
 import model.PriceStep;
 import model.PriceSteps;
-import model.Bill;
+import exceptions.InvalidInputException;
+import exceptions.InvalidParameterException;
+import exceptions.OverlappedPricestepException;
 
 /**
  * This class provides methodes to delete, create and get the current
