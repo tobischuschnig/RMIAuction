@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -109,5 +110,24 @@ public class DataManager implements Serializable{
 			return new CopyOnWriteArrayList<Bill>();
 		} 
 		
+	}
+
+	public ConcurrentHashMap<Integer, Auction> loadAuctions(String filePath) {
+		try 
+		{ 
+			FileInputStream fileIn = new FileInputStream(filePath); 
+			ObjectInputStream in = new ObjectInputStream(fileIn); 
+			ConcurrentHashMap<Integer, Auction> l=(ConcurrentHashMap<Integer, Auction>) in.readObject();
+			if(l==null){
+				return new ConcurrentHashMap<Integer, Auction>();
+			}
+			else{
+				return l; 
+			}
+		} 
+		catch(Exception ex) 
+		{ 
+			return new ConcurrentHashMap<Integer, Auction>();
+		} 
 	} 
 }
