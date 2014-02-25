@@ -7,10 +7,17 @@ import java.rmi.server.UnicastRemoteObject;
 import model.Properties;
 
 
-
+/**
+ * Main to start the AnalyticServer 
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
+ * @version 2013-02-25
+ */
 public class AnalyticServerMain {
 	private static Registry r;
-
+	/**
+	 * Main Mathod starts the Analytic server with the correct properties
+	 * @param args isnt used
+	 */
 	public static void main(String args[]){
 		// Ein SecurityManager ist nur erforderlich, wenn der RMI-Class-Loader Code laden muss
 		//	    if (System.getSecurityManager() == null)
