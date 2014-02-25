@@ -10,14 +10,17 @@ import Exceptions.UserInputException;
 
 import model.Bill;
 import model.PriceStep;
+import model.Properties;
 
 public class TestServer {
 	public static void main (String [] args){
-
+		Properties p=new Properties("registry.properties");
+		String host=p.getProperty("registry.host");
+		int port=Integer.parseInt(p.getProperty("registry.port"));
 		//BillingServer Objekt wird erstellt, und durch Naming Lookup abgerufen
 		BillingServerInterface acc = null;
-		try {      
-			acc = (BillingServerInterface)Naming.lookup("BillingServer");
+		try {     
+			acc = (BillingServerInterface)Naming.lookup("rmi://"+host+":"+port+"/BillingServer");
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
