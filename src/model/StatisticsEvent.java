@@ -4,12 +4,16 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Provides Methods to create and printing out StatisticsEvents
+ * @author Alexander Rieppel <arieppel@student.tgm.ac.at>
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
+ */
 public class StatisticsEvent extends Event {
 	private double value;
 
 	public StatisticsEvent(String iD, EventType type, long timestamp) {
 		super(iD, type, timestamp);
-		// TODO Auto-generated constructor stub
 	}
 	
 	
@@ -35,6 +39,10 @@ public class StatisticsEvent extends Event {
 		this.value = value;
 	}
 	
+	/**
+	 * Returns the Specific Event in a well formatted way
+	 * @return the formatted String
+	 */
 	@Override
 	public String toString() {
 		String hilf = "";

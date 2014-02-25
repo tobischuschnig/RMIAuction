@@ -18,6 +18,9 @@ public class LoginMessage implements Message{
 		this.tcpPort=tcpPort;
 		//this.udpPort=udpPort;
 	}
+	/**
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		return name;//null wurde vorher zurueckgeben -huang

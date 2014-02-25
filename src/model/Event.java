@@ -2,6 +2,11 @@ package model;
 
 import java.io.Serializable;
 
+/**
+ * Provides the basic Event which the specific Events can extend from
+ * @author Alexander Rieppel <arieppel@student.tgm.ac.at>
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
+ */
 public abstract class Event implements Serializable{
 
 	private String ID;

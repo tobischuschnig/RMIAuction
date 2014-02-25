@@ -17,6 +17,9 @@ public class BidMessage implements Message{
 		this.id=id;
 		this.amount=amount;
 	}
+	/**
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		return name;//war vorher null -huang

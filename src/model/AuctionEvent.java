@@ -5,6 +5,11 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Class wich contains the Constructor and all getters and setters for the specific EventType for Autions
+ * @author Alexander Rieppel <arieppel@student.tgm.ac.at>
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
+ */
 public class AuctionEvent extends Event  {
 
 	private int auctionID;
@@ -33,7 +38,10 @@ public class AuctionEvent extends Event  {
 	public void setAuctionID(int auctionID) {
 		this.auctionID = auctionID;
 	}
-
+	/**
+	 * Returns the specific type of a AuctionEvent in a well formatted way 
+	 * @return the formatted String
+	 */
 	@Override
 	public String toString() {
 		String hilf = "";

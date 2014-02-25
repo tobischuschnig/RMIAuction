@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Provides all types of Events which can occur as EnumTypes
+ * @author Alexander Rieppel <arieppel@student.tgm.ac.at>
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
+ */
 public enum EventType {
 
 	USER_SESSIONTIME_MIN,

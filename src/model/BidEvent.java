@@ -5,6 +5,11 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Class wich contains the Constructor and all getters and setters for the specific EventType for Bids
+ * @author Alexander Rieppel <arieppel@student.tgm.ac.at>
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
+ */
 public class BidEvent extends Event {
 
 	private String userName;
@@ -17,7 +22,6 @@ public class BidEvent extends Event {
 	
 	public BidEvent(String iD, EventType type, long timestamp) {
 		super(iD, type, timestamp);
-		// TODO Auto-generated constructor stub
 	}
 
 	
@@ -73,7 +77,10 @@ public class BidEvent extends Event {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-
+	/**
+	 * Returns the specific type of a Bid Event in a well formatted way 
+	 * @return the formatted String
+	 */
 	@Override
 	public String toString() {
 		String hilf = "";
