@@ -221,7 +221,7 @@ public class AnalyticsServerTest {
 	 */
 	@Test
 	public void testGetManagementClients(){
-		ConcurrentHashMap<String, ConcurrentHashMap<UUID, ManagementClientInterface>> a = null;
+		ConcurrentHashMap<String, ConcurrentHashMap<String, ManagementClientInterface>> a = null;
 		as.setManagementClients(a);
 		assertEquals(as.getManagementClients(),a);
 	}
