@@ -34,7 +34,7 @@ public class AnalyticServerMain {
 			}catch (Exception e) {
 				r=LocateRegistry.getRegistry(port);
 			}
-			System.out.println(args[0]);
+			p.addProperty("analytics.bindingName", args[0]);
 			//LocateRegistry.createRegistry(1099);
 			AnalyticServer analyticServer = new AnalyticServer();
 			AnalyticServerInterface analyticServerInterface = (AnalyticServerInterface)UnicastRemoteObject.exportObject(analyticServer, 0);
