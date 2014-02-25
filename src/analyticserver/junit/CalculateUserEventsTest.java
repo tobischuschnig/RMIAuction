@@ -1,7 +1,6 @@
 package analyticserver.junit;
 
 import static org.junit.Assert.assertEquals;
-import model.BidEvent;
 import model.EventType;
 import model.UserEvent;
 
@@ -9,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import analyticserver.AnalyticServer;
-import analyticserver.CalculateBidEvents;
 import analyticserver.CalculateUserEvents;
 
 public class CalculateUserEventsTest {

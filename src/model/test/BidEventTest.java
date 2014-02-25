@@ -1,13 +1,11 @@
 package model.test;
 
 import static org.junit.Assert.assertEquals;
+import model.BidEvent;
+import model.EventType;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import model.AuctionEvent;
-import model.BidEvent;
-import model.EventType;
 
 
 /**

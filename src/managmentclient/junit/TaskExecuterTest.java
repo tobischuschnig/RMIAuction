@@ -1,10 +1,7 @@
 package managmentclient.junit;
 
-import static org.junit.Assert.assertEquals;
 import managmentclient.ManagementClient;
 import managmentclient.TaskExecuter;
-import model.AuctionEvent;
-import model.EventType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +11,7 @@ public class TaskExecuterTest {
 	
 	@Before
 	public void setUp() {
-		te = new TaskExecuter(new ManagementClient("AnalyticServer", "BillingServer"),  "BillingServer","AnalyticServer");
+		te = new TaskExecuter(new ManagementClient("AnalyticServer", "BillingServer"),  "AnalyticServer","BillingServer");
 	}
 
 	/**

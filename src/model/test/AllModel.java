@@ -1,13 +1,8 @@
 package model.test;
 
-import managmentclient.junit.ManagementClientTest;
-import model.AuctionEvent;
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-
-import analyticserver.EventHandler;
 
 
 /**
