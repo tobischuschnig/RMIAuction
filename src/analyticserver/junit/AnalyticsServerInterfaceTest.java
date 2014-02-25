@@ -4,10 +4,12 @@ import static org.junit.Assert.*;
 
 import java.rmi.RemoteException;
 
+import model.AuctionEvent;
 import model.Event;
 
 import org.junit.Before;
 import org.junit.Test;
+
 
 
 
@@ -54,7 +56,7 @@ public class AnalyticsServerInterfaceTest {
 	 */
 	@Test(expected=NullPointerException.class)
 	public void testProcessEvent() throws RemoteException {
-		asi.processEvent(new Event(null, null, 0));	
+		asi.processEvent(new AuctionEvent(null, null, 0));	
 		assertNull(asi);
 	}
 	/**

@@ -17,7 +17,6 @@ public class EventTest {
 
 	@Before
 	public void setUp() throws Exception {
-		e = new Event(null, null, 0);
 	}
 
 	/**

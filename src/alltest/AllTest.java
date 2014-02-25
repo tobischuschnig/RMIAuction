@@ -33,6 +33,7 @@ import org.junit.runners.Suite.SuiteClasses;
 public class AllTest {
 	@BeforeClass 
 	public static void setUpOnce() {
-		   ServerStart.startServer();
+		   StartAnalyt.startServer();
+		   StartBilling.startServer();
 		}
 } 
