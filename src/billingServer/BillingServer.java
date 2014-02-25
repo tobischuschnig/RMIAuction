@@ -137,8 +137,8 @@ public class BillingServer implements BillingServerInterface,Serializable {
             		break;
             	}
             }
-            r.unbind("BillingServerSecure");
-            r.unbind("BillingServer");
+            r.unbind(args[0]+"Secure");
+            r.unbind(args[0]);
             secure.save();
             System.exit(1);
 		} 

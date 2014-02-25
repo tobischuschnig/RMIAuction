@@ -60,7 +60,7 @@ public class Server {
 		try {
             obja = (AnalyticServerInterface) Naming.lookup("rmi://"+host+":"+port+"/AnalyticServer");
         } catch (Exception ex) {
-            System.err.println("Server exit: Cannot connect to AnalyticsServer: AnalyticServer");
+            System.err.println("Server exit: Cannot connect to AnalyticsServer");
             System.exit(0);
         }
 		billint = null;
@@ -68,7 +68,8 @@ public class Server {
 			billint = (BillingServerInterface)Naming.lookup("rmi://"+host+":"+port+"/BillingServer");
 		} 
 		catch (Exception e) {
-			//e.printStackTrace();
+			System.err.println("Server exit: Cannot connect to BillingServer");
+            System.exit(0);
 		}
 		secure=null;
 		try {
