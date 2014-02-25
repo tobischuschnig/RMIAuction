@@ -117,7 +117,7 @@ public class TestingComponent {
 	 */
 	public static void main(String [] args){
 		if(args.length!=3){
-			System.out.println("Wrong arguments\nServer-IP TCP-Port UDP-Port");
+			System.out.println("Wrong arguments\nServer-IP TCP-Port AnalyticServerName");
 			System.exit(0);		//If there are no 3 arguments, program exits immediately
 		}
 
