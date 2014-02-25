@@ -10,7 +10,7 @@
     <property name="server.name" value="server.ServerStart"/><!-- Server's full class name (including the package) -->
     <property name="server.host" value="127.0.0.1"/><!-- Server's host -->
     <property name="client.name" value="client.MainClient"/><!-- Client's full class name (including the package) -->
-    <property name="server.port" value="12345"/><!-- Server's TCP port -->
+    <property name="server.port" value="5001"/><!-- Server's TCP port -->
 
     <property name="billingserver.name" value="billingServer.BillingServer"/>
     <property name="analyticsserver.name" value="analyticserver.AnalyticServerMain"/>
