@@ -8,7 +8,7 @@ package client;
 public class MainClient {
 
 	public static void main(String[] args) {
-		if(args.length!=2){
+		if(args.length!=3){
 			System.out.println("Wrong arguments\nServer-IP TCP-Port");
 			System.exit(0);		//If there are no 3 arguments, program exits immediately
 		}
