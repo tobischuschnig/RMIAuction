@@ -107,6 +107,10 @@ public class BillingServer implements BillingServerInterface,Serializable {
 	}
 
 	public static void main(String args[]){
+		if(args.length != 1) {
+			System.err.println("Wrong Arguments!\nCorrect: BillingServerName");
+			System.exit(0);
+		}
 		// Ein SecurityManager ist nur erforderlich, wenn der RMI-Class-Loader Code laden muss
 		//	    if (System.getSecurityManager() == null)
 		//	      System.setSecurityManager(new RMISecurityManager());
@@ -121,9 +125,9 @@ public class BillingServer implements BillingServerInterface,Serializable {
 			//LocateRegistry.createRegistry(1099);
 			acc = new BillingServer();
 			secure=new BillingServerSecure();
-			r.rebind("BillingServerSecure", (BillingServerSecureInterface)UnicastRemoteObject.exportObject(secure, 0));
+			r.rebind(args[0]+"Secure", (BillingServerSecureInterface)UnicastRemoteObject.exportObject(secure, 0));
 			System.out.println("BillingServerSecure bound");
-			r.rebind("BillingServer", (BillingServerInterface)UnicastRemoteObject.exportObject(acc, 0));
+			r.rebind(args[0], (BillingServerInterface)UnicastRemoteObject.exportObject(acc, 0));
 			System.out.println("BillingServer bound");
 			Scanner in;
             in = new Scanner(System.in);
@@ -138,7 +142,8 @@ public class BillingServer implements BillingServerInterface,Serializable {
             System.exit(1);
 		} 
 		catch (Exception e) {
-			System.out.println("Err: " + e.getMessage());
+			System.err.println("Wrong Arguments!\nCorrect: BillingServerName");
+//			System.out.println("Err: " + e.getMessage());
 		}
 	}
 	
