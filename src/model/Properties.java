@@ -1,7 +1,6 @@
 package model;
 
 import java.io.IOException;
-import java.net.URL;
 
 /**
  * This Class gets a Path as parameter. this path directs to the specific 

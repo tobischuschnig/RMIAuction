@@ -1,13 +1,15 @@
 package server;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import model.*;
+import model.AuctionEvent;
+import model.BidEvent;
+import model.EventType;
+import model.User;
 
 /**
  * Checks if an Auction is over and notifies the Users about it.

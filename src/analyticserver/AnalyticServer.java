@@ -2,7 +2,6 @@ package analyticserver;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
@@ -10,13 +9,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import javax.swing.undo.StateEdit;
-
-import exceptions.InvalidFilterException;
-
-import managmentclient.ManagementClient;
 import managmentclient.ManagementClientInterface;
-import model.*;
+import model.AuctionEvent;
+import model.BidEvent;
+import model.Event;
+import model.EventType;
+import model.StatisticsEvent;
+import model.UserEvent;
+import exceptions.InvalidFilterException;
 
 /**
  * Receives events from the system and computes simple statistics/analytics.
@@ -111,9 +111,6 @@ public class AnalyticServer implements AnalyticServerInterface{
 
 	}
 	
-	//The method returns a unique subscription identifier string. (ANGABE)
-	//TODO Needs a callback interface(TEST)
-	//checks the regex here
 	/**
 	 * Sucribes with a regular expression for events
 	 * @param filter The regular Expression
@@ -171,7 +168,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	public void unsuscribe(String uid) {
 		Set<String> wert = managementClients.keySet();
 		Iterator<String> it = wert.iterator();
-		while(it.hasNext()) { //TODO Exception handling when the client quits without unsuscribe
+		while(it.hasNext()) { //TODo Exception handling when the client quits without unsuscribe
 			try {
 				String hilf = it.next();
 				managementClients.get(hilf).remove(uid);
@@ -190,7 +187,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	 * @throws RemoteException throws a Remote exception
 	 */
 	public void notify(ArrayList<StatisticsEvent> statisticEvent,Event event) {
-		if(statisticEvent != null) { //TODO delete after testing
+		if(statisticEvent != null) { 
 			for(int i = 0; i < statisticEvent.size();i++) {
 				//System.out.println(statisticEvent.get(i).getType()+"             "+statisticEvent.get(i).getValue());
 //				System.out.println(statisticEvent.get(i).toString());
@@ -199,7 +196,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 //			System.out.println("null");
 		}
 		if(event != null)
-//		System.out.println(event.toString()); //TODO delete after testing
+//		System.out.println(event.toString()); 
 		
 		
 		if(event != null) { //notify of normal massages 
@@ -217,7 +214,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 						} catch (RemoteException e) {
 							System.err.println("Couldn't callback Client!");
 //							e.printStackTrace(); 
-							this.unsuscribe(hilf1.toString()); //TODO Exception Handling isnt working the Client is not unsuscribed
+							this.unsuscribe(hilf1.toString()); 
 						}
 					}
 				}
@@ -241,7 +238,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 							} catch (RemoteException e) {
 								System.err.println("Couldn't callback Client!");
 //								e.printStackTrace();
-								this.unsuscribe(hilf1.toString()); //TODO Exception Handling isnt working the Client is not unsuscribed
+								this.unsuscribe(hilf1.toString()); //TODo Exception Handling isnt working the Client is not unsuscribed
 							}
 						}
 					}

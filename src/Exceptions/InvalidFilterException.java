@@ -6,7 +6,7 @@ package exceptions;
 	 * @author PatrickPoelzlbauer
 	 * @version 19.02.2014 1.0
 	 */
-public class InvalidFilterException extends Exception{ //TODO sollten die net alle RemoteExceptions sein
+public class InvalidFilterException extends Exception{ //TOD sollten die net alle RemoteExceptions sein
 		  
 	/**
 	 * Constructor of the class

@@ -2,22 +2,20 @@ package server;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import model.Auction;
+import model.DataManager;
+import model.Event;
+import model.Message;
+import model.Properties;
+import model.User;
+import analyticserver.AnalyticServerInterface;
 import billingServer.BillingServerInterface;
 import billingServer.BillingServerSecureInterface;
-
-import analyticserver.AnalyticServerInterface;
-
-import connect.Notifier;
-import connect.NotifierFactory;
-
-import managmentclient.ManagementClientInterface;
-import model.*;
 
 /**
  * The main server with all functionalities and the user data.

@@ -1,11 +1,11 @@
 package analyticserver.junit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.PatternSyntaxException;
 
 import managmentclient.ManagementClientInterface;
 import model.AuctionEvent;
@@ -17,7 +17,6 @@ import model.UserEvent;
 import org.junit.Before;
 import org.junit.Test;
 
-import exceptions.InvalidFilterException;
 import analyticserver.AnalyticServer;
 import analyticserver.EventHandler;
 
