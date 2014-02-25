@@ -53,13 +53,13 @@ public class StatisticsEvent extends Event {
 		} else if(this.getType().equals(EventType.BID_COUNT_PER_MINUTE)) {
 			hilf+= this.getType()+": "+format.format(date).toString()+" - current bids per minute is "+value;
 		} else if(this.getType().equals(EventType.USER_SESSIONTIME_MIN)) {
-			hilf+= this.getType()+": "+format.format(date).toString()+" - minimum session time is "+value*1000+" seconds";
+			hilf+= this.getType()+": "+format.format(date).toString()+" - minimum session time is "+value/1000+" seconds";
 		} else if(this.getType().equals(EventType.USER_SESSIONTIME_MAX)) {
-			hilf+= this.getType()+": "+format.format(date).toString()+" - maximum session time is "+value*1000+" seconds";
+			hilf+= this.getType()+": "+format.format(date).toString()+" - maximum session time is "+value/1000+" seconds";
 		} else if(this.getType().equals(EventType.USER_SESSIONTIME_AVG)) {
-			hilf+= this.getType()+": "+format.format(date).toString()+" - average session time is "+value*1000+" seconds";
+			hilf+= this.getType()+": "+format.format(date).toString()+" - average session time is "+value/1000+" seconds";
 		} else if(this.getType().equals(EventType.AUCTION_TIME_AVG)) {
-			hilf+= this.getType()+": "+format.format(date).toString()+" - auction timme average is "+value*1000+" seconds";
+			hilf+= this.getType()+": "+format.format(date).toString()+" - auction timme average is "+value/1000+" seconds";
 		} else if(this.getType().equals(EventType.ACUTION_SUCCESS_RATIO)) {
 			hilf+= this.getType()+": "+format.format(date).toString()+" - auction succes ratio is"+value;
 		}
