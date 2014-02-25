@@ -143,7 +143,7 @@ public class PriceSteps implements Serializable {
 		if (startPrice <= -1 || endPrice <= -1 || fixedPrice <= -1
 				|| variablePricePercent <= -1)
 			throw new InvalidParameterException();
-		System.out.println(startPrice + " < "+endPrice);
+//		System.out.println(startPrice + " < "+endPrice);
 		if(endPrice==0){
 			endPrice = Double.MAX_VALUE;
 		}else if(startPrice > endPrice){
