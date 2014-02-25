@@ -207,7 +207,6 @@ public class BillingServerSecureTest {
 		bss.createPriceStep(101,200, 5, 6);
 		bss.createPriceStep(201,400, 7, 8);
 		bss.setBills(bills);
-		//TODO Solve Problem with infinite priceStep
 		bss.billAuction("test", 123, 50);
 		bss.billAuction("test1", 123, 100);
 		bss.billAuction("test2", 123, 100);

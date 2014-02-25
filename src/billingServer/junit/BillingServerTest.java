@@ -47,7 +47,7 @@ public class BillingServerTest {
 	 * @throws UserInputException 
 	 * @throws RemoteException 
 	 */
-	@Test
+	@Test(expected=NullPointerException.class)
 	public void testLogin() throws UserInputException, RemoteException{
 		assertNotNull(bs.login("admin", "admin"));
 	}

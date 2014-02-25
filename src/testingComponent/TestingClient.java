@@ -33,7 +33,6 @@ public class TestingClient{
 	private TCPConnector tcp; //TODO brauch ich eig net?
 	private TaskExecuter taskExecuter;
 
-	private TestingCompCLI tcc;
 	
 	private String username;
 	
@@ -53,7 +52,6 @@ public class TestingClient{
 		this.auctionDuration = auctionDuration;
 		this.updateIntervalSec = updateIntervalSec;
 		this.bidsPerMin = bidsPerMin;
-		tcc = new TestingCompCLI();
 		//this.tcp = new TCPConnector(1234,tcc,new Client("localhost",1234,4321));
 		//TODO the Client not run()
 		//TODO get the TaskExecuter and use only him 
@@ -171,10 +169,6 @@ public class TestingClient{
 
 	public ArrayList<Integer> getAuctionsIDs() {
 		return auctions;
-	}
-	
-	public TestingCompCLI getTestingCompCLI(){
-		return this.tcc;
 	}
 
 	/**
