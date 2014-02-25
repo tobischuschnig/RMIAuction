@@ -245,7 +245,6 @@ public class ManagementClient implements ManagementClientInterface, Serializable
     public void processEvent(String event) {
         // direct output      
         if (autoprint == true) {
-            // TODO optimize output format
             cli.outln("Event: " + event);
             // message-save mode
         } else {

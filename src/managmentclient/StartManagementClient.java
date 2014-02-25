@@ -9,15 +9,13 @@ public class StartManagementClient {
 
     private static ManagementClient mc;
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) {      
         if (args.length != 2) {
             // example "//localhost/RmiServerBilling"  "localhost/RmiServerAnalytics"
-            System.out.println("Wrong/Missing arguments - Syntax: <AnalyticsServer Remote Adress> <BillingServer Remote Adress>");
-        } else {
-            mc = new ManagementClient(args[0], args[1]);
-            // thread for user input
-            mc.run();
+            System.out.println("Wrong arguments - Syntax: <AnalyticsServer Remote Adress>");
         }
+        mc = new ManagementClient(args[0], args[1]);
+        // thread for user input
+        mc.run();
     }
 }
