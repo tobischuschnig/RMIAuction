@@ -51,7 +51,7 @@ public class BillingServer implements BillingServerInterface,Serializable {
 		FileInputStream fis = null;
 		BufferedReader br = null;
 		boolean login = false;
-		Properties p=new Properties("./user.properties");
+		Properties p=new Properties("user.properties");
 		
 		String pw=p.getProperty(username);
 		if(pw.equals("")){
@@ -108,11 +108,13 @@ public class BillingServer implements BillingServerInterface,Serializable {
 		// Ein SecurityManager ist nur erforderlich, wenn der RMI-Class-Loader Code laden muss
 		//	    if (System.getSecurityManager() == null)
 		//	      System.setSecurityManager(new RMISecurityManager());
+		Properties p=new Properties("registry.properties");
+		int port=Integer.parseInt(p.getProperty("registry.port"));
 		try {
 			try{
-				r=LocateRegistry.createRegistry(1099);	
+				r=LocateRegistry.createRegistry(port);	
 			}catch (Exception e) {
-				r=LocateRegistry.getRegistry(1099);
+				r=LocateRegistry.getRegistry(port);
 			}
 			//LocateRegistry.createRegistry(1099);
 			BillingServer acc = new BillingServer();
