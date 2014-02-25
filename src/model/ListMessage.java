@@ -1,7 +1,7 @@
 package model;
 /**
  * Message which is send when User lists auctions
- * @author Daniel
+ * @author Daniel Reichmann <dreichmann@student.tgm.ac.at>
  *
  */
 public class ListMessage implements Message{
@@ -13,6 +13,9 @@ public class ListMessage implements Message{
 	public ListMessage(String name){
 		this.name=name;
 	}
+	/**
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		return name;//null wurde vorher zurueckgeben -huang

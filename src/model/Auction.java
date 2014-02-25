@@ -38,9 +38,16 @@ public class Auction {
 		finished = false;
 	}
 	
+	/**
+	 * @return active
+	 */
 	public boolean isActive(){
 		return false;
 	}
+	/**
+	 * @param user
+	 * @param amount
+	 */
 	public boolean bid(User user,double amount){
 		return false;
 	}
@@ -145,6 +152,9 @@ public class Auction {
 		this.startTime = startTime;
 	}
 	
+	/**
+	 * @return the startTimeFormat
+	 */
 	public String getStartTimeFormat(){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(this.startTime);

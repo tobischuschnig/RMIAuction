@@ -9,12 +9,9 @@ public class StartManagementClient {
 
     private static ManagementClient mc;
 
-    public static void main(String[] args) {
-        // Input bei andren Rechner in Netzwerk //10.0.105.65/RmiServer
-        // + Firewall anpassen
-        
-        // Remove in Final Version
-        String[] args2 = {"BillingServer", "AnalyticServer"};
+    public static void main(String[] args) {      
+        // Remove in Final Version ?
+        String[] args2 = {"AnalyticServer","BillingServer"};
         args = args2;
         // ***
         if (args.length != 2) {

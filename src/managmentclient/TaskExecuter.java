@@ -14,9 +14,9 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Bill;
+
+import model.Properties;
 
 /**
  * Managmant of Remote Object calls (Analytics + Billing Server)
@@ -38,19 +38,27 @@ public class TaskExecuter {
         this.c = c;
         cli = new CLI();
         secure = null;
+        String host = null;
+        int port = 0;
 
         try {
-            managementClientInterface = (ManagementClientInterface) UnicastRemoteObject.exportObject(c, 0);
-            obja = (AnalyticServerInterface) Naming.lookup(analyticsServer);
+            Properties p = new Properties("registry.properties");
+            host = p.getProperty("registry.host");
+            port = Integer.parseInt(p.getProperty("registry.port"));
         } catch (Exception ex) {
-            cli.outln("Client exit: Cannot connect to AnalyticsServer: "+analyticsServer);
+            cli.outln("Properties file not found!");
+        }
+        try {
+            managementClientInterface = (ManagementClientInterface) UnicastRemoteObject.exportObject(c, 0);
+            obja = (AnalyticServerInterface) Naming.lookup("rmi://" + host + ":" + port + "/" + analyticsServer);
+        } catch (Exception ex) {
+            cli.outln("Client exit: Cannot connect to AnalyticsServer: " + analyticsServer);
             end();
         }
         try {
-            // TODO Remove //
-            objb = (BillingServerInterface) Naming.lookup(billingServer);
+            objb = (BillingServerInterface) Naming.lookup("rmi://" + host + ":" + port + "/" + billingServer);
         } catch (Exception ex) {
-            cli.outln("Client exit: Cannot connect to BillingServer: "+billingServer);
+            cli.outln("Client exit: Cannot connect to BillingServer: " + billingServer);
             end();
         }
     }
@@ -59,7 +67,7 @@ public class TaskExecuter {
         try {
             UnicastRemoteObject.unexportObject(c, false);
             c.setActive(false);
-        } catch (NoSuchObjectException ex) {
+        } catch (Exception ex) {
             System.exit(0);
         }
     }
@@ -153,16 +161,16 @@ public class TaskExecuter {
      */
     public void bill(String username) {
         try {
-        	ArrayList<Bill> al = secure.getBill(username);
-           // Bill b = secure.getBill(username);
+            ArrayList<Bill> al = secure.getBill(username);
+            // Bill b = secure.getBill(username);
             if (al == null) {
                 cli.outln("No Bills for User " + username);
             } else {
-               // cli.outln(b.toString());
-                for(Bill b : al){
-                	b.toString();
+                // cli.outln(b.toString());
+                for (Bill b : al) {
+                    b.toString();
                 }
-                
+
             }
         } catch (RemoteException ex) {
         }
@@ -176,7 +184,7 @@ public class TaskExecuter {
         try {
             //TODO ausgabe aendern?
             cli.outln("Lookup completed ");
-            cli.outln("Server said: " + obja.suscribe(filter, managementClientInterface));
+            cli.outln("Event ID: " + obja.suscribe(filter, managementClientInterface));
             cli.outln("Registered for Event callback.");
         } catch (InvalidFilterException ex) {
             cli.outln(ex.getMessage());

@@ -19,17 +19,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import Exceptions.InvalidInputException;
 import Exceptions.OverlappedPricestepException;
 
-//import org.mockito.cglib.transform.impl.AddPropertyTransformer;
-
+/**
+ * Provides the Methods to create delete and printing out a PriceStep which is created at the BillingServer
+ * @author Alexander Rieppel <arieppel@student.tgm.ac.at>
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
+ */
 public class PriceSteps implements Serializable {
 	private CopyOnWriteArrayList<PriceStep> priceSteps;
 	// private ConcurrentHashMap<Integer, PriceStep> priceSteps;
 	private String filePriceSteps;
 
-	/**
-	 * Dieser Konstruktor ist ein CHANGEREQUEST Er laedt aus price.steps die
-	 * gespeicherten priceStep Objekte und uebergibt diese dem ConcurrentHashMap
-	 */
 	public PriceSteps() {
 		try {
 			// FileInputStream fin = new FileInputStream("price.steps");
@@ -46,6 +45,12 @@ public class PriceSteps implements Serializable {
 		}
 	}
 
+	/**
+	 * Method to delete a PriceStep
+	 * @param start	the StartPrice
+	 * @param end the EndPrice
+	 * @return	successful or not
+	 */
 	public boolean removePricestep(double start, double end) {
 		for (int x = 0; x < priceSteps.size(); x++) {
 			if (priceSteps.get(x).getStartPrice() == start
@@ -57,10 +62,17 @@ public class PriceSteps implements Serializable {
 		return false;
 	}
 
+	/**
+	 * returns the size of the current PriceStep List
+	 * @return  the size of the list
+	 */
 	public int size() {
 		return priceSteps.size();
 	}
 
+	/**
+	 * Returns all PriceSteps in the list ordered by the Prices in a well formatted way
+	 */
 	@Override
 	public String toString() {
 		
@@ -137,6 +149,18 @@ public class PriceSteps implements Serializable {
 		this.filePriceSteps = filePriceSteps;
 	}
 
+	/**
+	 * Adds a priceStep to the list, and checks if the PriceStep overlaps with a existing PriceStep and if the PriceStep is valid in general
+	 * @param startPrice	the StartPrice
+	 * @param endPrice		the EndPrice
+	 * @param fixedPrice	the FixedPrice
+	 * @param variablePricePercent	the VariablePricePercent
+	 * @return	successful or not
+	 * @throws RemoteException
+	 * @throws InvalidInputException
+	 * @throws InvalidParameterException
+	 * @throws OverlappedPricestepException
+	 */
 	public boolean addPricestep(double startPrice, double endPrice,
 			double fixedPrice, double variablePricePercent) throws RemoteException,InvalidInputException,InvalidParameterException,OverlappedPricestepException {
 		boolean overlaped = false;

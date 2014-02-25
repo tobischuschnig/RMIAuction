@@ -103,6 +103,9 @@ public class User {
 		
 	}
 	
+	/**
+	 * @return Equality
+	 */
 	@Override
 	public boolean equals(Object u){
 		User a = (User) u;

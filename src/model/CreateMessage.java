@@ -17,6 +17,9 @@ public class CreateMessage implements Message{
 		this.desc=desc;
 		this.duration=duration;
 	}
+	/**
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		return name;//null wurde vorher zurueckgeben -huang

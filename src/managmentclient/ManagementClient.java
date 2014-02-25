@@ -1,10 +1,6 @@
 package managmentclient;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -31,7 +27,7 @@ public class ManagementClient implements ManagementClientInterface, Serializable
      * @param billing Address of Remote BillingServer
      * @param analytics Address of Remote AnalyticsServer
      */
-    public ManagementClient(String billing, String analytics) {
+    public ManagementClient(String analytics, String billing) {
         unprintedMessages = new LinkedList<String>();
         active = true;
         loggedIn = false;
@@ -254,6 +250,7 @@ public class ManagementClient implements ManagementClientInterface, Serializable
         // direct output      
         if (autoprint == true) {
             // TODO optimize output format
+            cli.outln("");
             cli.outln("Event: " + event);
             // message-save mode
         } else {

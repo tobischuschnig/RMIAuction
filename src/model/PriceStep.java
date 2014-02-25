@@ -2,6 +2,11 @@ package model;
 
 import java.io.Serializable;
 
+/**
+ * Provides the Basic Model for a PriceStep which is created at the BillingServer
+ * @author Alexander Rieppel <arieppel@student.tgm.ac.at>
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
+ */
 public class PriceStep implements Serializable{
 	private double startPrice, endPrice, fixedPrice, variablePricePercent;
 
