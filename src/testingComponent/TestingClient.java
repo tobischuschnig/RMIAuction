@@ -30,7 +30,7 @@ public class TestingClient{
 
 	private ArrayList<Integer> auctions;
 
-	private TCPConnector tcp; //TODO brauch ich eig net?
+	private TCPConnector tcp; 
 	private TaskExecuter taskExecuter;
 
 	
@@ -53,8 +53,6 @@ public class TestingClient{
 		this.updateIntervalSec = updateIntervalSec;
 		this.bidsPerMin = bidsPerMin;
 		//this.tcp = new TCPConnector(1234,tcc,new Client("localhost",1234,4321));
-		//TODO the Client not run()
-		//TODO get the TaskExecuter and use only him 
 
 
 	}
@@ -79,7 +77,6 @@ public class TestingClient{
 		auctions = new ArrayList();
 		//tcc = new TestingCompCLI();
 		//this.tcp = new TCPConnector(1234,tcc,new Client("localhost",1234,4321));
-		//TODO  get the TaskExecuter and use only him 
 		try {
 			c=new Client(host,tcpPort);
 			taskExecuter = c.getTaskExecuter();

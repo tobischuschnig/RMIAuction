@@ -1,10 +1,6 @@
 package testingComponent;
 
 
-import client.Client;
-import client.TCPConnector;
-import client.TaskExecuter;
-import model.CreateMessage;
 
 /**
  * This Class represents a thread which creates x times per

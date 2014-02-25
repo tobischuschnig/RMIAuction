@@ -1,14 +1,6 @@
 package testingComponent;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
-import client.Client;
-import client.TCPConnector;
-
-import model.ListMessage;
 /**
  * This Class represents a thread which updates the list of current auction
  * every x secronds

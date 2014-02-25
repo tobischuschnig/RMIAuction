@@ -1,11 +1,8 @@
 package model;
 
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Writer;
-import java.net.URL;
 
 /**
  * This Class gets a Path as parameter. this path directs to the specific 

@@ -9,7 +9,6 @@ import model.CreateMessage;
 import model.EventType;
 import model.Message;
 import model.User;
-import model.UserEvent;
 
 /**
  * This class is responsible for a functionality off the server.

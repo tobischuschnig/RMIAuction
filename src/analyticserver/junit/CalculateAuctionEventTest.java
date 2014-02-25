@@ -1,9 +1,6 @@
 package analyticserver.junit;
 
-import static org.junit.Assert.*;
 import model.AuctionEvent;
-import model.BidEvent;
-import model.Event;
 import model.EventType;
 
 import org.junit.Before;

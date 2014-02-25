@@ -1,11 +1,9 @@
 package server;
 
-import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import model.Auction;
-import model.AuctionEvent;
 import model.BidEvent;
 import model.BidMessage;
 import model.EventType;

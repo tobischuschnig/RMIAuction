@@ -4,12 +4,9 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.regex.PatternSyntaxException;
 
-import exceptions.InvalidFilterException;
-
-
-import managmentclient.ManagementClient;
 import managmentclient.ManagementClientInterface;
 import model.Event;
+import exceptions.InvalidFilterException;
 /**
  * The Interface of AnalyticServer provides the RMI Methods which are needed 
  * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
