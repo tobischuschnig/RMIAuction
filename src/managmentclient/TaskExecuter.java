@@ -168,11 +168,12 @@ public class TaskExecuter {
             } else {
                 // cli.outln(b.toString());
                 for (Bill b : al) {
-                    b.toString();
+                	cli.outln(b.toString());
                 }
 
             }
         } catch (RemoteException ex) {
+        	ex.printStackTrace();
         }
     }
 

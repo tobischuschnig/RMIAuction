@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Provides the Bills for the BillingServer
  * @author Alexander Rieppel <arieppel@student.tgm.ac.at>
  * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
  */
-public class Bill {
+public class Bill implements Serializable{
 
     private String user;
     private long auctionID;
