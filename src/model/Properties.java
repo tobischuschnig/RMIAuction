@@ -12,7 +12,7 @@ public class Properties {
 	 * @param name
 	 */
 	public String getProperty(String name) {
-		java.io.InputStream is = ClassLoader.getSystemResourceAsStream("registry.properties");
+		java.io.InputStream is = ClassLoader.getSystemResourceAsStream(this.file);
 		if (is != null) {
 			java.util.Properties props = new java.util.Properties();
 			try {
