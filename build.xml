@@ -12,8 +12,8 @@
     <property name="client.name" value="client.MainClient"/><!-- Client's full class name (including the package) -->
     <property name="server.port" value="5001"/><!-- Server's TCP port -->
 
-    <property name="billingserver.name" value="billingServer.BillingServer"/>
-    <property name="analyticsserver.name" value="analyticserver.AnalyticServerMain"/>
+    <property name="billing.name" value="billingServer.BillingServer"/>
+    <property name="analytics.name" value="analyticserver.AnalyticServerMain"/>
 
     <property name="analytics.bindingName" value="AnalyticServer"/><!-- RMI Binding Name of the Analytics Server -->
     <property name="billing.bindingName" value="BillingServer"/><!-- RMI Binding Name of the Billing Server -->
@@ -21,15 +21,14 @@
     <property name="client1.port" value="20001"/><!-- 1st Client's UDP port -->
     <property name="client2.port" value="20002"/><!-- 2nd Client's UDP port -->
     <property name="client3.port" value="20003"/><!-- 3rd Client's UDP port -->
-    <property name="client4.port" value="20004"/><!-- 4th Client's UDP port -->
-    <property name="client5.port" value="20005"/><!-- 5th Client's UDP port -->
-    <property name="client6.port" value="20006"/><!-- 6th Client's UDP port -->
+
+    <property name="mgmtclient.name" value="managmentclient.StartManagementClient"/><!-- Management Client's full class name (including the package) -->
 
     <path id="project.classpath">
         <pathelement location="${build.dir}"/>
         <pathelement location="lib/hamcrest-core-1.3.jar"/>
         <pathelement location="lib/junit-4.11.jar"/>
-        <pathelement location="lib/mockito-all-1.9.5.jar"/>
+        <pathelement location="lib/log4j-1.2.17.jar"/>
     </path>
 
     <target name="compile" description="Compile project.">
@@ -48,14 +47,14 @@
         </java>
     </target>
 
-    <target name="run-analytics-server" depends="compile" description="Run analytics-server.">
-        <java classname="${analyticsserver.name}" fork="true" classpathref="project.classpath">
+    <target name="run-analytics-server" depends="compile" description="Run Analytics Server.">
+        <java classname="${analytics.name}" fork="true" classpathref="project.classpath">
             <arg value="${analytics.bindingName}"/>
         </java>
     </target>
 
-    <target name="run-billing-server" depends="compile" description="Run billing-server.">
-        <java classname="${billingserver.name}" fork="true" classpathref="project.classpath">
+    <target name="run-billing-server" depends="compile" description="Run Billing Server.">
+        <java classname="${billing.name}" fork="true" classpathref="project.classpath">
             <arg value="${billing.bindingName}"/>
         </java>
     </target>
@@ -84,27 +83,32 @@
         </java>
     </target>
 
-    <target name="run-client4" depends="compile" description="Run 4th Client.">
-        <java classname="${client.name}" fork="false" classpathref="project.classpath">
-            <arg value="${server.host}"/>
-            <arg value="${server.port}"/>
-            <arg value="${client4.port}"/>
+    <target name="run-mgmtclient1" depends="compile" description="Run Management Client 1.">
+        <java classname="${mgmtclient.name}" fork="false" classpathref="project.classpath">
+            <arg value="${analytics.bindingName}"/>
+            <arg value="${billing.bindingName}"/>
         </java>
     </target>
 
-    <target name="run-client5" depends="compile" description="Run 5th Client.">
-        <java classname="${client.name}" fork="false" classpathref="project.classpath">
-            <arg value="${server.host}"/>
-            <arg value="${server.port}"/>
-            <arg value="${client5.port}"/>
+    <target name="run-mgmtclient2" depends="compile" description="Run Management Client 2.">
+        <java classname="${mgmtclient.name}" fork="false" classpathref="project.classpath">
+            <arg value="${analytics.bindingName}"/>
+            <arg value="${billing.bindingName}"/>
         </java>
     </target>
 
-    <target name="run-client6" depends="compile" description="Run 6th Client.">
-        <java classname="${client.name}" fork="false" classpathref="project.classpath">
+    <target name="run-mgmtclient3" depends="compile" description="Run Management Client 3.">
+        <java classname="${mgmtclient.name}" fork="false" classpathref="project.classpath">
+            <arg value="${analytics.bindingName}"/>
+            <arg value="${billing.bindingName}"/>
+        </java>
+    </target>
+
+    <target name="run-loadtest" depends="compile" description="Run Load Test.">
+        <java classname="${client.name}" fork="true" classpathref="project.classpath">
             <arg value="${server.host}"/>
             <arg value="${server.port}"/>
-            <arg value="${client6.port}"/>
+            <arg value="${analytics.bindingName}"/>
         </java>
     </target>
     
@@ -130,10 +134,5 @@
         <delete dir="${reports.dir}"/>
     </target>
 
-    <target name="rebuild" depends="clean, compile" description="Clean and build prject."/>
-	<target name="jar" description="Create new jar"> 
-	<jar destfile="lib/client.jar" basedir="${build.dir}"> 
-		<manifest> <attribute name="Main-Class" value="Client.MainClient"/> 
-	</manifest> </jar> 
-	</target>
+    <target name="rebuild" depends="clean, compile" description="Clean and build project."/>
 </project>
