@@ -1,4 +1,4 @@
-package TestingComponent.junit;
+package testingComponent.junit;
 
 import org.junit.Before;
 import org.junit.Test;
