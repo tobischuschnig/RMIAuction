@@ -109,7 +109,7 @@ public class Bill implements Serializable{
     public String toString() {
         String returnment = String.format("%10s%15s%15s%15s%15s", "auction_ID",
                 "strike_Price", "fee_Fixed", "fee_Variable", "fee_Total");
-        returnment += String.format("\n%10s%15s%15s%15s", this.auctionID,
+        returnment += String.format("\n%10s%15s%15s%15s%15s", this.auctionID,
                 this.strikePrice, this.feeFixed, this.feeVariable, this.feeTotal);
 
         return returnment;

@@ -124,7 +124,7 @@ public class TaskExecuter {
         boolean ret = false;
 
         try {
-            ret = secure.createPriceStep(startPrice, endPrice, fixedPrice, fixedPrice);
+            ret = secure.createPriceStep(startPrice, endPrice, fixedPrice, variablePricePercent);
 
         } catch (InvalidParameterException ex) {
             cli.outln("Fehler: " + ex.getMessage());

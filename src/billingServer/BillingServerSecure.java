@@ -99,7 +99,7 @@ public class BillingServerSecure implements Serializable,
 		System.out.println("bill will be added");
 		Double feeVariable = 0.0;
 		Double feeFixed = 0.0;
-
+		Double total=0.0;
 		CopyOnWriteArrayList<PriceStep> psTemp = priceSteps.getPriceSteps();
 
 		for (int x = 0; x < psTemp.size(); x++) {
@@ -110,9 +110,10 @@ public class BillingServerSecure implements Serializable,
 				feeFixed = temp.getFixedPrice();
 			}
 		}
-		System.out.println(user);
+		total=feeVariable+feeFixed;
+		System.out.println("Total fee:"+total);
 		bills.add(new Bill(user, auctionID, price, feeFixed, feeVariable,
-				feeFixed + feeVariable));
+				total));
 		return true;
 	}
 
