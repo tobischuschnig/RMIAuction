@@ -34,7 +34,7 @@ public class ManagementClient implements ManagementClientInterface, Serializable
         username = "";
         cli = new CLI();
         autoprint = true;
-        t = new TaskExecuter(this, billing, analytics);
+        t = new TaskExecuter(this, analytics, billing);
     }
 
     @Override

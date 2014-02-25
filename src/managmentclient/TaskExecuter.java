@@ -9,7 +9,6 @@ import analyticserver.AnalyticServerInterface;
 import billingServer.BillingServerInterface;
 import billingServer.BillingServerSecureInterface;
 import java.rmi.Naming;
-import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -34,7 +33,7 @@ public class TaskExecuter {
     // not in use yet
     private ManagementClient c;
 
-    public TaskExecuter(ManagementClient c, String billingServer, String analyticsServer) {
+    public TaskExecuter(ManagementClient c, String analyticsServer,String billingServer) {
         this.c = c;
         cli = new CLI();
         secure = null;
