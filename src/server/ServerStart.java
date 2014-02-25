@@ -23,11 +23,16 @@ public class ServerStart {
 		ReceiveConnection r = new ReceiveConnection(port, s);		//Establish Connection
 		Thread t = new Thread(r);
 		t.start();		//Generate and start Thread
-		Scanner in=new Scanner(System.in);
-		in.nextLine();
-		System.out.println("Server ends in 5sec");		//If Enter Button pressed, Server will end
+		
+		Scanner in = new Scanner(System.in);
+        while (true) {
+        	if(in.nextLine().equals("!exit")){ //wait for !exit
+        		break;
+        	}
+        }
 		s.setActive(false);
 		in.close();
+       //System.exit(1);
 	}
 
 }

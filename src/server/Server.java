@@ -39,15 +39,20 @@ public class Server {
     private AnalyticServerInterface obja;
     private BillingServerInterface billint;
     private BillingServerSecureInterface secure;
-	
+	private DataManager m=new DataManager();
+
 	/**
 	 * The standard konstructor where are all attributes are set up and the attributes are
 	 * initialised.
 	 */
 	public Server() {
-		user=new ConcurrentHashMap<String,User>();
+		this.user=new ConcurrentHashMap<String, User>();
+		try {
+			this.auction=(ConcurrentHashMap<Integer, Auction>)m.loadAuctions("auctions");
+		} catch (Exception e) {
+			auction=new ConcurrentHashMap<Integer, Auction>();
+		}
 		active = true;
-		auction=new ConcurrentHashMap<Integer,Auction>();
 		ahandler = new AuctionHandler(this);
 		rhandler = new RequestHandler();
 		//udp = NotifierFactory.getUDPNotifer();
@@ -210,7 +215,6 @@ public class Server {
 //	}
 
 	public boolean isActive() {
-
 		return active;
 	}
 	public void setActive(boolean active){
