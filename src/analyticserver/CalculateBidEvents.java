@@ -52,7 +52,7 @@ public class CalculateBidEvents implements InterfaceCalculate, Runnable {
 	 * A second Method for the calculation Part of Bids per minute
 	 * @return An ArrayList of statistic Events
 	 */
-	private ArrayList<StatisticsEvent> calculateBidEventAverageTime() {
+	public ArrayList<StatisticsEvent> calculateBidEventAverageTime() {
 		
 		Set<Integer> wert = a.getBidEvents().keySet();
 		Iterator<Integer> it = wert.iterator();

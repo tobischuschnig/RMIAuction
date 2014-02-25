@@ -21,6 +21,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	server.test.ServerTest.class,
 	analyticserver.junit.AnalyticsServerTest.class,
 	analyticserver.junit.EventHandlerTest.class,
+	analyticserver.junit.CalculateBidEventsTest.class,
 	billingServer.junit.BillingServerTest.class,
 	billingServer.junit.BillingServerSecureTest.class,
 	model.test.AuctionTest.class,
@@ -34,7 +35,7 @@ import org.junit.runners.Suite.SuiteClasses;
 public class AllTest {
 	@BeforeClass 
 	public static void setUpOnce() {
-		   StartAnalyt.startServer();
-		   StartBilling.startServer();
+		   //StartAnalyt.startServer();
+		   //StartBilling.startServer();
 		}
 } 

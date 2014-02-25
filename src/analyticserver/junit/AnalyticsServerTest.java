@@ -1,12 +1,11 @@
 package analyticserver.junit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.PatternSyntaxException;
 
 import managmentclient.ManagementClientInterface;
 import model.AuctionEvent;
@@ -18,6 +17,7 @@ import model.UserEvent;
 import org.junit.Before;
 import org.junit.Test;
 
+import exceptions.InvalidFilterException;
 import analyticserver.AnalyticServer;
 import analyticserver.EventHandler;
 
@@ -66,7 +66,7 @@ public class AnalyticsServerTest {
 //	 * @throws PatternSyntaxException 
 //	 */
 //	@Test
-//	public void testSuscribe() throws PatternSyntaxException, InvalidFilterException{
+//	public void testSuscribe() throws PatternSyntaxException, InvalidFilterException {
 //		// input is a correct input
 //		ManagementClientInterface man = null;
 //		String input = "(USER_.*)|(BID_.*)";

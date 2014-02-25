@@ -1,20 +1,18 @@
 package testingComponent.junit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import client.Client;
-import client.TCPConnector;
-
 import testingComponent.BidThread;
 import testingComponent.CreateThread;
 import testingComponent.ListThread;
 import testingComponent.TestingClient;
-import testingComponent.TestingCompCLI;
+import client.Client;
+import client.TCPConnector;
 
 
 /**
@@ -27,7 +25,7 @@ public class TestingComponentTest {
 	private BidThread bt;
 	private CreateThread ct;
 	private ListThread lt;
-	private TestingCompCLI tcc;
+	
 	
 	@Before
 	public void setUp(){
@@ -99,15 +97,6 @@ public class TestingComponentTest {
 	public void testGetClient(){
 		tc.setClients(12);
 		assertEquals(tc.getClients(),12);
-	}
-	
-	/**
-	 * Testing of Method, when something should happen
-	 */
-	@Test
-	public void testGetTestingCompCLI(){
-		tc.getTestingCompCLI();
-//		assertEquals(tc.getAuctionDuration(),12);
 	}
 	
 	/**

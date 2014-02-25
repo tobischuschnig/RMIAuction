@@ -104,15 +104,15 @@ private ManagementClient mc;
 		b=mc.input("!steps");
 		assertTrue(b);
 	}
-	/**
-	 * Testing of !end should equals true
-	 */
-	@Test
-	public void testEnd() {
-		boolean b;
-		b=mc.input("!end");
-		assertTrue(b);
-	}
+//	/**
+//	 * Testing of !end should equals true
+//	 */
+//	@Test
+//	public void testEnd() {
+//		boolean b;
+//		b=mc.input("!end");
+//		assertTrue(b);
+//	}
 	/**
 	 * Testing of !addstep should equals true
 	 */
