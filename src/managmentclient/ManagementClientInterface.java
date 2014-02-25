@@ -4,7 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- *
+ * Interface for Remotecalls
  * @author alexander auradnik <alexander.auradik@student.tgm.ac.at>
  * @version 2014-02-14 
  */

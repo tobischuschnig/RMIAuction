@@ -10,9 +10,8 @@ import model.User;
 /**
  * This Class got the necessary values fot testing the programm. it starts all three threads:
  * bid, create, list. 
- * @author Klune Alexander
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
  *@version 1.0
- *@email aklune@student.tgm.ac.at
  */
 public class TestingClient{
 
@@ -55,8 +54,8 @@ public class TestingClient{
 		this.bidsPerMin = bidsPerMin;
 		tcc = new TestingCompCLI();
 		//this.tcp = new TCPConnector(1234,tcc,new Client("localhost",1234,4321));
-		//TODO neuer Client nicht auf run()
-		//TODO dem seinen TaskExecuter hohlen und alles mit dem machen 
+		//TODO the Client not run()
+		//TODO get the TaskExecuter and use only him 
 
 
 	}
@@ -81,7 +80,7 @@ public class TestingClient{
 		auctions = new ArrayList();
 		//tcc = new TestingCompCLI();
 		//this.tcp = new TCPConnector(1234,tcc,new Client("localhost",1234,4321));
-		//TODO dem seinen TaskExecuter hohlen und alles mit dem machen 
+		//TODO  get the TaskExecuter and use only him 
 		try {
 			c=new Client(host,tcpPort);
 			taskExecuter = c.getTaskExecuter();
@@ -90,7 +89,7 @@ public class TestingClient{
 			//System.out.println("hallo"+tcpPort+udpPort+host);
 			
 			
-			taskExecuter.login(username, tcpPort); //TODO brauche den rueckgabewert
+			taskExecuter.login(username, tcpPort); 
 			try {
 				Thread.sleep(100);
 			} catch(InterruptedException e) {}
@@ -107,7 +106,6 @@ public class TestingClient{
 		}catch(Exception e){
 			System.out.println("Can not connect to Server");
 		}
-		//TODO jetzt einlogen machen vill mit einer UUID
 	}
 	
 	/**

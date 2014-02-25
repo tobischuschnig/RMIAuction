@@ -13,6 +13,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.MessageDigest;
+import java.util.Scanner;
 
 import model.Properties;
 
@@ -33,7 +34,8 @@ public class BillingServer implements BillingServerInterface,Serializable {
 
 
 	private static Registry r;
-
+	private static BillingServer acc;
+	private static BillingServerSecure secure;
 	/**
 	 * The access to the billing server is secured by user authentication. To keep things simple, 
 	 * the username/password combinations can be configured statically in a config file user.properties. 
@@ -117,17 +119,30 @@ public class BillingServer implements BillingServerInterface,Serializable {
 				r=LocateRegistry.getRegistry(port);
 			}
 			//LocateRegistry.createRegistry(1099);
-			BillingServer acc = new BillingServer();
-			BillingServerSecure secure=new BillingServerSecure();
+			acc = new BillingServer();
+			secure=new BillingServerSecure();
 			r.rebind("BillingServerSecure", (BillingServerSecureInterface)UnicastRemoteObject.exportObject(secure, 0));
 			System.out.println("BillingServerSecure bound");
 			r.rebind("BillingServer", (BillingServerInterface)UnicastRemoteObject.exportObject(acc, 0));
 			System.out.println("BillingServer bound");
+			Scanner in;
+            in = new Scanner(System.in);
+            while (true) {
+            	if(in.nextLine().equals("!exit")){
+            		break;
+            	}
+            }
+            System.out.println("EXIT");
+            r.unbind("BillingServerSecure");
+            r.unbind("BillingServer");
+            secure.save();
+            System.exit(1);
 		} 
 		catch (Exception e) {
 			System.out.println("Err: " + e.getMessage());
 		}
 	}
+	
 }
 
 

@@ -12,7 +12,7 @@ import Client.TCPConnector;
  * This Class represents a thread which updates the list of current auction
  * every x secronds
  * 
- * @author Klune Alexander
+ * @author Tobias Schuschnig <tschuschnig@student.tgm.ac.at>
  * @version 1.0
  * @email aklune@student.tgm.ac.at
  */
@@ -27,7 +27,7 @@ public class ListThread implements Runnable{
 	 */
 	public ListThread(TestingClient testingClient){
 		this.testingClient = testingClient;
-		end = System.currentTimeMillis()*1000*60*2;//TODO Endet mit Math.random zwischen 7 und 10
+		end = System.currentTimeMillis()*1000*60*2;//TODO end with Math.random between 7 and 10
 	}
 	
 	/**
@@ -37,8 +37,8 @@ public class ListThread implements Runnable{
 	 */
 	@Override
 	public void run() {
-		while(System.currentTimeMillis() <= end) {//TODO Fehler nicht einmal eine Schleife im Thread
-			//System.out.println("Hallo von list");
+		while(System.currentTimeMillis() <= end) {//TODO Error not even a Loop in the Thread
+			//System.out.println("Hallo from list");
 			//System.out.println(testingClient.getTaskExecuter().list());
 			testingClient.getTaskExecuter().list();
 			String wert = "";
@@ -62,12 +62,12 @@ public class ListThread implements Runnable{
 			
 			testingClient.setAuctionsIDs(ids);
 			try {
-				Thread.sleep(((60/testingClient.getAuctionsPerMin())*1000));//TODO Fehler falsche Formel 60/x richtig!!
+				Thread.sleep(((60/testingClient.getAuctionsPerMin())*1000));//TODO Error wrong formel  60/x correct!!
 			} catch (InterruptedException e) {
 				System.err.println("Fehler beim schlafen legen des ListThreads");
 			}
 		}
-		System.out.println("---------------------------------------------------------------------------------------------------------------------");
+//		System.out.println("---------------------------------------------------------------------------------------------------------------------");
 	}
 
 }
