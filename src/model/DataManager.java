@@ -55,7 +55,14 @@ public class DataManager implements Serializable{
 			} 
 		} 
 	} 
-
+	
+	/**
+	 * load Pricesteps back from file
+	 * @param filePath file to load
+	 * @return Pricesteps which got loaded
+	 * @throws IOException file not found
+	 * @throws ClassNotFoundException class not found
+	 */
 	public static PriceSteps loadPriceSteps(String filePath) throws IOException, ClassNotFoundException 
 	{ 
 		try 
@@ -76,6 +83,13 @@ public class DataManager implements Serializable{
 		} 
 		
 	} 
+	/**
+	 * load billes back from file
+	 * @param filePath file to load
+	 * @return Pricesteps which got loaded
+	 * @throws IOException file not found
+	 * @throws ClassNotFoundException class not found
+	 */
 	public static CopyOnWriteArrayList<Bill> loadBills(String filePath) throws IOException, ClassNotFoundException 
 	{ 
 		try 

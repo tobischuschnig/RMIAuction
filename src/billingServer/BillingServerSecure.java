@@ -182,7 +182,7 @@ public class BillingServerSecure implements Serializable,
 		try {
 			m.saveData(bills, "bills");
 		} catch (IOException e) {
-			System.out.println("Could not save pricesteps");
+			System.out.println("Could not save bills");
 		}
 	}
 }
