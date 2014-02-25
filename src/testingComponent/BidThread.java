@@ -29,7 +29,7 @@ public class BidThread implements Runnable {
 	 */
 	public BidThread(TestingClient testingClient) {
 		this.testingClient = testingClient;
-		end = System.currentTimeMillis()*1000*60*2;//TODO end with Math.random between 7 and 10
+		end = System.currentTimeMillis()+1000*60*8;//TODO end with Math.random between 7 and 10
 		amount = 1000;
 	}
 	
@@ -41,10 +41,10 @@ public class BidThread implements Runnable {
 	public void run() {
 		while(System.currentTimeMillis() <= end) {//TODO Error not even a Loop in the Thread
 			int max = testingClient.getAuctionsIDs().size();
-			System.out.println(max+"asdfasdf");
+//			System.out.println(max+"asdfasdf");
 			if(max != 0) {
 				int bidid = ((int) (Math.random()*max));
-				System.out.println(bidid+"sdfasdfd");
+//				System.out.println(bidid+"sdfasdfd");
 				bidid = testingClient.getAuctionsIDs().get(bidid);
 				amount+=  (Math.random()*max);
 				testingClient.getTaskExecuter().bid(bidid, amount);
@@ -52,7 +52,7 @@ public class BidThread implements Runnable {
 			try {
 				Thread.sleep(((60/testingClient.getAuctionsPerMin())*1000));//TODO Error wrong formel  60/x correct!!
 			} catch (InterruptedException e) {
-				System.err.println("Fehler beim schlafen legen des ListThreads");
+				System.err.println("Error by pausing the Thread.");
 			}
 		}
 	}

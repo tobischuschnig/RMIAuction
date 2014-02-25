@@ -27,7 +27,7 @@ public class ListThread implements Runnable{
 	 */
 	public ListThread(TestingClient testingClient){
 		this.testingClient = testingClient;
-		end = System.currentTimeMillis()*1000*60*2;//TODO end with Math.random between 7 and 10
+		end = System.currentTimeMillis()+1000*60*8;//TODO end with Math.random between 7 and 10
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class ListThread implements Runnable{
 			try {
 				Thread.sleep(((60/testingClient.getAuctionsPerMin())*1000));//TODO Error wrong formel  60/x correct!!
 			} catch (InterruptedException e) {
-				System.err.println("Fehler beim schlafen legen des ListThreads");
+				System.err.println("Error by pausing the Thread.");
 			}
 		}
 //		System.out.println("---------------------------------------------------------------------------------------------------------------------");

@@ -26,7 +26,7 @@ public class CreateThread implements Runnable {
 	 */
 	public CreateThread(TestingClient testingClient){
 		this.testingClient = testingClient;
-		end = System.currentTimeMillis()*1000*60*2;//TODO end with Math.random between 7 and 10
+		end = System.currentTimeMillis()+1000*60*8;//TODO end with Math.random between 7 and 10
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class CreateThread implements Runnable {
 
 			incrementer++;
 			try {
-				System.out.println(testingClient.getAuctionsPerMin()+""+((testingClient.getAuctionsPerMin()/60)*1000));
+				//System.out.println(testingClient.getAuctionsPerMin()+""+((testingClient.getAuctionsPerMin()/60)*1000));
 				Thread.sleep(((60/testingClient.getAuctionsPerMin())*1000));//TODO Error wrong formel  60/x correct!!
 			} catch (InterruptedException e) {
 				System.err.println("Error by pausing the Thread."); 
