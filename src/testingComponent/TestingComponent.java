@@ -124,7 +124,7 @@ public class TestingComponent {
 		
 		
 		
-		managementClient = new ManagementClient("BillingServer", "AnalyticServer"); //TODO Error changed, AnalyticsServer (!sic)
+		managementClient = new ManagementClient(args[2], null ); //TODO Error changed, AnalyticsServer (!sic)
 		TaskExecuter t = managementClient.getT();
 		t.subscribe(".*");
 		

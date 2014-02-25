@@ -40,18 +40,22 @@ public class AnalyticServer implements AnalyticServerInterface{
 	
 	private ConcurrentHashMap<EventType,StatisticsEvent> statisticsEvents;
 	
-	private ConcurrentHashMap<String,ConcurrentHashMap<UUID,ManagementClientInterface>> managementClients;
+	private ConcurrentHashMap<String,ConcurrentHashMap<String,ManagementClientInterface>> managementClients;
 	//String (previously checked with Pattern compile , ArrayList with users with this regex pattern
 	
 	private ArrayList<String> pattern;
 	
 	private EventHandler eventHandler;
 	
+	private long guid;
+	
 	
 	/**
 	 * Konstruktor initialisises all necessary Objects
 	 */
 	public AnalyticServer() {
+		guid = 0;
+		
 		pattern= new ArrayList();
 		pattern.add(EventType.USER_SESSIONTIME_MIN.toString());
 		pattern.add(EventType.USER_SESSIONTIME_MAX.toString());
@@ -124,7 +128,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 		
 		filter = filter.toUpperCase();
 		System.out.println(filter);
-		UUID uuid = UUID.randomUUID();
+		String uid = ""+this.guid;
 		int wert =0;
 		for (int i = 0; i < pattern.size();i++) {
 			if(Pattern.matches(filter,pattern.get(i))) wert++;
@@ -134,14 +138,15 @@ public class AnalyticServer implements AnalyticServerInterface{
 			throw new InvalidFilterException();
 		} else {
 			if (managementClients.get(filter) == null) {
-				ConcurrentHashMap<UUID, ManagementClientInterface> hilf = new ConcurrentHashMap();
-				hilf.put(uuid, managementClient);
+				ConcurrentHashMap<String, ManagementClientInterface> hilf = new ConcurrentHashMap();
+				hilf.put(uid, managementClient);
 				managementClients.put(filter, hilf);
 			} else {
-				managementClients.get(filter).put(uuid, managementClient);
+				managementClients.get(filter).put(uid, managementClient);
 			}
 		}
-		return uuid.toString();
+		this.guid+=1;
+		return uid;
 	}
 	/**
 	 *  Receives events from the system and computes simple statistics/analytics.
@@ -198,10 +203,10 @@ public class AnalyticServer implements AnalyticServerInterface{
 			while(it.hasNext()) {
 				String hilf = it.next();
 				if(Pattern.matches(hilf,event.getType().toString())) {
-					Set<UUID> wert1 = managementClients.get(hilf).keySet();
-					Iterator<UUID> it1 = wert1.iterator();
+					Set<String> wert1 = managementClients.get(hilf).keySet();
+					Iterator<String> it1 = wert1.iterator();
 					while(it1.hasNext()) {
-						UUID hilf1 = it1.next();
+						String hilf1 = it1.next();
 						try {
 							managementClients.get(hilf).get(hilf1).processEvent(event.toString());
 						} catch (RemoteException e) {
@@ -220,10 +225,10 @@ public class AnalyticServer implements AnalyticServerInterface{
 				String hilf = it.next();
 				for (int i = 0; i < statisticEvent.size();i++) {
 					if(Pattern.matches(hilf, statisticEvent.get(i).getType().toString())) { 
-						Set<UUID> wert1 = managementClients.get(hilf).keySet();
-						Iterator<UUID> it1 = wert1.iterator();
+						Set<String> wert1 = managementClients.get(hilf).keySet();
+						Iterator<String> it1 = wert1.iterator();
 						while(it1.hasNext()) {
-							UUID hilf1 = it1.next();
+							String hilf1 = it1.next();
 							try {
 								for(int iii = 0; iii < statisticEvent.size();iii++) {
 									managementClients.get(hilf).get(hilf1).processEvent(statisticEvent.get(iii).toString());
@@ -379,7 +384,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	/**
 	 * @return the managementClients
 	 */
-	public ConcurrentHashMap<String, ConcurrentHashMap<UUID, ManagementClientInterface>> getManagementClients() {
+	public ConcurrentHashMap<String, ConcurrentHashMap<String, ManagementClientInterface>> getManagementClients() {
 		return managementClients;
 	}
 
@@ -387,7 +392,7 @@ public class AnalyticServer implements AnalyticServerInterface{
 	 * @param managementClients the managementClients to set
 	 */
 	public void setManagementClients(
-			ConcurrentHashMap<String, ConcurrentHashMap<UUID, ManagementClientInterface>> managementClients) {
+			ConcurrentHashMap<String, ConcurrentHashMap<String, ManagementClientInterface>> managementClients) {
 		this.managementClients = managementClients;
 	}
 
