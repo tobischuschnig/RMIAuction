@@ -2,6 +2,8 @@ package model.test;
 
 import static org.junit.Assert.*;
 import model.Event;
+import model.EventType;
+import model.StatisticsEvent;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,10 +15,11 @@ import org.junit.Test;
  *
  */
 public class EventTest {
-	private Event e;
+	private StatisticsEvent e;
 
 	@Before
 	public void setUp() throws Exception {
+		e=new StatisticsEvent("asd",EventType.AUCTION_TIME_AVG,12310293);
 	}
 
 	/**

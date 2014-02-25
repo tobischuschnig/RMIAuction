@@ -26,7 +26,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	billingServer.junit.BillingServerSecureTest.class,
 	model.test.AuctionTest.class,
 	model.test.UserTest.class,
-	model.test.AllModel.class,
+	model.test.AllModelTest.class,
 	managmentclient.junit.ManagementCLientInputTest.class,
 	managmentclient.junit.TaskExecuterTest.class,
 	managmentclient.junit.ManagementClientTest.class,
