@@ -2,6 +2,7 @@ package billingServer;
 
 import Exceptions.*;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import model.DataManager;
 import model.PriceStep;
 import model.PriceSteps;
 import model.Bill;
@@ -27,13 +29,22 @@ public class BillingServerSecure implements Serializable,
 
 	private PriceSteps priceSteps;
 	private CopyOnWriteArrayList<Bill> bills;
-
+	DataManager m=new DataManager();
 	/**
 	 * Konstructor wich sets the concurrenthashmap for the pricesteps
 	 */
 	public BillingServerSecure() {
-		this.priceSteps = new PriceSteps();
-		this.bills = new CopyOnWriteArrayList<Bill>();
+		
+		try {
+			this.priceSteps=(PriceSteps)m.loadPriceSteps("priceSteps");
+		} catch (Exception e) {
+			this.priceSteps = new PriceSteps();
+		}
+		try {
+			this.bills=(CopyOnWriteArrayList<Bill>)m.loadBills("bills");
+		} catch (Exception e) {
+			this.bills = new CopyOnWriteArrayList<Bill>();
+		} 
 	}
 
 	/**
@@ -67,8 +78,10 @@ public class BillingServerSecure implements Serializable,
 	public boolean createPriceStep(double startPrice, double endPrice,
 			double fixedPrice, double variablePricePercent)
 			throws  RemoteException,InvalidParameterException,InvalidInputException,OverlappedPricestepException{
-		return priceSteps.addPricestep(startPrice, endPrice, fixedPrice,
+		boolean b= priceSteps.addPricestep(startPrice, endPrice, fixedPrice,
 				variablePricePercent);
+		
+		return b;
 	}
 
 	/**
@@ -96,7 +109,6 @@ public class BillingServerSecure implements Serializable,
 	 * @return if bill was sucessfully created
 	 */
 	public boolean billAuction(String user, long auctionID, double price) {
-		System.out.println("bill will be added");
 		Double feeVariable = 0.0;
 		Double feeFixed = 0.0;
 		Double total=0.0;
@@ -111,9 +123,7 @@ public class BillingServerSecure implements Serializable,
 			}
 		}
 		total=feeVariable+feeFixed;
-		System.out.println("Total fee:"+total);
-		bills.add(new Bill(user, auctionID, price, feeFixed, feeVariable,
-				total));
+		bills.add(new Bill(user, auctionID, price, feeFixed, feeVariable,total));
 		return true;
 	}
 
@@ -161,5 +171,18 @@ public class BillingServerSecure implements Serializable,
 	 */
 	public void setBills(CopyOnWriteArrayList<Bill> bills) {
 		this.bills = bills;
+	}
+	
+	public void save(){
+		try {
+			m.saveData(priceSteps, "priceSteps");
+		} catch (IOException e) {
+			System.out.println("Could not save pricesteps");
+		}
+		try {
+			m.saveData(bills, "bills");
+		} catch (IOException e) {
+			System.out.println("Could not save pricesteps");
+		}
 	}
 }
