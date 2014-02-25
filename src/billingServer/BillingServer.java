@@ -14,6 +14,8 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.MessageDigest;
 
+import model.Properties;
+
 import Exceptions.UserInputException;
 /**
  * This is the class for the user login.
@@ -49,25 +51,15 @@ public class BillingServer implements BillingServerInterface,Serializable {
 		FileInputStream fis = null;
 		BufferedReader br = null;
 		boolean login = false;
-
-		try {
-			fis = new FileInputStream("user.properties");
-			br = new BufferedReader(new InputStreamReader(fis));
-			String line = br.readLine();
-			while(line != null){
-				String[] parts = line.split("=");
-				if(parts[0].equals(username) && parts[1].equals(createMD5(password))){
-					login = true;
-				}
-				line = br.readLine();
-
+		Properties p=new Properties("user.properties");
+		
+		String pw=p.getProperty(username);
+		if(pw.equals("")){
+			System.err.println("Username not found in user.properties");
+		}else{
+			if(pw.equals(createMD5(password))){
+				login=true;
 			}
-			fis.close();
-			br.close();
-		}catch (FileNotFoundException e) {
-			System.err.println("Error loading file : user.properties");
-		}catch (IOException e) {
-			System.err.println("Error loading file : user.properties");
 		}
 		//Rueckgabe der referenz
 		if(login){
